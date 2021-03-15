@@ -1,0 +1,3470 @@
+{
+  "00": [
+    {
+      "id": "1",
+      "title": "WOHNBAUTEN__TITLE",
+      "parent": true,
+      "fU": "HNF"
+    },
+    {
+      "id": "2",
+      "title": "SCHULBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "3",
+      "title": "LAGER_PRODUKTION",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "3dep",
+      "title": "PRODUKTIONSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4",
+      "title": "LANDWIRTSCHAFT__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "5",
+      "title": "TECHNISCHE_ANLAGEN__TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6",
+      "title": "BUERO_HANDELSBAUTEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "6adep",
+      "title": "BUEROBAUTEN_VERWALTUNGSBAUTEN_DIENSTLEISTUNGSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "7",
+      "title": "JUSTIZBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "8",
+      "title": "GESUNDHEITSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "9",
+      "title": "KULTUS__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "10",
+      "title": "KULTUR__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "11",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "12dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13",
+      "title": "VERKEHRSBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14",
+      "title": "SCHUTZBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "15",
+      "title": "NUTZUNGSSPEZ_ANLAGEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "20",
+      "title": "TIEFBAU_VERKEHRSBAU",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "30",
+      "title": "TIEFBAU_KUNSTBAUTEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "40",
+      "title": "TIEFBAU_ANLAGE_INGENIEURBAU",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "1": [
+    {
+      "id": "1.1",
+      "title": "WOHNBAUTEN_BEHELFSWOHNUNGEN",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.2",
+      "title": "WOHNBAUTEN__MFH",
+      "parent": true,
+      "fU": "10"
+    },
+    {
+      "id": "1.4",
+      "title": "WOHNBAUTEN__TERRASSENHAEUSER",
+      "parent": true,
+      "fU": "10"
+    },
+    {
+      "id": "1.5",
+      "title": "WOHNBAUTEN__EFH_REIHEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "1.8",
+      "title": "WOHNBAUTEN__ALTERSWOHNUNGEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "1.9",
+      "title": "WOHNBAUTEN__ALTERSHEIME",
+      "parent": false,
+      "fU": "12"
+    },
+    {
+      "id": "1.10",
+      "title": "WOHNBAUTEN__HEIMSTAETTEN_KINDERHEIME_JUGENDHEIME",
+      "parent": false,
+      "fU": "12"
+    },
+    {
+      "id": "1.11",
+      "title": "WOHNBAUTEN__STUDENTENWOHNHAEUSER",
+      "parent": false,
+      "fU": "12"
+    },
+    {
+      "id": "1.12",
+      "title": "WOHNBAUTEN__PERSONALHAEUSER",
+      "parent": false,
+      "fU": "12"
+    }
+  ],
+  "1.1": [],
+  "1.2": [
+    {
+      "id": "1.2.1",
+      "title": "WOHNBAUTEN__MFH_LOW",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.2.2",
+      "title": "WOHNBAUTEN__MFH_MEDIUM",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.2.3",
+      "title": "WOHNBAUTEN__MFH_HIGH",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.2.4",
+      "title": "WOHNBAUTEN__MFH_HIGHEST",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "1.2.1": [],
+  "1.2.2": [],
+  "1.2.3": [],
+  "1.2.4": [],
+  "1.4": [
+    {
+      "id": "1.4.1",
+      "title": "WOHNBAUTEN__TERRASSENHAEUSER_LOW",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.4.2",
+      "title": "WOHNBAUTEN__TERRASSENHAEUSER_MEDIUM",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.4.3",
+      "title": "WOHNBAUTEN__TERRASSENHAEUSER_HIGHEST",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.4.4",
+      "title": "WOHNBAUTEN__TERRASSENHAEUSER_ULTIMATE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "1.4.1": [],
+  "1.4.2": [],
+  "1.4.3": [],
+  "1.4.4": [],
+  "1.5": [
+    {
+      "id": "1.5.0dep",
+      "title": "WOHNBAUTEN__EFH_FERIENHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "1.5.1",
+      "title": "WOHNBAUTEN__E_RFH__EFH",
+      "parent": true,
+      "fU": "HNF"
+    },
+    {
+      "id": "1.5.1dep",
+      "title": "WOHNBAUTEN__EFH_REIHEN_LOW",
+      "parent": false,
+      "fU": "10",
+      "disabled": true
+    },
+    {
+      "id": "1.5.2dep",
+      "title": "WOHNBAUTEN__EFH_REIHEN_MEDIUM",
+      "parent": false,
+      "fU": "10",
+      "disabled": true
+    },
+    {
+      "id": "1.5.3dep",
+      "title": "WOHNBAUTEN__EFH_REIHEN_HIGH",
+      "parent": false,
+      "fU": "10",
+      "disabled": true
+    },
+    {
+      "id": "1.5.4dep",
+      "title": "WOHNBAUTEN__EFH_REIHEN_HIGHEST",
+      "parent": false,
+      "fU": "10",
+      "disabled": true
+    },
+    {
+      "id": "1.5.2",
+      "title": "WOHNBAUTEN__E_RFH__REFH",
+      "parent": true,
+      "fU": "10"
+    }
+  ],
+  "1.5.0dep": [],
+  "1.5.1": [
+    {
+      "id": "1.5.1.1",
+      "title": "WOHNBAUTEN__E_RFH__EFH__LOW",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.5.1.2",
+      "title": "WOHNBAUTEN__E_RFH__EFH__MEDIUM",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.5.1.3",
+      "title": "WOHNBAUTEN__E_RFH__EFH__HIGH",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.5.1.4",
+      "title": "WOHNBAUTEN__E_RFH__EFH__HIGHEST",
+      "parent": false,
+      "fU": "10"
+    }
+  ],
+  "1.5.1.1": [],
+  "1.5.1.2": [],
+  "1.5.1.3": [],
+  "1.5.1.4": [],
+  "1.5.1dep": [],
+  "1.5.2dep": [],
+  "1.5.3dep": [],
+  "1.5.4dep": [],
+  "1.5.2": [
+    {
+      "id": "1.5.2.1",
+      "title": "WOHNBAUTEN__E_RFH__REFH__LOW",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.5.2.2",
+      "title": "WOHNBAUTEN__E_RFH__REFH__MEDIUM",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.5.2.3",
+      "title": "WOHNBAUTEN__E_RFH__REFH__HIGH",
+      "parent": false,
+      "fU": "10"
+    },
+    {
+      "id": "1.5.2.4",
+      "title": "WOHNBAUTEN__E_RFH__REFH__HIGHEST",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "1.5.2.1": [],
+  "1.5.2.2": [],
+  "1.5.2.3": [],
+  "1.5.2.4": [],
+  "1.8": [],
+  "1.9": [],
+  "1.10": [],
+  "1.11": [],
+  "1.12": [],
+  "2": [
+    {
+      "id": "2.1",
+      "title": "SCHULBAUTEN__KINDERGAERTEN_HORTE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.2",
+      "title": "SCHULBAUTEN__VOLKSSCHULEN",
+      "parent": false,
+      "fU": "14"
+    },
+    {
+      "id": "2.3",
+      "title": "SCHULBAUTEN__BERUFSSCHULEN",
+      "parent": true,
+      "fU": "14",
+      "disabled": true
+    },
+    {
+      "id": "2.4",
+      "title": "SCHULBAUTEN__AULA",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.5",
+      "title": "SCHULBAUTEN__HEILPAEDAGOGISCHE_SONDERSCHULEN",
+      "parent": false,
+      "fU": "14"
+    },
+    {
+      "id": "2.6",
+      "title": "SCHULBAUTEN__HOCHSCHULEN_UNIVERSITAETEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "2.8",
+      "title": "SCHULBAUTEN__BIBLIOTHEKEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "2.9dep",
+      "title": "SCHULBAUTEN__SPEZIELLE_FORSCHUNGSBAUTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "2.9",
+      "title": "SCHULBAUTEN__FORSCHUNGSBAUTEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "2.1": [],
+  "2.2": [],
+  "2.3": [
+    {
+      "id": "2.3.1",
+      "title": "SCHULBAUTEN__BERUFSSCHULEN__BERUF",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.3.2dep",
+      "title": "SCHULBAUTEN__MITTELSCHULEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "2.3.2",
+      "title": "SCHULBAUTEN__BERUFSSCHULEN__GYM",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "2.3.1": [],
+  "2.3.2dep": [],
+  "2.3.2": [],
+  "2.4": [],
+  "2.5": [],
+  "2.6": [
+    {
+      "id": "2.6.1",
+      "title": "SCHULBAUTEN__HOERSAALGEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.6.2",
+      "title": "SCHULBAUTEN__LEHRE_OHNE_LABOR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.6.3",
+      "title": "SCHULBAUTEN__LEHRE_MIT_LABOR",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "2.6.1": [],
+  "2.6.2": [],
+  "2.6.3": [],
+  "2.8": [
+    {
+      "id": "2.8.1",
+      "title": "SCHULBAUTEN__BIBLIOTHEKEN__BIBLIOTHEK",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.8.2",
+      "title": "SCHULBAUTEN__BIBLIOTHEKEN__STAATSARCHIV",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "2.8.1": [],
+  "2.8.2": [],
+  "2.9dep": [],
+  "2.9": [
+    {
+      "id": "2.9.1",
+      "title": "SCHULBAUTEN__FORSCHUNGSBAUTEN_OHNE_LABOR",
+      "parent": false,
+      "fU": "16"
+    },
+    {
+      "id": "2.9.2",
+      "title": "SCHULBAUTEN__FORSCHUNGSBAUTEN_MIT_LABOR",
+      "parent": true,
+      "fU": "16"
+    }
+  ],
+  "2.9.1": [],
+  "2.9.2": [
+    {
+      "id": "2.9.2.1",
+      "title": "SCHULBAUTEN__FORSCHUNGSBAUTEN_MIT_LABOR__MEDIUM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "2.9.2.2",
+      "title": "SCHULBAUTEN__FORSCHUNGSBAUTEN_MIT_LABOR__HIGH",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "2.9.2.1": [],
+  "2.9.2.2": [],
+  "3": [
+    {
+      "id": "3.1",
+      "title": "LAGERBAUTEN__TITLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.2",
+      "title": "LAGER_PRODUKTION__PRODUKTION",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "3.1": [
+    {
+      "id": "3.1.1",
+      "title": "LAGERBAUTEN__INDUSTRIEBAUTEN_GEWERBEBAUTEN__LAGERHALLEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "3.1.2",
+      "title": "LAGERBAUTEN_MEHRSTOECKIGE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "3.1.3",
+      "title": "LAGERBAUTEN__MECHANISIERTE_LAGER_KUEHLLAGER",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.1.4",
+      "title": "LAGERBAUTEN__SILOBAUTEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.1.5",
+      "title": "LAGERBAUTEN__VERTEILZENTRALEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "3.1.1": [
+    {
+      "id": "3.1.1.1",
+      "title": "LAGERBAUTEN__INDUSTRIEBAUTEN_GEWERBEBAUTEN__LAGERHALLEN_UNBEHEIZT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.1.1.2",
+      "title": "LAGERBAUTEN__INDUSTRIEBAUTEN_GEWERBEBAUTEN__LAGERHALLEN_BEHEIZT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.1.1.3",
+      "title": "LAGERBAUTEN__INDUSTRIEBAUTEN_GEWERBEBAUTEN__LAGERHALLEN__OFFEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "3.1.1.1": [],
+  "3.1.1.2": [],
+  "3.1.1.3": [],
+  "3.1.2": [],
+  "3.1.3": [],
+  "3.1.4": [],
+  "3.1.5": [
+    {
+      "id": "3.1.5.1",
+      "title": "LAGERBAUTEN__VERTEILZENTRALEN_NONFOOD",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.1.5.2",
+      "title": "LAGERBAUTEN__VERTEILZENTRALEN_FOOD",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "3.1.5.1": [],
+  "3.1.5.2": [],
+  "3.2": [
+    {
+      "id": "3.2.1",
+      "title": "LAGER_PRODUKTION__PRODUKTION__INDUSTRIEHALLEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "3.2.2",
+      "title": "LAGER_PRODUKTION__PRODUKTION__PRODUKTIONSBAUTEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "3.2.1": [],
+  "3.2.2": [],
+  "3dep": [
+    {
+      "id": "3dep.2dep",
+      "title": "LAGERBAUTEN__INDUSTRIEHALLEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "3dep.3dep",
+      "title": "LAGERBAUTEN_PRODUKTIONSBAUTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "3dep.2dep": [],
+  "3dep.3dep": [],
+  "4": [
+    {
+      "id": "4.1dep",
+      "title": "LANDWIRTSCHAFT__SCHEUNEN_STALLUNGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.1",
+      "title": "LANDWIRTSCHAFT__SCHEUNEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.2",
+      "title": "LANDWIRTSCHAFT__GEB_TIERHALTUNG_PRODUKTION",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.4dep",
+      "title": "LANDWIRTSCHAFT__LANDWIRTSCHAFTLICHE_ANLAGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.7dep",
+      "title": "LANDWIRTSCHAFT__SCHLACHTHOEFE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.3",
+      "title": "LANDWIRTSCHAFT__TIERMEDIZIN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.5dep",
+      "title": "LANDWIRTSCHAFT__TIERHEIME",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.6dep",
+      "title": "LANDWIRTSCHAFT__TIERSPITAELER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.4",
+      "title": "LANDWIRTSCHAFT__PFLANZENHALTUNG",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "4.1dep": [],
+  "4.1": [
+    {
+      "id": "4.1.1dep",
+      "title": "LANDWIRTSCHAFT__SCHUPPEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "4.1.1dep": [],
+  "4.2": [
+    {
+      "id": "4.2.1dep",
+      "title": "LANDWIRTSCHAFT_STALLUNGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.2.1",
+      "title": "LANDWIRTSCHAFT__GEB_TIERHALTUNG_PRODUKTION__STALLUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.2.2",
+      "title": "LANDWIRTSCHAFT__GEB_TIERHALTUNG_PRODUKTION__PRODUKTIONSANLAGE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.2.3dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__ZOO_TIERHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "4.2.3",
+      "title": "LANDWIRTSCHAFT__GEB_TIERHALTUNG_PRODUKTION__TIERHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.2.4",
+      "title": "LANDWIRTSCHAFT__GEB_TIERHALTUNG_PRODUKTION__SCHLACHTHOF",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "4.2.1dep": [],
+  "4.2.1": [],
+  "4.2.2": [],
+  "4.2.3dep": [],
+  "4.2.3": [],
+  "4.2.4": [],
+  "4.4dep": [],
+  "4.7dep": [],
+  "4.3": [
+    {
+      "id": "4.3.1",
+      "title": "LANDWIRTSCHAFT__TIERMEDIZIN__TIERHEIM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.3.2",
+      "title": "LANDWIRTSCHAFT__TIERMEDIZIN__TIERSPITAL",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "4.3.1": [],
+  "4.3.2": [],
+  "4.5dep": [],
+  "4.6dep": [],
+  "4.4": [
+    {
+      "id": "4.4.1",
+      "title": "LANDWIRTSCHAFT__PFLANZENHALTUNG__GAERTNEREI",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.4.2",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__GAERTEN_GEWAECHSHAEUSER",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "4.4.3",
+      "title": "LANDWIRTSCHAFT__PFLANZENHALTUNG__GEWAECHSHAEUSER_AUSTELLUNG",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "4.4.1": [],
+  "4.4.2": [],
+  "4.4.3": [],
+  "5": [
+    {
+      "id": "5.1",
+      "title": "TECH__EKR",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "5.2",
+      "title": "TECH__WASSER",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "5.3",
+      "title": "TECHNISCHE_ANLAGEN__WASSERENTSORGUNG",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.4",
+      "title": "TECHNISCHE_ANLAGEN__ROHSTOFF",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.5",
+      "title": "TECHNISCHE_ANLAGEN__ABFALLBESEITIGUNG",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "5.1": [
+    {
+      "id": "5.1.1",
+      "title": "TECH__EKR__ENERGIEERZEUGUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.1.2",
+      "title": "TECH__EKR__ENERGIESTEUERUNG",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "5.1.3",
+      "title": "TECH__EKR__ENERGIEVERSORGUNG",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "5.1.4",
+      "title": "VERKEHRSBAUTEN__POSTBETRIEBE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.1.5",
+      "title": "VERKEHRSBAUTEN__RECHENZENTREN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.1.1": [],
+  "5.1.2": [
+    {
+      "id": "5.1.2.1",
+      "title": "TECHNISCHE_ANLAGEN__UNTERWERK",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.1.2.2",
+      "title": "TECH__EKR__ENERGIESTEUERUNG__FUNKSTATION",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.1.2.1": [],
+  "5.1.2.2": [],
+  "5.1.3": [
+    {
+      "id": "5.1.3.1",
+      "title": "TECHNISCHE_ANLAGEN__HEIZZENTRALE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.1.3.2",
+      "title": "TECHNISCHE_ANLAGEN__TANKANLAGEN_TITLE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "5.1.3.1": [],
+  "5.1.3.2": [
+    {
+      "id": "5.1.3.2.1",
+      "title": "TECHNISCHE_ANLAGEN__TANKANLAGEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.1.3.2.2",
+      "title": "VERKEHRSBAUTEN__TANKSTELLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.1.3.2.1": [],
+  "5.1.3.2.2": [],
+  "5.1.4": [],
+  "5.1.5": [],
+  "5.2": [
+    {
+      "id": "5.2.1",
+      "title": "TECH__WASSER__QUELLFASSUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.2.2",
+      "title": "TECH__WASSER__GRUNDWASSER",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.2.3",
+      "title": "TECH__WASSER__RESERVOIR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.2.4",
+      "title": "TECHNISCHE_ANLAGEN__WASSERAUFBEREITUNGSANLAGEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.2.1": [],
+  "5.2.2": [],
+  "5.2.3": [],
+  "5.2.4": [],
+  "5.3": [
+    {
+      "id": "5.3.1",
+      "title": "TECHNISCHE_ANLAGEN__WASSERENTSORGUNG__KLAERANLAGE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.3.1": [],
+  "5.4": [
+    {
+      "id": "5.4.1",
+      "title": "TECHNISCHE_ANLAGEN__ROHSTOFF__GEWINNUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.4.2",
+      "title": "TECHNISCHE_ANLAGEN__ROHSTOFF__AUFBEREITUNG",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.4.1": [],
+  "5.4.2": [],
+  "5.5": [
+    {
+      "id": "5.5.1dep",
+      "title": "TECHNISCHE_ANLAGEN__KEHRICHTVERBRENNUNGSANLAGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "5.5.1",
+      "title": "TECHNISCHE_ANLAGEN__ABFALLBESEITIGUNG__KEHRICHTVERBRENNUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "5.5.2dep",
+      "title": "TECHNISCHE_ANLAGEN__SONDERABFALLSAMMELSTELLE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "5.5.2",
+      "title": "TECHNISCHE_ANLAGEN__ABFALLBESEITIGUNG__ENTSORGUNGSANLAGE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "5.5.1dep": [],
+  "5.5.1": [],
+  "5.5.2dep": [],
+  "5.5.2": [],
+  "6dep": [
+    {
+      "id": "6dep.1dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__EINZELHANDEL",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6dep.2dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__GROSSHANDEL",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6dep.1dep": [],
+  "6dep.2dep": [],
+  "6": [
+    {
+      "id": "6.1",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.2",
+      "title": "BUERO_HANDELSBAUTEN__BVB",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.1": [
+    {
+      "id": "6.1.1",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.1.2",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__GROSSHANDEL",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.3",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__MARKT_MESSE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.1.1": [
+    {
+      "id": "6.1.1.1",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__LADENBAU",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.1.2",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__STILLES_GEWERBE_ATELIER",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.1.1.3",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__KIOSK",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "6.1.1.1": [
+    {
+      "id": "6.1.1.1.1dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__EINZELHANDEL_EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.1.1.1",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__LADENBAU__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.1.1.1.2",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__LADENBAU__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "6.1.1.1.1dep": [],
+  "6.1.1.1.1": [],
+  "6.1.1.1.2": [],
+  "6.1.1.2": [
+    {
+      "id": "6.1.1.2.1",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__STILLES_GEWERBE_ATELIER__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.1.2.2",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__EINZELHANDEL__STILLES_GEWERBE_ATELIER__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "6.1.1.2.1": [],
+  "6.1.1.2.2": [],
+  "6.1.1.3": [],
+  "6.1.2": [
+    {
+      "id": "6.1.2.1",
+      "title": "BUERO_HANDELSBAUTEN__GROSSHANDEL__WARENHAUS_EINKAUFSZENTRUM",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.2.2",
+      "title": "BUERO_HANDELSBAUTEN__GROSSHANDEL__GROSSHANDELSBAU_GROSSMARKT",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.1.2.1": [
+    {
+      "id": "6.1.2.1.1",
+      "title": "BUERO_HANDELSBAUTEN__GROSSHANDEL__WARENHAUS_EINKAUFSZENTRUM__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.1.2.1.2",
+      "title": "BUERO_HANDELSBAUTEN__GROSSHANDEL__WARENHAUS_EINKAUFSZENTRUM__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "6.1.2.1.1": [],
+  "6.1.2.1.2": [],
+  "6.1.2.2": [
+    {
+      "id": "6.1.2.2.1dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__GROSSHANDEL_EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.2.2.1",
+      "title": "BUERO_HANDELSBAUTEN__GROSSHANDEL__GROSSHANDELSBAU_GROSSMARKT__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.2.2.2",
+      "title": "BUERO_HANDELSBAUTEN__GROSSHANDEL__GROSSHANDELSBAU_GROSSMARKT__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.1.2.2.1dep": [],
+  "6.1.2.2.1": [],
+  "6.1.2.2.2": [],
+  "6.1.3": [
+    {
+      "id": "6.1.3.1dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__MARKTHALLEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.3.1",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__MARKT_MESSE__MARKT_MESSEHALLE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.3.2dep",
+      "title": "KULTUR__MESSE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.3.2",
+      "title": "BUERO_HANDELSBAUTEN__HANDELSBAU__MARKT_MESSE__MESSEZENTRUM",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.3.3dep",
+      "title": "LAGERBAUTEN_MESSEZENTREN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.1.3.4dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__MARKTHALLEN_UNBEHEIZT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.1.3.1dep": [],
+  "6.1.3.1": [],
+  "6.1.3.2dep": [],
+  "6.1.3.2": [],
+  "6.1.3.3dep": [],
+  "6.1.3.4dep": [],
+  "6.2": [
+    {
+      "id": "6.2.4dep",
+      "title": "LADENBAUTEN_HANDELSBAUTEN__GROSSMAERKTE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.1",
+      "title": "BUERO_HANDELSBAUTEN__BVB__BUERO",
+      "parent": true,
+      "fU": "16",
+      "disabled": true
+    },
+    {
+      "id": "6.2.2",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__VERWALTUNG_BANK",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.3",
+      "title": "BUERO_HANDELSBAUTEN__BVB__BEHOERDENHAEUSER",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "6.2.4dep": [],
+  "6.2.1": [
+    {
+      "id": "6.2.1.1",
+      "title": "BUERO_HANDELSBAUTEN__BVB__BUERO__EDELROHBAU",
+      "parent": false,
+      "fU": "16"
+    },
+    {
+      "id": "6.2.1.2",
+      "title": "BUERO_HANDELSBAUTEN__BVB__BUERO__VOLLAUSBAU",
+      "parent": false,
+      "fU": "16"
+    },
+    {
+      "id": "6.2.1.3dep",
+      "title": "LAGERBAUTEN_TECHNOPARK",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.1.3",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__TECHNOPARK",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.2.1.1": [],
+  "6.2.1.2": [],
+  "6.2.1.3dep": [],
+  "6.2.1.3": [
+    {
+      "id": "6.2.1.3.1",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__TECHNOPARK__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.1.3.2",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__TECHNOPARK__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.2.1.3.1": [],
+  "6.2.1.3.2": [],
+  "6.2.2": [
+    {
+      "id": "6.2.2.1",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__VERWALTUNG",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.2.2",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__BANK",
+      "parent": true,
+      "fU": "16",
+      "disabled": true
+    }
+  ],
+  "6.2.2.1": [
+    {
+      "id": "6.2.2.1.1",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__VERWALTUNG__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.2.1.2",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__VERWALTUNG__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6.2.2.1.1": [],
+  "6.2.2.1.2": [],
+  "6.2.2.2": [
+    {
+      "id": "6.2.2.2.1",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__BANK__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.2.2.2",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__BANK__VOLLAUSBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6.2.2.2.3",
+      "title": "BUERO_HANDELSBAUTEN__BVB__VERWALTUNG_BANK__BANK__BANKAUSBAU",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "6.2.2.2.1": [],
+  "6.2.2.2.2": [],
+  "6.2.2.2.3": [],
+  "6.2.3": [
+    {
+      "id": "6.2.3.1",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__BEHOERDENHAEUSER__GEMEINDEHAEUSER",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.2.3.2",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__BEHOERDENHAEUSER__RATHAUS_STADTHAUS_STADTVERWALTUNG",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "6.2.3.1": [],
+  "6.2.3.2": [
+    {
+      "id": "6.2.3.2.1",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__BEHOERDENHAEUSER__STADTHAUS_STADTVERWALTUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "6.2.3.2.2",
+      "title": "BUERO_HANDELSBAUTEN__BUEROBAUTEN__BEHOERDENHAEUSER__RATHAUS",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "6.2.3.2.1": [],
+  "6.2.3.2.2": [],
+  "6adep": [
+    {
+      "id": "6adep.1dep",
+      "title": "BUEROBAUTEN",
+      "parent": true,
+      "fU": "16",
+      "disabled": true
+    },
+    {
+      "id": "6adep.3dep",
+      "title": "VERWALTUNGSBAUTEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6adep.2dep ",
+      "title": "BANKEN",
+      "parent": false,
+      "fU": "16",
+      "disabled": true
+    },
+    {
+      "id": "6adep.7dep",
+      "title": "BUEROBAUTEN_VERWALTUNGSBAUTEN__GEMEINDEHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6adep.8dep",
+      "title": "LADENBAUTEN_VERWALTUNGSBAUTEN__RATHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6adep.1dep": [
+    {
+      "id": "6adep.1dep.1dep",
+      "title": "BUEROBAUTEN__EDELROHBAU",
+      "parent": false,
+      "fU": "16",
+      "disabled": true
+    },
+    {
+      "id": "6adep.1dep.2dep",
+      "title": "BUEROBAUTEN__VOLLAUSBAU",
+      "parent": false,
+      "fU": "16",
+      "disabled": true
+    }
+  ],
+  "6adep.1dep.1dep": [],
+  "6adep.1dep.2dep": [],
+  "6adep.3dep": [
+    {
+      "id": "6adep.3dep.1dep",
+      "title": "BUEROBAUTEN_VERWALTUNGSBAUTEN__INKLUSIVE_AUSBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "6adep.3dep.2dep",
+      "title": "BUEROBAUTEN_VERWALTUNGSBAUTEN__EDELROHBAU",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "6adep.3dep.1dep": [],
+  "6adep.3dep.2dep": [],
+  "6adep.2dep ": [],
+  "6adep.7dep": [],
+  "6adep.8dep": [],
+  "7": [
+    {
+      "id": "7.1",
+      "title": "JUSTIZBAUTEN__POLIZEI_JUSTIZ",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "7.3dep",
+      "title": "JUSTIZ__GERICHT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "7.2dep",
+      "title": "JUSTIZ__POLIZEI",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "7.2",
+      "title": "JUSTIZBAUTEN__JUSTIZVOLLZUG",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "7.1dep",
+      "title": "JUSTIZ__STRAFVOLLZUGSANSTALTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "7.1": [
+    {
+      "id": "7.1.1",
+      "title": "JUSTIZBAUTEN__POLIZEI_JUSTIZ__GERICHT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "7.1.2",
+      "title": "JUSTIZBAUTEN__POLIZEI_JUSTIZ__POLIZEI",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "7.1.3",
+      "title": "JUSTIZBAUTEN__POLIZEI_JUSTIZ__UNTERSUCHUNGSGEFAENGNIS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "7.1.4",
+      "title": "JUSTIZBAUTEN__POLIZEI_JUSTIZ__AUSBILDUNG",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "7.1.1": [],
+  "7.1.2": [],
+  "7.1.3": [],
+  "7.1.4": [],
+  "7.3dep": [],
+  "7.2dep": [],
+  "7.2": [
+    {
+      "id": "7.2.1",
+      "title": "JUSTIZBAUTEN__JUSTIZVOLLZUG__STRAFVOLLZUG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "7.2.2dep",
+      "title": "JUSTIZ__WIEDEREINGLIEDERUNGSSTAETTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "7.2.2",
+      "title": "JUSTIZBAUTEN__JUSTIZVOLLZUG__WIEDEREINGLIEDERUNGSTAETTE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "7.2.1": [],
+  "7.2.2dep": [],
+  "7.2.2": [],
+  "7.1dep": [],
+  "8": [
+    {
+      "id": "8.1dep",
+      "title": "GESUNDHEITSBAUTEN__TAGESHEIME",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.1",
+      "title": "GESUNDHEITSBAUTEN__TAGESHEIM_GESCHUTZE_WERKSTAETTE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.3dep",
+      "title": "GESUNDHEITSBAUTEN__ARZTPRAXEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.3",
+      "title": "GESUNDHEITSBAUTEN__ARZTPRAXIS_AERZTEHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.4dep",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.4",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAUS_SPITAL",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.5dep",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIKEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.5",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.6dep",
+      "title": "GESUNDHEIT__PFLEGEHEIME",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.6",
+      "title": "GESUNDHEITSBAUTEN__PFLEGE_REHA",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.7",
+      "title": "GESUNDHEITSBAUTEN__SONDERKRANKENHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.8",
+      "title": "GESUNDHEITSBAUTEN__ERHOLUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.7dep",
+      "title": "GESUNDHEIT__HEILBAEDER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.9",
+      "title": "GESUNDHEITSBAUTEN__HEILBAD_SPEZIALINSTITUTION",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "8.1dep": [],
+  "8.1": [],
+  "8.3dep": [],
+  "8.3": [],
+  "8.4dep": [
+    {
+      "id": "8.4dep.1dep",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAEUSER_BETTENTRAKT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.4dep.2dep",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAEUSER_Untersuchung",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.4dep.3dep",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAEUSER_Logistik",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "8.4": [
+    {
+      "id": "8.4.1",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAUS_SPITAL__UNTERSUCHUNG_BEHANDLUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.4.2",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAUS_SPITAL__PFLEGE_BETTENTRAKT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.4.3",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAUS_SPITAL__ADMINISTRATION",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.4.4",
+      "title": "GESUNDHEITSBAUTEN__KRANKENHAUS_SPITAL__LOGISTIK_INFRASTRUKTUR",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "8.4.1": [],
+  "8.4.1dep": [],
+  "8.4.2": [],
+  "8.4.3": [],
+  "8.4.3dep": [],
+  "8.4.4": [],
+  "8.2dep": [],
+  "8.5dep": [],
+  "8.5": [
+    {
+      "id": "8.5.2dep",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIKEN_UNTERSUCHUNG",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.5.1",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__UNTERSUCHUNG_BEHANDLUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.5.1dep",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIKEN_BETTENTRAKT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.5.2",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__PFLEGE_BETTENTRAKT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.5.3",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__ADMINISTRATION",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.5.4dep",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIKEN_LOGISTIK",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.5.4",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__LOGISTIK_INFRASTRUKTUR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.5.5dep",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIKEN_FORSCHUNG",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.5.5",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__LEHRE_FORSCHUNG",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "8.5.2dep": [],
+  "8.5.1": [],
+  "8.5.1dep": [],
+  "8.5.2": [],
+  "8.5.3": [],
+  "8.5.4dep": [],
+  "8.5.4": [],
+  "8.5.5dep": [],
+  "8.5.5": [
+    {
+      "id": "8.5.5.1",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__LEHRE_FORSCHUNG__OHNE_LABOR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.5.5.2",
+      "title": "GESUNDHEITSBAUTEN__UNIVERSITAETSKLINIK__LEHRE_FORSCHUNG__MIT_LABOR",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "8.5.5.1": [],
+  "8.5.5.2": [],
+  "8.6dep": [],
+  "8.6": [
+    {
+      "id": "8.6.1",
+      "title": "GESUNDHEITSBAUTEN__PFLEGE_REHA__PFLEGEHEIM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.6.2dep",
+      "title": "GESUNDHEIT__REHABILITATIONSZENTREN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.6.2",
+      "title": "GESUNDHEITSBAUTEN__PFLEGE_REHA__PFLEGEHEIM__REHA",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "8.6.3dep",
+      "title": "GESUNDHEIT__SANATORIEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "8.6.3",
+      "title": "GESUNDHEITSBAUTEN__PFLEGE_REHA__PFLEGEHEIM__SANATORIUM",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "8.6.1": [],
+  "8.6.2dep": [],
+  "8.6.2": [],
+  "8.6.3dep": [],
+  "8.6.3": [],
+  "8.7": [],
+  "8.8": [],
+  "8.7dep": [],
+  "8.9": [],
+  "9": [
+    {
+      "id": "9.1",
+      "title": "KULTUS__KAPELLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "9.2",
+      "title": "KULTUS__KIRCHE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "9.3",
+      "title": "KULTUS__KIRCHGEMEINDEHAEUSER",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "9.4",
+      "title": "KULTUS__FRIEDHOF",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "9.5dep",
+      "title": "KULTUS__ABDANKUNG",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "9.6dep",
+      "title": "KULTUS__KREMATORIUM",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "9.7",
+      "title": "KULTUS__KLOESTER",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "9.1": [],
+  "9.2": [],
+  "9.3": [],
+  "9.4": [
+    {
+      "id": "9.4.1",
+      "title": "KULTUS__FRIEDHOF__ABDANKUNGSHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "9.4.2",
+      "title": "KULTUS__FRIEDHOF__KREMATORIUM",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "9.4.1": [],
+  "9.4.2": [],
+  "9.5dep": [],
+  "9.6dep": [],
+  "9.7": [],
+  "10": [
+    {
+      "id": "10.1",
+      "title": "KULTUR__AUSSTELLUNGEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.2",
+      "title": "KULTUR__MUSEEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.3",
+      "title": "KULTUR__WOHLFAHRT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.4",
+      "title": "KULTUR__KULTUR_GEMEINSCHAFTSZENTREN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.6",
+      "title": "KULTUR__KONZERTE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.7",
+      "title": "KULTUR__PAVILLONS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.8",
+      "title": "KULTUR__KINO",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.9",
+      "title": "KULTUR__DISCO",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.10",
+      "title": "KULTUR__KONGRESS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.11",
+      "title": "KULTUR__SAAL",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.12",
+      "title": "KULTUR__FESTHALLEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.13",
+      "title": "KULTUR__RADIO_FERNSEH_FILM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "10.14",
+      "title": "KULTUR__HISTORISCHE_GEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "10.1": [],
+  "10.2": [],
+  "10.3": [],
+  "10.4": [],
+  "10.6": [],
+  "10.7": [],
+  "10.8": [],
+  "10.9": [],
+  "10.10": [],
+  "10.11": [],
+  "10.12": [],
+  "10.13": [],
+  "10.14": [],
+  "11": [
+    {
+      "id": "11.1",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__VERPFLEGUNGSEINRICHTUNG",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "11.1dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__RESTAURANT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.4dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__KANTINEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.2",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__BEHERBERGUNGSSTAETTE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "11.2dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__HOTELBAUTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.5dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__HERBERGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "11.1": [
+    {
+      "id": "11.1.1",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__VERPFLEGUNGSEINRICHTUNG__RESTUARATION",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "11.1.2",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__VERPFLEGUNGSEINRICHTUNG__PERSONAL_RESTAURANT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "11.1.3dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__RASTSTAETTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.1.3",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__VERPFLEGUNGSEINRICHTUNG__RASTSTAETTE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "11.1.1": [],
+  "11.1.2": [],
+  "11.1.3dep": [],
+  "11.1.3": [],
+  "11.1dep": [],
+  "11.4dep": [],
+  "11.2": [
+    {
+      "id": "11.2.1",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__BEHERBERGUNGSSTAETTE__HOTEL",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "11.2.2",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__BEHERBERGUNGSSTAETTE__HERBERGE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.2.3dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__SCHIRMHUETTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.2.3",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__BEHERBERGUNGSSTAETTE__BERGHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "11.2.4dep",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__MOTELS",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "11.2.4",
+      "title": "GASTGEWERBE_FREMDENVERKEHRSBAUTEN__BEHERBERGUNGSSTAETTE__MOTEL",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "11.2.1": [],
+  "11.2.2": [],
+  "11.2.3dep": [],
+  "11.2.3": [],
+  "11.2.4dep": [],
+  "11.2.4": [],
+  "11.2dep": [],
+  "11.5dep": [],
+  "12dep": [
+    {
+      "id": "12dep.1dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__TURNHALLEN_SPORTHALLEN_MEHRZWECKHALLEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.2dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__GARDEROBENGEBAEUDE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.3dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__HALLENBAEDER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.4dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__STADIONANLAGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.5dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__SPORTPLAETZE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.6dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__REITHALLEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.8dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__BOOTSHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.9dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__FREIZEITZENTREN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.11dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__GAERTEN_GARTENANLAGE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.12dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__ZOO",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.13dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__GAERTEN_GAERTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12dep.14dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__PAVILLONS",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.4.1dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__TRIBUENENBAUTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "12dep.1dep": [],
+  "12dep.2dep": [],
+  "12dep.3dep": [],
+  "12": [
+    {
+      "id": "12.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__TURN_SPORTHALLEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__STADIONANLAGEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORTAUSSENANLAGEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.4",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__GEB_SPORTAUSSENANLAGEN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.6",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__HALLENBAD",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.7",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__REITHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.8",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SONDERSPORTANLAGE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.9",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__FREIZEITZENTRUM",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.10",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPIELPLAETZE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.11",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__PAERKE_GARTENANLAGEN",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.12",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__PAVILLONS",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "12.1": [
+    {
+      "id": "12.1.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__TURN_SPORTHALLEN__TURNHALLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__TENNISHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__MEHRZWECKHALLE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.4",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__EISSPORTHALLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "12.1.1": [
+    {
+      "id": "12.1.1.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__TURN_SPORTHALLEN__TURNHALLE__1_HALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.1.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__TURN_SPORTHALLEN__TURNHALLE__2_HALLEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.1.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__TURN_SPORTHALLEN__TURNHALLE__3_HALLEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "12.1.1.1": [],
+  "12.1.1.2": [],
+  "12.1.1.3": [],
+  "12.1.2": [],
+  "12.1.3": [
+    {
+      "id": "12.1.3.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__MEHRZWECKHALLE__1_HALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.3.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__MEHRZWECKHALLE__2_HALLEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.1.3.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORT_FREIZEITBAU__MEHRZWECKHALLE__3_HALLEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "12.1.3.1": [],
+  "12.1.3.2": [],
+  "12.1.3.3": [],
+  "12.1.4": [],
+  "12.2dep": [],
+  "12.2": [],
+  "12.3": [
+    {
+      "id": "12.3.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORTAUSSENANLAGEN__SPORTPLATZ",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.3.2dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__FREIBAD",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.3.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORTAUSSENANLAGEN__FREIBAD",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.3.3dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__KUNSTEISBAHN_FREIBAD",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.3.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPORTAUSSENANLAGEN__KUNSTEISBAHN_OFFEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "12.3.1": [],
+  "12.3.2dep": [],
+  "12.3.2": [],
+  "12.3.3dep": [],
+  "12.3.3": [],
+  "12.3dep": [],
+  "12.4": [
+    {
+      "id": "12.4.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__GEB_SPORTAUSSENANLAGEN__TRIBUNEBAU",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.4.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__GEB_SPORTAUSSENANLAGEN___GARDEROBENGEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.4.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__GEB_SPORTAUSSENANLAGEN__KLUBHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.4.4",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__GEB_SPORTAUSSENANLAGEN__BOOTSHAUS",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "12.4.1dep": [],
+  "12.4.1": [],
+  "12.4.2": [],
+  "12.4.3": [],
+  "12.4.4": [],
+  "12.8dep": [],
+  "12.6": [],
+  "12.7dep": [],
+  "12.7": [],
+  "12.8": [],
+  "12.9dep": [],
+  "12.9": [],
+  "12.10": [
+    {
+      "id": "12.10.1dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__KINDERSPIELPLAETZE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.10.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPIELPLAETZE__KINDERSPIELPLAETZE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.10.2dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__SKATEPARKS",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.10.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__SPIELPLAETZE__SKATEPARKS",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "12.10.1dep": [],
+  "12.10.1": [],
+  "12.10.2dep": [],
+  "12.10.2": [],
+  "12.11dep": [],
+  "12.11": [
+    {
+      "id": "12.11.1dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__PAERKE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.11.1",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__PAERKE_GARTENANLAGEN__OEFFENTLICHE_PARKANLAGE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.11.2",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__PAERKE_GARTENANLAGEN__ZOOLOGISCHE_GARTENANLAGE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "12.11.3dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN_ERHOLUNGSBAUTEN__GAERTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "12.11.3",
+      "title": "FREIZEIT_SPORT_ERHOLUNGSBAUTEN__PAERKE_GARTENANLAGEN__BOTANISCHE_GARTENANLAGE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "12.11.1dep": [],
+  "12.11.1": [],
+  "12.11.2": [],
+  "12.11.3dep": [],
+  "12.11.3": [],
+  "12.12dep": [],
+  "12.13dep": [],
+  "12.14dep": [],
+  "12.12": [
+    {
+      "id": "12.12.2dep",
+      "title": "FREIZEITBAUTEN_SPORTBAUTEN__ZOO_GAERTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "12.12.2dep": [],
+  "13": [
+    {
+      "id": "13.1dep",
+      "title": "VERKEHRSBAUTEN__PARKHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.1",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE",
+      "parent": true,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.2dep",
+      "title": "VERKEHRSBAUTEN__GARAGEN_FREISTEHEND",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.3dep",
+      "title": "VERKEHRSBAUTEN__TIEFGARAGEN_EINSTELLHALLEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.4dep",
+      "title": "VERKEHRSBAUTEN__PARKHAEUSER_UNTERIRDISCH",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.2",
+      "title": "VERKEHRSBAUTEN__STRASSENVERKEHR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.5",
+      "title": "VERKEHRSBAUTEN__ZOLL",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8",
+      "title": "VERKEHRSBAUTEN__BAHN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8dep",
+      "title": "VERKEHRSBAUTEN__BAHNHOEFE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.9",
+      "title": "VERKEHRSBAUTEN__BUS",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.10",
+      "title": "VERKEHRSBAUTEN__SEILBAHN",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.10dep",
+      "title": "VERKEHRSBAUTEN__SEILBAHNEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.11",
+      "title": "VERKEHRSBAUTEN__FLUG",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.12",
+      "title": "VERKEHRSBAUTEN__SCHIFF",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.13dep",
+      "title": "VERKEHRSBAUTEN__POSTGEBAEUDE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.14dep",
+      "title": "VERKEHRSBAUTEN__FUSSGAENGERZONEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "13.1dep": [],
+  "13.1": [
+    {
+      "id": "13.1.1",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__HOCHGARAGE",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.1.2",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__TIEFGARAGE",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "13.1.1": [
+    {
+      "id": "13.1.1.1dep",
+      "title": "VERKEHRSBAUTEN__PARKHAEUSER_OBERIRDISCH",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.1.1.1",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__HOCHGARAGE__PARKHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.1.1.2",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__HOCHGARAGE__PW_GARAGE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.1.1.3",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__HOCHGARAGE__GEWERB_FAHRZEUGHALLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.1.1.1dep": [],
+  "13.1.1.1": [],
+  "13.1.1.2": [],
+  "13.1.1.3": [],
+  "13.1.2": [
+    {
+      "id": "13.1.2.1",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__TIEFGARAGE__PARKHAUS",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.1.2.2",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__TIEFGARAGE__PW_GARAGE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.1.2.3",
+      "title": "VERKEHRSBAUTEN__HOCH_TIEFGARAGE__TIEFGARAGE__GEWERB_FAHRZEUGHALLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.1.2.1": [],
+  "13.1.2.2": [],
+  "13.1.2.3": [],
+  "13.2dep": [],
+  "13.3dep": [],
+  "13.4dep": [],
+  "13.2": [],
+  "13.3": [
+    {
+      "id": "13.3.1",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__DIENSTRAUM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3.2",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__WERKSTATT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3.3",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__FAHRZEUGHALLE_TEMPERIERT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3.4",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__LAGER_TEMPERIERT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3.5",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__LAGER_NICHT_BEHEIZT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3.6",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__OFFENE_LAGERHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.3.7",
+      "title": "VERKEHRSBAUTEN__WERKHOEFE__TANKSTELLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.3.1": [],
+  "13.3.2": [],
+  "13.3.3": [],
+  "13.3.4": [],
+  "13.3.5": [],
+  "13.3.6": [],
+  "13.3.7": [],
+  "13.5": [
+    {
+      "id": "13.5.2",
+      "title": "VERKEHRSBAUTEN__ZOLL__ZOLLGEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.5.6",
+      "title": "VERKEHRSBAUTEN__ZOLL__UEBERDACHUNG",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.5.2": [],
+  "13.5.6": [],
+  "13.8": [
+    {
+      "id": "13.8.1",
+      "title": "VERKEHRSBAUTEN__BAHN__BAHNHOFGEB_EMPFANG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8.2",
+      "title": "VERKEHRSBAUTEN__BAHN__VERWALTUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8.3",
+      "title": "VERKEHRSBAUTEN__BAHN__STELLWERK",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8.4dep",
+      "title": "VERKEHRSBAUTEN__EISENBAHN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.8.4",
+      "title": "VERKEHRSBAUTEN__BAHN__BAHNDEPOT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8.5",
+      "title": "VERKEHRSBAUTEN__BAHN__VERKEHRSPAVILLION_HALTESTELLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8.6",
+      "title": "VERKEHRSBAUTEN__BAHN__UEBERDACHUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.8.7dep",
+      "title": "VERKEHRSBAUTEN__BAHNBETRIEB",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "13.8.1": [],
+  "13.8.2": [],
+  "13.8.3": [],
+  "13.8.4dep": [],
+  "13.8.4": [],
+  "13.8.5": [],
+  "13.8.6": [],
+  "13.8.7dep": [],
+  "13.8dep": [],
+  "13.9": [
+    {
+      "id": "13.9.1dep",
+      "title": "VERKEHRSBAUTEN__BUSBAHNHOF",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.9.1",
+      "title": "VERKEHRSBAUTEN__BUS__BUSGEB_EMPFANG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.9.2",
+      "title": "VERKEHRSBAUTEN__BUS__VERWALTUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.9.3",
+      "title": "VERKEHRSBAUTEN__BUS__WERKSTATT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.9.4",
+      "title": "VERKEHRSBAUTEN__BUS__BUSDEPOT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.9.5dep",
+      "title": "VERKEHRSBAUTEN__VERKEHRSPAVILLONS",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.9.5",
+      "title": "VERKEHRSBAUTEN__BUS__VERKEHRSPAVILLON_HALTESTELLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.9.6dep",
+      "title": "VERKEHRSBAUTEN__UEBERDACHUNGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.9.6",
+      "title": "VERKEHRSBAUTEN__BUS__UEBERDACHUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.9.7",
+      "title": "VERKEHRSBAUTEN__BUS__TANKSTELLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.9.1dep": [],
+  "13.9.1": [],
+  "13.9.2": [],
+  "13.9.3": [],
+  "13.9.4": [],
+  "13.9.5dep": [],
+  "13.9.5": [],
+  "13.9.6dep": [],
+  "13.9.6": [],
+  "13.9.7": [],
+  "13.10": [
+    {
+      "id": "13.10.1",
+      "title": "VERKEHRSBAUTEN__SEILBAHN__SEILBAHNGEB_EMPFANG",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.10.1": [],
+  "13.10dep": [],
+  "13.11": [
+    {
+      "id": "13.11.1dep",
+      "title": "VERKEHRSBAUTEN__FLUGHAEFEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.11.1",
+      "title": "VERKEHRSBAUTEN__FLUG__PASSAGIERTERMINAL_EMPFANG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.11.3dep",
+      "title": "VERKEHRSBAUTEN__FLUGHAEFEN_FRACHT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.11.2",
+      "title": "VERKEHRSBAUTEN__LUFT__FRACHTERMINAL",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.11.2dep",
+      "title": "VERKEHRSBAUTEN__FLUGHAEFEN_BETRIEB",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.11.3",
+      "title": "VERKEHRSBAUTEN__FLUG__VERWALTUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.11.4dep",
+      "title": "VERKEHRSBAUTEN__FLUGHAEFEN_WERFT",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "13.11.4",
+      "title": "VERKEHRSBAUTEN__FLUG__FLUGZEUGHALLE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.11.1dep": [],
+  "13.11.1": [],
+  "13.11.3dep": [],
+  "13.11.2": [],
+  "13.11.2dep": [],
+  "13.11.3": [],
+  "13.11.4dep": [],
+  "13.11.4": [],
+  "13.12": [
+    {
+      "id": "13.12.1",
+      "title": "VERKEHRSBAUTEN__SCHIFF__EMPFANG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.12.2",
+      "title": "VERKEHRSBAUTEN__SCHIFF__VERWALTUNG",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.12.3",
+      "title": "VERKEHRSBAUTEN__SCHIFF__WERKSTATT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.12.4",
+      "title": "VERKEHRSBAUTEN__SCHIFF__WERFTHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.12.5",
+      "title": "VERKEHRSBAUTEN__SCHIFF__VERKEHRSPAVILLON_HALTESTELLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "13.12.6",
+      "title": "VERKEHRSBAUTEN__SCHIFF__UEBERDACHUNG",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "13.12.1": [],
+  "13.12.2": [],
+  "13.12.3": [],
+  "13.12.4": [],
+  "13.12.5": [],
+  "13.12.6": [],
+  "13.13dep": [],
+  "13.14dep": [],
+  "14": [
+    {
+      "id": "14.1dep",
+      "title": "SCHUTZBAUTEN__KASERNEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.1",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.2dep",
+      "title": "SCHUTZBAUTEN__ZEUGHAEUSER",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.2",
+      "title": "SCHUTZBAUTEN__ARMEE_LOGISTIK_ZEUGHAUS",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.3dep",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZANLAGEN__TITLE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.3",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZ",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.5dep",
+      "title": "SCHUTZBAUTEN__GESCHUETZTE_OPERATIONSSTELLEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.6dep",
+      "title": "SCHUTZBAUTEN__AUSBILDUNGSZENTREN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.4dep",
+      "title": "SCHUTZBAUTEN__FEUERWEHRGEBAEUDE",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.4",
+      "title": "SCHUTZBAUTEN__FEUERWEHR",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "14.1dep": [],
+  "14.1": [
+    {
+      "id": "14.1.1",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__UNTERKUNFT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.1.2",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__WIRTSCHAFTSGEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.1.3dep",
+      "title": "SCHUTZBAUTEN__SCHULUNGSBAUTEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.1.3",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__SCHULUNGSGEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.1.4",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__VERWALTUNGSGEBAUEDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.1.5",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__SPORTHALLE",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "14.1.1": [],
+  "14.1.2": [],
+  "14.1.3dep": [],
+  "14.1.3": [],
+  "14.1.4": [],
+  "14.1.5": [
+    {
+      "id": "14.1.5.1",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__SPORTHALLE__1_HALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.1.5.2",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__SPORTHALLE__2_HALLEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.1.5.3",
+      "title": "SCHUTZBAUTEN__KASERNE_AUSBILDUNG__SPORTHALLE__3_HALLEN",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "14.1.5.1": [],
+  "14.1.5.2": [],
+  "14.1.5.3": [],
+  "14.2dep": [],
+  "14.2": [
+    {
+      "id": "14.2.1",
+      "title": "SCHUTZBAUTEN__ARMEE_LOGISTIK_ZEUGHAUS__LAGERGEBAEUDE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.2.2",
+      "title": "SCHUTZBAUTEN__ARMEE_LOGISTIK_ZEUGHAUS__FAHRZEUGHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.2.3",
+      "title": "SCHUTZBAUTEN__ARMEE_LOGISTIK_ZEUGHAUS__WERKSTATT",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "14.2.1": [],
+  "14.2.2": [],
+  "14.2.3": [],
+  "14.3dep": [
+    {
+      "id": "14.3dep.1dep",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZANLAGEN",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.3dep.2dep",
+      "title": "SCHUTZBAUTEN__SANITAET",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    }
+  ],
+  "14.3": [
+    {
+      "id": "14.3.1",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZ__OEFFENTLICHE_ZIVILSCHUTZANLAGE_KOMMANDOPOSTEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.3.2",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZ__SANITAETSPOSTEN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.3.3",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZ__GESCHUETZTE_OPERATIONSSTELLEN_NOTSPITAL",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.3.4",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZ__ZIVILSCHUTZ_AUSBILDUNGSZENTRUM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.3.5",
+      "title": "SCHUTZBAUTEN__ZIVILSCHUTZ__BUNKER_NICHT_BEHEIZT",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "14.3.1dep": [],
+  "14.3.1": [],
+  "14.3.2dep": [],
+  "14.3.2": [],
+  "14.3.3": [],
+  "14.3.4": [],
+  "14.3.5": [],
+  "14.5dep": [],
+  "14.6dep": [],
+  "14.4dep": [],
+  "14.4": [
+    {
+      "id": "14.4.1",
+      "title": "SCHUTZBAUTEN__FEUERWEHR__DIENSTRAUM",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.4.2",
+      "title": "SCHUTZBAUTEN__FEUERWEHR__WERKSTATT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.4.3",
+      "title": "SCHUTZBAUTEN__FEUERWEHR__FAHRZEUGHALLE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.4.4",
+      "title": "SCHUTZBAUTEN__FEUERWEHR__LAGER_TEMPERIERT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "14.4.5dep",
+      "title": "SCHUTZBAUTEN__BRAND_ZIVILSCHUTZSIMULATION",
+      "parent": false,
+      "fU": "NONE",
+      "disabled": true
+    },
+    {
+      "id": "14.4.5",
+      "title": "SCHUTZBAUTEN__FEUERWEHR__BRANDSCHUTZSIMULATION",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "14.4.1": [],
+  "14.4.2": [],
+  "14.4.3": [],
+  "14.4.4": [],
+  "14.4.5dep": [],
+  "14.4.5": [],
+  "15": [
+    {
+      "id": "15.1",
+      "title": "NUTZUNGSSPEZ_ANLAGEN__GROSSKUECHE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "15.2",
+      "title": "NUTZUNGSSPEZ_ANLAGEN__WAESCHEREIANALGE",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "15.1": [],
+  "15.2": [],
+  "20": [
+    {
+      "id": "20.1",
+      "title": "TIEFBAU_VERKEHRSBAU__STRASSE_WEG",
+      "parent": true,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.2",
+      "title": "TIEFBAU_VERKEHRSBAU__SCHIENE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.3",
+      "title": "TIEFBAU_VERKEHRSBAU__SEILBAHN",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.4",
+      "title": "TIEFBAU_VERKEHRSBAU__LUFTFAHRT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.5",
+      "title": "TIEFBAU_VERKEHRSBAU__SCHIFFFAHRT",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.6",
+      "title": "TIEFBAU_VERKEHRSBAU__TRANSPORTLEITUNG",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "20.1": [
+    {
+      "id": "20.1.1",
+      "title": "TIEFBAU_VERKEHRSBAU__STRASSE_WEG__HOCHLEISTUNGSTR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.1.2",
+      "title": "TIEFBAU_VERKEHRSBAU__STRASSE_WEG__HAUPTVERKEHRSSTR",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "20.1.3",
+      "title": "TIEFBAU_VERKEHRSBAU__STRASSE_WEG__SAMMEL_ERSCHLIESSUNGSSTR",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "20.1.1": [],
+  "20.1.2": [],
+  "20.1.3": [],
+  "20.2": [],
+  "20.3": [],
+  "20.4": [],
+  "20.5": [],
+  "20.6": [],
+  "30": [
+    {
+      "id": "30.1",
+      "title": "TIEFBAU_KUNSTBAUTEN__BRUECKE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "30.2",
+      "title": "TIEFBAU_KUNSTBAUTEN__STUETZBAUWERKE",
+      "parent": false,
+      "fU": "NONE"
+    },
+    {
+      "id": "30.3",
+      "title": "TIEFBAU_KUNSTBAUTEN__TAG_UNTERTAGBAU",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "30.1": [],
+  "30.2": [],
+  "30.3": [],
+  "40": [
+    {
+      "id": "40.6",
+      "title": "TIEFBAU_ANLAGE_INGENIEURBAU__SCHUTZVERBAU",
+      "parent": true,
+      "fU": "NONE"
+    }
+  ],
+  "40.6": [
+    {
+      "id": "40.6.5",
+      "title": "TIEFBAU_ANLAGE_INGENIEURBAU__SCHUTZVERBAU__LAERMSCHUTZ",
+      "parent": false,
+      "fU": "NONE"
+    }
+  ],
+  "40.6.5": []
+}
