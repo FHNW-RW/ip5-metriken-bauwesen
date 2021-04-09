@@ -1,5 +1,6 @@
 import json
 from typing import Final
+
 import pandas as pd
 from pandas import DataFrame
 
@@ -58,8 +59,8 @@ def _attribute_from_json(jsonstr, attribute):
         return loaded_json[attribute]
 
 
-def get_dataset(file: str, remove_na: bool) -> DataFrame:
-    df = pd.read_csv(file, sep=';')
+def get_dataset(csv_path, remove_na=False) -> DataFrame:
+    df = pd.read_csv(csv_path, sep=';')
 
     # only use neubau data from switzerland that is verified
     df = df[df[FIELD_NOM_COUNTRY] == COUNTRY_CH]
@@ -81,3 +82,21 @@ def get_dataset(file: str, remove_na: bool) -> DataFrame:
         df.dropna(how="any")
 
     return df
+
+
+def select_relevant_features(df: DataFrame) -> DataFrame:
+    return df.copy().loc[:, [
+                                FIELD_NOM_USAGE_MAIN,
+                                FIELD_NOM_FACADE,
+                                FIELD_AREA_TOTAL_FLOOR_416,
+                                FIELD_AREA_NET_FLOOR_416,
+                                FIELD_AREA_MAIN_USAGE,
+                                FIELD_VOLUME_TOTAL_416,
+                                FIELD_VOLUME_TOTAL_116,
+                                FIELD_NUM_BUILDINGS,
+                                FIELD_NUM_FLOORS_OVERGROUND,
+                                FIELD_NUM_FLOORS_UNDERGROUND,
+                                FIELD_TOTAL_EXPENSES,
+                                FIELD_COST_REF_GF,
+                                FIELD_COST_REF_GSF,
+                            ]]
