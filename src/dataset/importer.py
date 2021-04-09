@@ -1,7 +1,7 @@
 import json
 from typing import Final
-
 import pandas as pd
+from pandas import DataFrame
 
 # check data/README.me for more info about dataset
 
@@ -51,33 +51,33 @@ FIELD_COST_REF_GSF: Final = "cost_ref_gfs"
 JSON_FIELD_GF: Final = "GF"
 JSON_FIELD_GSF: Final = "GSF"
 
-df = pd.read_csv('dataset.csv', sep=';')
 
-# only use neubau data from switzerland that is verified
-df = df[df[FIELD_NOM_COUNTRY] == COUNTRY_CH]
-df = df[df[FIELD_NEUBAU_UMBAU] == CONSTRUCTION_TYPE_NEUBAU]
-df = df[df[FIELD_VERIFICATION_STATUS] == STATUS_VERIFIED]
-
-
-# extract json
-
-def extract_from_json(jsonstr, attribute):
+def _attribute_from_json(jsonstr, attribute):
     loaded_json = json.loads(jsonstr)
     if attribute in loaded_json:
         return loaded_json[attribute]
 
 
-df[FIELD_TOTAL_EXPENSES] = df[FIELD_DYN_EXPENSES_JSON].apply(
-    lambda jsonstr: extract_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES))
+def get_dataset(file: str, remove_na: bool) -> DataFrame:
+    df = pd.read_csv(file, sep=';')
 
-df[FIELD_COST_REF_GF] = df[FIELD_DYN_COST_REF].apply(
-    lambda jsonstr: extract_from_json(jsonstr, JSON_FIELD_GF))
+    # only use neubau data from switzerland that is verified
+    df = df[df[FIELD_NOM_COUNTRY] == COUNTRY_CH]
+    df = df[df[FIELD_NEUBAU_UMBAU] == CONSTRUCTION_TYPE_NEUBAU]
+    df = df[df[FIELD_VERIFICATION_STATUS] == STATUS_VERIFIED]
 
-df[FIELD_COST_REF_GSF] = df[FIELD_DYN_COST_REF].apply(
-    lambda jsonstr: extract_from_json(jsonstr, JSON_FIELD_GSF))
+    # extract cost and expenses from json
+    df[FIELD_TOTAL_EXPENSES] = df[FIELD_DYN_EXPENSES_JSON].apply(
+        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES))
 
-print(df[FIELD_TOTAL_EXPENSES][5])
-print(df[FIELD_COST_REF_GF][11])
-print(df[FIELD_COST_REF_GSF][12])
+    df[FIELD_COST_REF_GF] = df[FIELD_DYN_COST_REF].apply(
+        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_GF))
 
-# remove missing data https://pandas.pydata.org/docs/user_guide/10min.html
+    df[FIELD_COST_REF_GSF] = df[FIELD_DYN_COST_REF].apply(
+        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_GSF))
+
+    # remove missing data
+    if remove_na:
+        df.dropna(how="any")
+
+    return df
