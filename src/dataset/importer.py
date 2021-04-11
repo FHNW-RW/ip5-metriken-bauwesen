@@ -30,6 +30,12 @@ CONSTRUCTION_TYPE_UMBAU: Final = "UMBAU"
 CONSTRUCTION_TYPE_NEU_UND_UMBAU: Final = "NEU_UND_UMBAU"
 FIELD_USAGE_CLUSTER: Final = "usage_cluster"
 
+#Elevators
+FIELD_ELEVATOR_PRESENT : Final = "bool_elevators"
+FIELD_NUM_ELEVATOR : Final = "num_elevators"
+FIELD_ELEVATOR_INCLINED_PRESENT : Final = "bool_elevators_inclined"
+FIELD_NUM_ELEVATOR_INCLINED: Final = "num_elevators_inclined"
+
 # relevant features
 FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
 FIELD_USAGES: Final = "usages"
