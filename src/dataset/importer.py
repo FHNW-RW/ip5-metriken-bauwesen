@@ -53,7 +53,7 @@ JSON_FIELD_GF: Final = "GF"
 JSON_FIELD_GSF: Final = "GSF"
 
 
-def _attribute_from_json(jsonstr, attribute):
+def _get_from_json(jsonstr, attribute):
     loaded_json = json.loads(jsonstr)
     if attribute in loaded_json:
         return loaded_json[attribute]
@@ -69,13 +69,13 @@ def get_dataset(csv_path, remove_na=False) -> DataFrame:
 
     # extract cost and expenses from json
     df[FIELD_TOTAL_EXPENSES] = df[FIELD_DYN_EXPENSES_JSON].apply(
-        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES))
+        lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES))
 
     df[FIELD_COST_REF_GF] = df[FIELD_DYN_COST_REF].apply(
-        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_GF))
+        lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_GF))
 
     df[FIELD_COST_REF_GSF] = df[FIELD_DYN_COST_REF].apply(
-        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_GSF))
+        lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_GSF))
 
     # remove missing data
     if remove_na:
