@@ -28,6 +28,7 @@ FIELD_NEUBAU_UMBAU: Final = "neubau_umbau"
 CONSTRUCTION_TYPE_NEUBAU: Final = "NEUBAU"
 CONSTRUCTION_TYPE_UMBAU: Final = "UMBAU"
 CONSTRUCTION_TYPE_NEU_UND_UMBAU: Final = "NEU_UND_UMBAU"
+FIELD_USAGE_CLUSTER: Final = "usage_cluster"
 
 # relevant features
 FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
@@ -99,6 +100,7 @@ def get_dataset(csv_path, remove_na=False) -> DataFrame:
 def select_relevant_features(df: DataFrame) -> DataFrame:
     return df.copy().loc[:, [
                                 FIELD_NOM_USAGE_MAIN,
+                                FIELD_USAGE_CLUSTER,
                                 FIELD_NOM_FACADE,
                                 FIELD_AREA_TOTAL_FLOOR_416,
                                 FIELD_AREA_NET_FLOOR_416,
