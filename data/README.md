@@ -8,7 +8,12 @@ In diesem Readme werden alle Spalten des Daten-Exports aufgelistet.
 ## Generelle Daten
 **!id:** kennwerte interner Identifier\
 **!source:** Quelle des Dateninstanz\
-**!verification_status:** manuell geprüfter Verifikationsstatus (VERIFIED_OK := "Verifiziert und OK", VERIFIED_OK_BUT_UNSUITABLE := "Verifiziert aber fehlerhaft", PARTIALLY_VERIFIED := "Teilweise verifiziert", NOT_VERIFIED := "Nicht verifziert"\
+**!verification_status:** manuell geprüfter Verifikationsstatus 
+- VERIFIED_OK := "Verifiziert und OK",
+- VERIFIED_OK_BUT_UNSUITABLE := "Verifiziert aber fehlerhaft",
+- PARTIALLY_VERIFIED := "Teilweise verifiziert",
+- NOT_VERIFIED := "Nicht verifziert"
+    
 **!title:** Bezeichnung der Dateninstanz\
 **!neubau_umbau:** Typ des Baus (NEUBAU oder UMBAU)\
 comment: Kommentar des Datenerfassers resp. Prüfers\
@@ -52,7 +57,10 @@ area_usage: Nutzfläche NF\
 **!volume_total_116:** Volumen RI SIA 116
 
 ratio_volume_under_terrain: Ratio des Volumens unter Terrain (0 bis 1)\
-weak_ratio_volume_under_terrain: Angabe, ob ratio_volume_under_terrain geschätzt ist := 1 oder sicher ermittelt := 0\
+weak_ratio_volume_under_terrain: Angabe, ob ratio_volume_under_terrain 
+- geschätzt ist := 1
+- sicher ermittelt ist := 0
+
 ratio_garage: Ratio der Garage gemessen in Geschossfläche GF
 
 roofs: JSON, grobe Angabe, wo sich Dach befindet
@@ -76,7 +84,7 @@ num_office_spaces: Anzahl Büros\
 num_class_rooms: Anzahl Klassenzimmer\
 num_parking_spaces_underground: Anzahl unterrirdische Parkplätze
 
-num_floors: Anz. Stockwerke
+num_floors: Anz. Stockwerke\
 **!num_floors_overground:** Anz. oberirdische Stockwerke\
 **!num_floors_underground:** Anz. unterirdische Stockwerke
 
