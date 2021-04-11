@@ -44,7 +44,8 @@ FIELD_NUM_FLOORS_UNDERGROUND: Final = "num_floors_underground"
 
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
 FIELD_TOTAL_EXPENSES: Final = "total_expenses"
-JSON_FIELD_TOTAL_EXPENSES: Final = "BKP_08"
+JSON_FIELD_TOTAL_EXPENSES_BKP: Final = "BKP_08"
+JSON_FIELD_TOTAL_EXPENSES_EBKP: Final = "EBKP_12"
 
 FIELD_DYN_COST_REF: Final = "dyn_cost_ref"
 FIELD_COST_REF_GF: Final = "cost_ref_gf"
@@ -59,6 +60,17 @@ def _get_from_json(jsonstr, attribute):
         return loaded_json[attribute]
 
 
+def _get_total_expenses(jsonstr: str):
+    """ Return total expenses from BKP_08 or EBKP_12 if present """
+    loaded_json = json.loads(jsonstr)
+
+    if JSON_FIELD_TOTAL_EXPENSES_BKP in loaded_json:
+        return _get_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES_BKP)
+
+    elif JSON_FIELD_TOTAL_EXPENSES_EBKP in loaded_json:
+        return _get_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES_EBKP)
+
+
 def get_dataset(csv_path, remove_na=False) -> DataFrame:
     df = pd.read_csv(csv_path, sep=';')
 
@@ -69,7 +81,7 @@ def get_dataset(csv_path, remove_na=False) -> DataFrame:
 
     # extract cost and expenses from json
     df[FIELD_TOTAL_EXPENSES] = df[FIELD_DYN_EXPENSES_JSON].apply(
-        lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES))
+        lambda jsonstr: _get_total_expenses(jsonstr))
 
     df[FIELD_COST_REF_GF] = df[FIELD_DYN_COST_REF].apply(
         lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_GF))
@@ -104,7 +116,6 @@ def select_relevant_features(df: DataFrame) -> DataFrame:
 
 # Replace nan values in given column of dataframe with average value
 def replace_nan_average(df: DataFrame, column: str) -> DataFrame:
-
     total = df[column].sum()
     avg = int(total / len(df.index))
 
