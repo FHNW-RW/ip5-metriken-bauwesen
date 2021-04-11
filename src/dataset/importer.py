@@ -103,11 +103,15 @@ def select_relevant_features(df: DataFrame) -> DataFrame:
 
 
 # Replace nan values in given column of dataframe with average value
-def replace_nan_average(df: DataFrame, column: str):
+def replace_nan_average(df: DataFrame, column: str) -> DataFrame:
+
     total = df[column].sum()
     avg = int(total / len(df.index))
 
     nan_vals = df[column].isna()
-    df.loc[nan_vals, column] = avg
+    adjusted_df = df.copy()
+    adjusted_df.loc[nan_vals, column] = avg
 
-    print("Replaced " + str(nan_vals.count()) + " nan values with average (" + str(avg) + ") value.")
+    print("Replaced " + str(nan_vals.sum()) + " nan values with average (" + str(avg) + ") value.")
+
+    return adjusted_df
