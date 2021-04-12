@@ -28,6 +28,13 @@ FIELD_NEUBAU_UMBAU: Final = "neubau_umbau"
 CONSTRUCTION_TYPE_NEUBAU: Final = "NEUBAU"
 CONSTRUCTION_TYPE_UMBAU: Final = "UMBAU"
 CONSTRUCTION_TYPE_NEU_UND_UMBAU: Final = "NEU_UND_UMBAU"
+FIELD_USAGE_CLUSTER: Final = "usage_cluster"
+
+# elevators
+FIELD_ELEVATOR_PRESENT: Final = "bool_elevators"
+FIELD_NUM_ELEVATOR: Final = "num_elevators"
+FIELD_ELEVATOR_INCLINED_PRESENT: Final = "bool_elevators_inclined"
+FIELD_NUM_ELEVATOR_INCLINED: Final = "num_elevators_inclined"
 
 # relevant features
 FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
@@ -44,7 +51,8 @@ FIELD_NUM_FLOORS_UNDERGROUND: Final = "num_floors_underground"
 
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
 FIELD_TOTAL_EXPENSES: Final = "total_expenses"
-JSON_FIELD_TOTAL_EXPENSES: Final = "BKP_08"
+JSON_FIELD_TOTAL_EXPENSES_BKP: Final = "BKP_08"
+JSON_FIELD_TOTAL_EXPENSES_EBKP: Final = "EBKP_12"
 
 FIELD_DYN_COST_REF: Final = "dyn_cost_ref"
 FIELD_COST_REF_GF: Final = "cost_ref_gf"
@@ -53,10 +61,21 @@ JSON_FIELD_GF: Final = "GF"
 JSON_FIELD_GSF: Final = "GSF"
 
 
-def _attribute_from_json(jsonstr, attribute):
+def _get_from_json(jsonstr, attribute):
     loaded_json = json.loads(jsonstr)
     if attribute in loaded_json:
         return loaded_json[attribute]
+
+
+def _get_total_expenses(jsonstr: str):
+    """ Return total expenses from BKP_08 or EBKP_12 if present """
+    loaded_json = json.loads(jsonstr)
+
+    if JSON_FIELD_TOTAL_EXPENSES_BKP in loaded_json:
+        return _get_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES_BKP)
+
+    elif JSON_FIELD_TOTAL_EXPENSES_EBKP in loaded_json:
+        return _get_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES_EBKP)
 
 
 def get_dataset(csv_path, remove_na=False) -> DataFrame:
@@ -69,13 +88,13 @@ def get_dataset(csv_path, remove_na=False) -> DataFrame:
 
     # extract cost and expenses from json
     df[FIELD_TOTAL_EXPENSES] = df[FIELD_DYN_EXPENSES_JSON].apply(
-        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_TOTAL_EXPENSES))
+        lambda jsonstr: _get_total_expenses(jsonstr))
 
     df[FIELD_COST_REF_GF] = df[FIELD_DYN_COST_REF].apply(
-        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_GF))
+        lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_GF))
 
     df[FIELD_COST_REF_GSF] = df[FIELD_DYN_COST_REF].apply(
-        lambda jsonstr: _attribute_from_json(jsonstr, JSON_FIELD_GSF))
+        lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_GSF))
 
     # remove missing data
     if remove_na:
@@ -87,6 +106,7 @@ def get_dataset(csv_path, remove_na=False) -> DataFrame:
 def select_relevant_features(df: DataFrame) -> DataFrame:
     return df.copy().loc[:, [
                                 FIELD_NOM_USAGE_MAIN,
+                                FIELD_USAGE_CLUSTER,
                                 FIELD_NOM_FACADE,
                                 FIELD_AREA_TOTAL_FLOOR_416,
                                 FIELD_AREA_NET_FLOOR_416,
