@@ -28,7 +28,6 @@ FIELD_NEUBAU_UMBAU: Final = "neubau_umbau"
 CONSTRUCTION_TYPE_NEUBAU: Final = "NEUBAU"
 CONSTRUCTION_TYPE_UMBAU: Final = "UMBAU"
 CONSTRUCTION_TYPE_NEU_UND_UMBAU: Final = "NEU_UND_UMBAU"
-FIELD_USAGE_CLUSTER: Final = "usage_cluster"
 
 # elevators
 FIELD_ELEVATOR_PRESENT: Final = "bool_elevators"
@@ -36,9 +35,12 @@ FIELD_NUM_ELEVATOR: Final = "num_elevators"
 FIELD_ELEVATOR_INCLINED_PRESENT: Final = "bool_elevators_inclined"
 FIELD_NUM_ELEVATOR_INCLINED: Final = "num_elevators_inclined"
 
-# relevant features
-FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
+# usages
 FIELD_USAGES: Final = "usages"
+FIELD_USAGE_CLUSTER: Final = "usage_cluster"
+FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
+
+# relevant features
 FIELD_NOM_FACADE: Final = "nom_facade"
 FIELD_AREA_TOTAL_FLOOR_416: Final = "area_total_floor_416"
 FIELD_AREA_NET_FLOOR_416: Final = "area_net_floor_416"
