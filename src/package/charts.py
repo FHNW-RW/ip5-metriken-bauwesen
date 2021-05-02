@@ -4,7 +4,7 @@ import seaborn as sns
 from pandas import DataFrame
 from seaborn import FacetGrid
 
-import src.dataset.importer as im
+import src.package.importer as im
 
 LABEL_GF: Final = "Geschossfläche GF"
 LABEL_HNF: Final = "Hauptnutzfläche HNF"

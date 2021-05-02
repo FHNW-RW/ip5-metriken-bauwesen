@@ -4,7 +4,7 @@ from typing import Final
 import pandas as pd
 from pandas import DataFrame
 
-# check data/README.me for more info about dataset
+# check data/README.me for more info about package
 
 # general data info
 FIELD_ID: Final = "id"
