@@ -7,7 +7,9 @@ from numpy import where
 from sklearn.datasets import make_classification
 from sklearn.cluster import Birch
 from matplotlib import pyplot
-from sklearn.preprocessing import LabelEncoder as Le
+from sklearn import preprocessing
+
+le = preprocessing.LabelEncoder()
 
 # load dataset
 df = im.get_dataset('package/dataset.csv')
@@ -22,7 +24,7 @@ model = Birch(threshold=0.01, n_clusters=10)
 
 # fit the model
 relevant_features = relevant_features.dropna(how="any")
-relevant_features[im.FIELD_NOM_USAGE_MAIN] = Le().fit_transform(relevant_features[im.FIELD_NOM_USAGE_MAIN])
+relevant_features[im.FIELD_NOM_USAGE_MAIN] = le.fit_transform(relevant_features[im.FIELD_NOM_USAGE_MAIN])
 relevant_features = relevant_features.to_numpy()
 model.fit(relevant_features)
 
@@ -40,5 +42,12 @@ for cluster in clusters:
     pyplot.scatter(relevant_features[row_ix, 0], relevant_features[row_ix, 1])
 # show the plot
 pyplot.show()
+print(list(le.inverse_transform([40, 20, 10])))
+
+# Create List of key value pairs for identified clusters
+# labels = relevant_features.copy
+# labels[im.FIELD_NOM_USAGE_MAIN] = le.inverse_transform(labels[im.FIELD_NOM_USAGE_MAIN])
+# labels.head()
+
 
 # TODO Pro Cluster wie viele von welcher Main Usage
