@@ -50,6 +50,7 @@ FIELD_VOLUME_TOTAL_116: Final = "volume_total_116"
 FIELD_NUM_BUILDINGS: Final = "num_buildings"
 FIELD_NUM_FLOORS_OVERGROUND: Final = "num_floors_overground"
 FIELD_NUM_FLOORS_UNDERGROUND: Final = "num_floors_underground"
+FIELD_HNF_GF_RATIO: Final = "ratio_hnf_gf"
 
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
 FIELD_TOTAL_EXPENSES: Final = "total_expenses"
@@ -97,6 +98,9 @@ def get_dataset(csv_path, remove_na=False) -> DataFrame:
 
     df[FIELD_COST_REF_GSF] = df[FIELD_DYN_COST_REF].apply(
         lambda jsonstr: _get_from_json(jsonstr, JSON_FIELD_GSF))
+
+    # calculate HNF / GF ratio
+    df[FIELD_HNF_GF_RATIO] = df.eval(f'{FIELD_AREA_MAIN_USAGE} / {FIELD_AREA_TOTAL_FLOOR_416}')
 
     # remove missing data
     if remove_na:
