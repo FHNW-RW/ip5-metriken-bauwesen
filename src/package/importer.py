@@ -117,6 +117,12 @@ def get_dataset(csv_path, remove_na=False, fill_cluster_median=False) -> DataFra
     return df
 
 
+def cap_by_gf_hnf(df: DataFrame, gf_upper=12500, hnf_upper=20000) -> DataFrame:
+    capped_df = df[df[FIELD_AREA_MAIN_USAGE] <= hnf_upper]
+    capped_df = capped_df[df[FIELD_AREA_TOTAL_FLOOR_416] <= gf_upper]
+    return capped_df
+
+
 def select_relevant_features(df: DataFrame) -> DataFrame:
     return df.copy().loc[:, [
                                 FIELD_NOM_USAGE_MAIN,
