@@ -28,7 +28,7 @@ def lmplot_gf_hnf(df: DataFrame, hue=None) -> FacetGrid:
         scatter_kws={'alpha': 0.5},
         hue=hue,
         height=CHART_HEIGHT, aspect=CHART_HEIGHT / CHART_WIDTH,
-        robust=True, truncate=True
+        truncate=True
     )
 
     gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)

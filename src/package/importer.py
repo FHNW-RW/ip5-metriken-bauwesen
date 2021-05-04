@@ -117,7 +117,10 @@ def get_dataset(csv_path, remove_na=False, fill_cluster_median=False) -> DataFra
     return df
 
 
-def cap_by_gf_hnf(df: DataFrame, gf_upper=10000, hnf_upper=15000) -> DataFrame:
+def cap_upper_gf_hnf(df: DataFrame, gf_upper_percentile='75%', hnf_upper_percentile='75%') -> DataFrame:
+    gf_upper = df[FIELD_AREA_TOTAL_FLOOR_416].describe()[gf_upper_percentile]
+    hnf_upper = df[FIELD_AREA_MAIN_USAGE].describe()[hnf_upper_percentile]
+
     capped_df = df[df[FIELD_AREA_MAIN_USAGE] <= hnf_upper]
     capped_df = capped_df[df[FIELD_AREA_TOTAL_FLOOR_416] <= gf_upper]
     return capped_df
