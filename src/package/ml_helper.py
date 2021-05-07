@@ -2,7 +2,7 @@ from numpy import mean
 from numpy import std
 from pandas import DataFrame
 from sklearn.metrics import mean_absolute_error, mean_squared_error, max_error, mean_absolute_percentage_error
-from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_validate, RepeatedKFold
 from sklearn.preprocessing import LabelEncoder as Le
 
 import src.package.importer as im
@@ -27,7 +27,7 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     return X, y
 
 
-def cross_validation(model, X, y, cv=None):
+def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=3, random_state=0)):
     """ Use repeated cross validation to evaluate model """
 
     scoring = [
