@@ -85,13 +85,17 @@ def _fillna_cluster_median(df, field):
     df[field] = df[field].fillna(df.groupby(FIELD_USAGE_CLUSTER)[field].transform('mean'))
 
 
-def get_dataset(csv_path, remove_na=False, fill_cluster_median=False) -> DataFrame:
+def get_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None) -> DataFrame:
     df = pd.read_csv(csv_path, sep=';')
 
-    # only use neubau data from switzerland that is verified
+    # only use neubau data from switzerland
     df = df[df[FIELD_NOM_COUNTRY] == COUNTRY_CH]
     df = df[df[FIELD_NEUBAU_UMBAU] == CONSTRUCTION_TYPE_NEUBAU]
-    df = df[df[FIELD_VERIFICATION_STATUS] == STATUS_VERIFIED]
+
+    # use verified or partially verified if not set
+    if verification_status is None:
+        verification_status = [STATUS_VERIFIED, STATUS_PARTIALLY_VERIFIED]
+    df = df[df[FIELD_VERIFICATION_STATUS].isin(verification_status)]
 
     # extract cost and expenses from json
     df[FIELD_TOTAL_EXPENSES] = df[FIELD_DYN_EXPENSES_JSON].apply(
