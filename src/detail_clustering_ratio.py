@@ -1,22 +1,26 @@
-import package.importer as im
-import package.manipulations as mani
-
+from matplotlib import pyplot
 # birch clustering
 from numpy import unique
 from numpy import where
-from sklearn.datasets import make_classification
-from sklearn.cluster import Birch
-from matplotlib import pyplot
 from sklearn import preprocessing
+from sklearn.cluster import Birch
+
+import package.importer as im
+import package.manipulations as mani
 
 le = preprocessing.LabelEncoder()
 
+# IMPORTANT NOTE: This visualisation alone is not very valuable.
+# It builds the basis for future investigations
+# During the process we agreed on reprioritizing
+
 # load dataset
 df = im.get_dataset('package/dataset.csv')
-relevant_features = df.copy().loc[:, [im.FIELD_AREA_TOTAL_FLOOR_416, im.FIELD_AREA_MAIN_USAGE, im.FIELD_NOM_USAGE_MAIN]]
+df = mani.compute_ratio_hnf_gf(df)
+relevant_features = df.copy().loc[:, ['ratio_hnf_gf', im.FIELD_NOM_USAGE_MAIN]]
 
 # define the model
-model = Birch(threshold=0.1, n_clusters=10)
+model = Birch(threshold=0.5, n_clusters=10)
 
 # fit the model
 relevant_features = relevant_features.dropna(how="any")
@@ -47,4 +51,3 @@ ind = 0
 for value in params:
     print(ind, '->', value)
     ind += 1
-
