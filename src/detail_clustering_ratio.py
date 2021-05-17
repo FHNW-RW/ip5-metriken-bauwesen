@@ -1,4 +1,5 @@
 from matplotlib import pyplot
+
 # birch clustering
 from numpy import unique
 from numpy import where
@@ -12,7 +13,7 @@ le = preprocessing.LabelEncoder()
 
 # IMPORTANT NOTE: This visualisation alone is not very valuable.
 # It builds the basis for future investigations
-# During the process we agreed on reprioritizing
+# During the process we agreed on reprioritizing this matter
 
 # load dataset
 df = im.get_dataset('package/dataset.csv')
