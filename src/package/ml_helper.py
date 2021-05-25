@@ -1,9 +1,13 @@
+import os
+
 from numpy import mean
 from numpy import std
 from pandas import DataFrame
 from sklearn.metrics import mean_absolute_error, mean_squared_error, max_error, mean_absolute_percentage_error
 from sklearn.model_selection import cross_validate, RepeatedKFold
 from sklearn.preprocessing import LabelEncoder as Le
+from joblib import dump
+from pathlib import Path
 
 import src.package.importer as im
 
@@ -39,6 +43,21 @@ def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=3, rand
     ]
 
     return cross_validate(model, X, y, cv=cv, scoring=scoring)
+
+
+def serialize_model(model, name):
+    """ Serialize model with joblib """
+
+    # get or create export directory
+    project_root = Path(__file__).parent.parent.parent
+    export_directory = os.path.join(project_root, r'export')
+    if not os.path.exists(export_directory):
+        os.makedirs(export_directory)
+
+    filename = os.path.join(export_directory, f'{name}.joblib')
+    print(f'Location: {filename}')
+
+    dump(model, filename)
 
 
 def evaluate_cv_scores(scores_map):
