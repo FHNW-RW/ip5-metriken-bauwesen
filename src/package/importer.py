@@ -16,6 +16,10 @@ FIELD_NOM_COUNTRY: Final = "nom_country"
 COUNTRY_CH: Final = "SWITZERLAND"
 COUNTRY_DE: Final = "GERMANY"
 
+# garage type
+GARAGE_TYPE_INDOOR: Final = "EINSTELLHALLEN"
+GARAGE_TYPE_OUTDOOR: Final = "GARAGEN_FREISTEHEND"
+
 # verification status
 FIELD_VERIFICATION_STATUS: Final = "verification_status"
 STATUS_VERIFIED: Final = "VERIFIED_OK"
