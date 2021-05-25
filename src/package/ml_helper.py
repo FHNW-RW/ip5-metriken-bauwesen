@@ -19,7 +19,10 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
 
     # preprocess dataset
     relevant_features = relevant_features.dropna(how="any")
-    relevant_features[im.FIELD_USAGE_CLUSTER] = Le().fit_transform(relevant_features[im.FIELD_USAGE_CLUSTER])
+
+    usage_encoder = Le()
+    relevant_features[im.FIELD_USAGE_CLUSTER] = usage_encoder.fit_transform(relevant_features[im.FIELD_USAGE_CLUSTER])
+    serialize_object(usage_encoder, 'usage_encoder')  # serialize to reuse in API
 
     if upper_percentile is not None:
         relevant_features = im.cap_upper_gf_hnf(relevant_features, upper_percentile=upper_percentile)
@@ -45,8 +48,8 @@ def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=3, rand
     return cross_validate(model, X, y, cv=cv, scoring=scoring)
 
 
-def serialize_model(model, name):
-    """ Serialize model with joblib """
+def serialize_object(to_serialize, name):
+    """ Serialize object with joblib """
 
     # get or create export directory
     project_root = Path(__file__).parent.parent.parent
@@ -57,7 +60,7 @@ def serialize_model(model, name):
     filename = os.path.join(export_directory, f'{name}.joblib')
     print(f'Location: {filename}')
 
-    dump(model, filename)
+    dump(to_serialize, filename)
 
 
 def evaluate_cv_scores(scores_map):
