@@ -1,35 +1,42 @@
 import os
+from pathlib import Path
 
+from joblib import dump
 from numpy import mean
 from numpy import std
 from pandas import DataFrame
 from sklearn.metrics import mean_absolute_error, mean_squared_error, max_error, mean_absolute_percentage_error
 from sklearn.model_selection import cross_validate, RepeatedKFold
-from sklearn.preprocessing import LabelEncoder as Le
-from joblib import dump
-from pathlib import Path
+from sklearn.pipeline import Pipeline
 
+import src.package.consts as c
 import src.package.importer as im
+from src.package.transformers import CombineFeatures, EncodeLabelsTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
     """ Returns dataset to estimate HNF based on GF and usage cluster """
-    relevant_features = df.copy().loc[:,
-                        [im.FIELD_AREA_TOTAL_FLOOR_416, im.FIELD_AREA_MAIN_USAGE, im.FIELD_USAGE_CLUSTER]]
+    dataset = df.copy().loc[:, [c.FIELD_AREA_TOTAL_FLOOR_416,
+                                c.FIELD_AREA_MAIN_USAGE,
+                                c.FIELD_USAGE_CLUSTER,
+                                c.FIELD_NOM_USAGE_MAIN]]
 
     # preprocess dataset
-    relevant_features = relevant_features.dropna(how="any")
+    dataset = dataset.dropna(how="any")
+    print(dataset)
 
-    usage_encoder = Le()
-    relevant_features[im.FIELD_USAGE_CLUSTER] = usage_encoder.fit_transform(relevant_features[im.FIELD_USAGE_CLUSTER])
-    serialize_object(usage_encoder, 'usage_encoder')  # serialize to reuse in API
+    transform_pipeline = Pipeline([
+        ('combine_features', CombineFeatures()),
+        ('encode_labels', EncodeLabelsTransformer()),
+    ])
+    dataset = transform_pipeline.fit_transform(dataset)
 
     if upper_percentile is not None:
-        relevant_features = im.cap_upper_gf_hnf(relevant_features, upper_percentile=upper_percentile)
+        dataset = im.cap_upper_gf_hnf(dataset, upper_percentile=upper_percentile)
 
     # features / labels
-    X = relevant_features[[im.FIELD_AREA_TOTAL_FLOOR_416, im.FIELD_USAGE_CLUSTER]]
-    y = relevant_features[im.FIELD_AREA_MAIN_USAGE]
+    X = dataset[[c.FIELD_AREA_TOTAL_FLOOR_416, c.FIELD_COMBINED_USAGE]]
+    y = dataset[c.FIELD_AREA_MAIN_USAGE]
 
     return X, y
 
