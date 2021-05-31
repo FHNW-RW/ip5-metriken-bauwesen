@@ -2,8 +2,7 @@ import os
 from pathlib import Path
 
 from joblib import dump
-from numpy import mean
-from numpy import std
+from numpy import mean, std
 from pandas import DataFrame
 from sklearn.metrics import mean_absolute_error, mean_squared_error, max_error, mean_absolute_percentage_error
 from sklearn.model_selection import cross_validate, RepeatedKFold
@@ -23,7 +22,6 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
 
     # preprocess dataset
     dataset = dataset.dropna(how="any")
-    print(dataset)
 
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
