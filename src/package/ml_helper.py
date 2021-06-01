@@ -39,6 +39,19 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     return X, y
 
 
+def hnf_dataset_full(df: DataFrame):
+    # TODO: Dataset with as many features as possible that could be useful
+    # num_floors_overground
+    # num_floors_underground
+    # area_net_floor_416
+    # num_buildings
+    # garage_indoor
+    # garage_outdoor
+    # Maybe others?
+
+    return None
+
+
 def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=3, random_state=0)):
     """ Use repeated cross validation to evaluate model """
 
