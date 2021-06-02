@@ -1,7 +1,7 @@
 from typing import Final
 from pandas import DataFrame
 
-import src.package.importer as im
+import src.package.consts as c
 import json
 
 # JSON CODES
@@ -40,8 +40,8 @@ def __decode_garages(raw_json: str):
 
     for usage in usages_dict_raw:
         usage_type = usage[USAGE_TYPE]
-        found_indoor = usage_type.upper().count(im.GARAGE_TYPE_INDOOR)
-        found_outdoor = usage_type.upper().count(im.GARAGE_TYPE_OUTDOOR)
+        found_indoor = usage_type.upper().count(c.GARAGE_TYPE_INDOOR)
+        found_outdoor = usage_type.upper().count(c.GARAGE_TYPE_OUTDOOR)
 
         if found_indoor > 0:
             parking_garage = True
@@ -59,7 +59,7 @@ def __extract_usages(df):
     tertiary_usages = []
 
     for index, row in df.iterrows():
-        usages_json = row[im.FIELD_USAGES]
+        usages_json = row[c.FIELD_USAGES]
         usages_list, percentages_list = __decode_usages(usages_json)
 
         if len(usages_list) >= 1:
@@ -88,7 +88,7 @@ def __extract_garages(data):
 
     # check all entries for garages
     for index, row in data.iterrows():
-        usages_json = row[im.FIELD_USAGES]
+        usages_json = row[c.FIELD_USAGES]
         parking_garage_found, outdoor_garage_found = __decode_garages(usages_json)
 
         indoor.append(parking_garage_found)
