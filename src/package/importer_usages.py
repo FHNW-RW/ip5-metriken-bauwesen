@@ -14,8 +14,8 @@ USAGE_PERCENTAGE: Final = "percentage"
 GARAGE_INDOOR_PRESENT: Final = "garage_indoor"
 GARAGE_OUTDOOR_PRESENT: Final = "garage_outdoor"
 
-GARAGE_INDOOR_PERCENTAGE: Final = "garage_indoor"
-GARAGE_OUTDOOR_PERCENTAGE: Final = "garage_outdoor"
+GARAGE_INDOOR_PERCENTAGE: Final = "garage_indoor_percentage"
+GARAGE_OUTDOOR_PERCENTAGE: Final = "garage_outdoor_percentage"
 
 NOM_PRIMARY_USAGE: Final = "nom_primary_usage"
 NOM_SECONDARY_USAGE: Final = "nom_secondary_usage"
@@ -52,19 +52,21 @@ def __decode_garages(raw_json: str):
     parking_garage = False
     outdoor_garage = False
 
-    usages_dict_raw = json.loads(raw_json)
+    parking_garage_percentage = 0.0
+    outdoor_garage_percentage = 0.0
 
-    for usage in usages_dict_raw:
-        usage_type = usage[USAGE_TYPE]
-        found_indoor = usage_type.upper().count(c.GARAGE_TYPE_INDOOR)
-        found_outdoor = usage_type.upper().count(c.GARAGE_TYPE_OUTDOOR)
+    usages = __decode_usages(raw_json)
 
-        if found_indoor > 0:
+    for usage in usages:
+        if c.GARAGE_TYPE_INDOOR in usage[0]:
             parking_garage = True
-        if found_outdoor > 0:
-            outdoor_garage = True
+            parking_garage_percentage = usage[1]
 
-    return parking_garage, outdoor_garage
+        if c.GARAGE_TYPE_OUTDOOR in usage[0]:
+            outdoor_garage = True
+            outdoor_garage_percentage = usage[1]
+
+    return parking_garage, outdoor_garage, parking_garage_percentage, outdoor_garage_percentage
 
 
 # extract usages
@@ -127,18 +129,25 @@ def __extract_usages(df):
 #  extract garages
 def __extract_garages(data):
     # prepare lists
-    indoor = []
-    outdoor = []
+    indoor_present = []
+    outdoor_present = []
+
+    indoor_percentages = []
+    outdoor_percentages = []
 
     # check all entries for garages
     for index, row in data.iterrows():
         usages_json = row[c.FIELD_USAGES]
-        parking_garage_found, outdoor_garage_found = __decode_garages(usages_json)
+        parking_garage_found, outdoor_garage_found, indoor_percentage, outdoor_percentage = __decode_garages(
+            usages_json)
 
-        indoor.append(parking_garage_found)
-        outdoor.append(outdoor_garage_found)
+        indoor_present.append(parking_garage_found)
+        indoor_percentages.append(indoor_percentage)
 
-    return indoor, outdoor
+        outdoor_present.append(outdoor_garage_found)
+        outdoor_percentages.append(outdoor_percentage)
+
+    return np.column_stack((indoor_present, indoor_percentages, outdoor_present, outdoor_percentages))
 
 
 # prepare df to describe usages
@@ -153,7 +162,9 @@ def __describe_usages(df):
 
 # prepare df to describe garages
 def __describe_garages(df):
-    return df[[GARAGE_INDOOR_PRESENT, GARAGE_OUTDOOR_PRESENT]]
+    return df[[GARAGE_INDOOR_PRESENT, GARAGE_INDOOR_PERCENTAGE,
+               GARAGE_OUTDOOR_PRESENT, GARAGE_OUTDOOR_PERCENTAGE
+               ]]
 
 
 # extract usages and add features to df
@@ -181,10 +192,13 @@ def extract_usage_details(df: DataFrame, shortened_df: bool):
 # extract garages and add features to df
 def extract_garage_details(df: DataFrame, shortened_df: bool):
     data = df.copy()
-    indoor, outdoor = __extract_garages(data)
+    garages_info = __extract_garages(data)
 
-    data[GARAGE_INDOOR_PRESENT] = indoor
-    data[GARAGE_OUTDOOR_PRESENT] = outdoor
+    data[GARAGE_INDOOR_PRESENT] = garages_info[:, 0]
+    data[GARAGE_INDOOR_PERCENTAGE] = garages_info[:, 1]
+
+    data[GARAGE_OUTDOOR_PRESENT] = garages_info[:, 2]
+    data[GARAGE_OUTDOOR_PERCENTAGE] = garages_info[:, 3]
 
     if shortened_df:
         short = __describe_garages(data)
