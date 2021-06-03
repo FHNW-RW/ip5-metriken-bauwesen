@@ -2,6 +2,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import LabelEncoder as Le
 
 import src.package.consts as c
+import src.package.importer_usages as im_usages
 
 usage_wohnen_mfh = ['WOHNBAUTEN__MFH_HIGH', 'WOHNBAUTEN__MFH_MEDIUM', 'WOHNBAUTEN__MFH_LOW']
 usage_wohnen_efh = ['WOHNBAUTEN__EFH_REIHEN_LOW', 'WOHNBAUTEN__EFH_REIHEN_MEDIUM', 'WOHNBAUTEN__EFH_REIHEN_HIGH']
@@ -33,6 +34,24 @@ class CombineFeatures(BaseEstimator, TransformerMixin):
         X[c.FIELD_COMBINED_USAGE] = X.apply(
             lambda x: combine_usage(x[c.FIELD_NOM_USAGE_MAIN], x[c.FIELD_USAGE_CLUSTER]), axis=1
         )
+
+        # if present, combine primary, ..., quaternary usages
+        if im_usages.NOM_PRIMARY_USAGE in X:
+            X[im_usages.NOM_PRIMARY_USAGE] = X.apply(
+                lambda x: combine_usage(x[im_usages.NOM_PRIMARY_USAGE], x[im_usages.NOM_PRIMARY_USAGE]), axis=1
+            )
+
+            X[im_usages.NOM_SECONDARY_USAGE] = X.apply(
+                lambda x: combine_usage(x[im_usages.NOM_SECONDARY_USAGE], x[im_usages.NOM_SECONDARY_USAGE]), axis=1
+            )
+
+            X[im_usages.NOM_TERTIARY_USAGE] = X.apply(
+                lambda x: combine_usage(x[im_usages.NOM_TERTIARY_USAGE], x[im_usages.NOM_TERTIARY_USAGE]), axis=1
+            )
+
+            X[im_usages.NOM_QUATERNARY_USAGE] = X.apply(
+                lambda x: combine_usage(x[im_usages.NOM_QUATERNARY_USAGE], x[im_usages.NOM_QUATERNARY_USAGE]), axis=1
+            )
 
         return X
 
