@@ -35,24 +35,6 @@ class CombineFeatures(BaseEstimator, TransformerMixin):
             lambda x: combine_usage(x[c.FIELD_NOM_USAGE_MAIN], x[c.FIELD_USAGE_CLUSTER]), axis=1
         )
 
-        # if present, combine primary, ..., quaternary usages
-        if im_usages.NOM_PRIMARY_USAGE in X:
-            X[im_usages.NOM_PRIMARY_USAGE] = X.apply(
-                lambda x: combine_usage(x[im_usages.NOM_PRIMARY_USAGE], x[im_usages.NOM_PRIMARY_USAGE]), axis=1
-            )
-
-            X[im_usages.NOM_SECONDARY_USAGE] = X.apply(
-                lambda x: combine_usage(x[im_usages.NOM_SECONDARY_USAGE], x[im_usages.NOM_SECONDARY_USAGE]), axis=1
-            )
-
-            X[im_usages.NOM_TERTIARY_USAGE] = X.apply(
-                lambda x: combine_usage(x[im_usages.NOM_TERTIARY_USAGE], x[im_usages.NOM_TERTIARY_USAGE]), axis=1
-            )
-
-            X[im_usages.NOM_QUATERNARY_USAGE] = X.apply(
-                lambda x: combine_usage(x[im_usages.NOM_QUATERNARY_USAGE], x[im_usages.NOM_QUATERNARY_USAGE]), axis=1
-            )
-
         return X
 
 

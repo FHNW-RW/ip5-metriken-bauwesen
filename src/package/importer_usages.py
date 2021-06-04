@@ -1,6 +1,7 @@
 from typing import Final
 
 import numpy as np
+import pandas as pd
 from pandas import DataFrame
 
 import src.package.consts as c
@@ -60,11 +61,11 @@ def __decode_garages(raw_json: str):
     for usage in usages:
         if c.GARAGE_TYPE_INDOOR in usage[0]:
             parking_garage = True
-            parking_garage_percentage = usage[1]
+            parking_garage_percentage = float(usage[1])
 
         if c.GARAGE_TYPE_OUTDOOR in usage[0]:
             outdoor_garage = True
-            outdoor_garage_percentage = usage[1]
+            outdoor_garage_percentage = float(usage[1])
 
     return parking_garage, outdoor_garage, parking_garage_percentage, outdoor_garage_percentage
 
@@ -92,28 +93,28 @@ def __extract_usages(df):
 
         if len(usages) >= 1:
             primary_usages.append(usages[0, 0])
-            primary_percentage.append(usages[0, 1])
+            primary_percentage.append(float(usages[0, 1]))
         else:
             primary_usages.append(None)
             primary_percentage.append(None)
 
         if len(usages) >= 2:
             secondary_usages.append(usages[1, 0])
-            secondary_percentage.append(usages[1, 1])
+            secondary_percentage.append(float(usages[1, 1]))
         else:
             secondary_usages.append(None)
             secondary_percentage.append(None)
 
         if len(usages) >= 3:
             tertiary_usages.append(usages[2, 0])
-            tertiary_percentage.append(usages[2, 1])
+            tertiary_percentage.append(float(usages[2, 1]))
         else:
             tertiary_usages.append(None)
             tertiary_percentage.append(None)
 
         if len(usages) >= 4:
             quaternary_usages.append(usages[3, 0])
-            quaternary_percentage.append(usages[3, 1])
+            quaternary_percentage.append(float(usages[3, 1]))
         else:
             quaternary_usages.append(None)
             quaternary_percentage.append(None)
@@ -182,6 +183,12 @@ def extract_usage_details(df: DataFrame, shortened_df: bool):
     data[TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
     data[QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
 
+    # set dtype to numeric
+    data[PRIMARY_USAGE_PERCENTAGE] = pd.to_numeric(data[PRIMARY_USAGE_PERCENTAGE], errors='coerce')
+    data[SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(data[SECONDARY_USAGE_PERCENTAGE], errors='coerce')
+    data[TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(data[TERTIARY_USAGE_PERCENTAGE], errors='coerce')
+    data[QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(data[QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
+
     if shortened_df:
         short = __describe_usages(data)
         return data, short
@@ -199,6 +206,10 @@ def extract_garage_details(df: DataFrame, shortened_df: bool):
 
     data[GARAGE_OUTDOOR_PRESENT] = garages_info[:, 2]
     data[GARAGE_OUTDOOR_PERCENTAGE] = garages_info[:, 3]
+
+    # set dtype to numeric
+    data[GARAGE_INDOOR_PERCENTAGE] = pd.to_numeric(data[GARAGE_INDOOR_PERCENTAGE], errors='coerce')
+    data[GARAGE_OUTDOOR_PERCENTAGE] = pd.to_numeric(data[GARAGE_OUTDOOR_PERCENTAGE], errors='coerce')
 
     if shortened_df:
         short = __describe_garages(data)
