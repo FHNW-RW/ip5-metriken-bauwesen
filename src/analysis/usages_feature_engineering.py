@@ -24,6 +24,7 @@ def garage_total_percentage(df):
     """ adds field with total percentage of garage for each object """
 
     df['garage_total_percentage'] = df[im_usages.GARAGE_INDOOR_PERCENTAGE] + df[im_usages.GARAGE_OUTDOOR_PERCENTAGE]
+    df['garage_total_percentage'] = pd.to_numeric(df['garage_total_percentage']) # change dtype to float
 
     return df
 
@@ -31,7 +32,7 @@ def garage_total_percentage(df):
 def __add_total_garage_count(grp):
     """ calculates percentage of objects with garage (either indoor or outdoor) for the respecting group  """
     garages_present = grp[
-        (grp[im_usages.GARAGE_INDOOR_PRESENT] == True) | (grp[im_usages.GARAGE_OUTDOOR_PRESENT] == True)]
+        (grp[im_usages.GARAGE_INDOOR_PRESENT] == 1.0) | (grp[im_usages.GARAGE_OUTDOOR_PRESENT] == 1.0)]
     grp['garages_total'] = (len(garages_present.index) / len(grp))
 
     return grp
@@ -39,7 +40,7 @@ def __add_total_garage_count(grp):
 
 def __add_total_indoor_garage_count(grp):
     """ calculates percentage of objects with garage (indoor) for the respecting group  """
-    garages_present = grp[(grp[im_usages.GARAGE_INDOOR_PRESENT] == True)]
+    garages_present = grp[(grp[im_usages.GARAGE_INDOOR_PRESENT] == 1.0)]
     grp['indoor_garages_total'] = (len(garages_present.index) / len(grp))
 
     return grp
@@ -47,9 +48,7 @@ def __add_total_indoor_garage_count(grp):
 
 def __add_avg_garage_percentage(grp):
     """ calculates percentage of objects with garage (indoor) for the respecting group  """
-    grp_sum = grp['garage_total_percentage'].sum()
-
-    grp['garages_avg'] = (grp_sum / len(grp))
+    grp['garages_avg'] = grp['garage_total_percentage'].mean()
 
     return grp
 

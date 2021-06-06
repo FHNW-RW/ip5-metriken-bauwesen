@@ -39,13 +39,13 @@ def __decode_usages(raw_json: str):
     # remove None values
     for usage in usages_dicts_raw:
         if usage[USAGE_PERCENTAGE] is None:
-            usage[USAGE_PERCENTAGE] = 0.0
+            usage[USAGE_PERCENTAGE] = float(0.0)
 
     for usage in usages_dicts_raw:
         decoded_usages.append(usage[USAGE_TYPE])
-        decoded_percentages.append(usage[USAGE_PERCENTAGE])
+        decoded_percentages.append(float(usage[USAGE_PERCENTAGE]))
 
-    return np.column_stack((decoded_usages, decoded_percentages))
+    return pd.DataFrame(list(zip(decoded_usages, decoded_percentages)), columns=['usage', 'percentage'])
 
 
 # decode garages
@@ -58,14 +58,14 @@ def __decode_garages(raw_json: str):
 
     usages = __decode_usages(raw_json)
 
-    for usage in usages:
-        if c.GARAGE_TYPE_INDOOR in usage[0]:
-            parking_garage = True
-            parking_garage_percentage = float(usage[1])
+    # check for garages
+    if len(usages[usages['usage'].str.contains(c.GARAGE_TYPE_INDOOR)]) > 0:
+        parking_garage = True
+        parking_garage_percentage = usages[usages['usage'].str.contains(c.GARAGE_TYPE_INDOOR)]['percentage'].sum()
 
-        if c.GARAGE_TYPE_OUTDOOR in usage[0]:
-            outdoor_garage = True
-            outdoor_garage_percentage = float(usage[1])
+    if len(usages[usages['usage'].str.contains(c.GARAGE_TYPE_OUTDOOR)]) > 0:
+        outdoor_garage = True
+        outdoor_garage_percentage = usages[usages['usage'].str.contains(c.GARAGE_TYPE_OUTDOOR)]['percentage'].sum()
 
     return parking_garage, outdoor_garage, parking_garage_percentage, outdoor_garage_percentage
 
@@ -86,35 +86,40 @@ def __extract_usages(df):
     # extract values
     for index, row in df.iterrows():
         usages_json = row[c.FIELD_USAGES]
+
+        # TODO
+        if row[c.FIELD_ID] == 353.0:
+            print(row)
+
         usages = __decode_usages(usages_json)
 
         # sort ascending percentages
-        usages = usages[usages[:, 1].argsort()[::-1]]
+        usages = usages.sort_values(by='percentage', ascending=False)
 
         if len(usages) >= 1:
-            primary_usages.append(usages[0, 0])
-            primary_percentage.append(float(usages[0, 1]))
+            primary_usages.append(usages.iloc[0]['usage'])
+            primary_percentage.append(usages.iloc[0]['percentage'])
         else:
             primary_usages.append(None)
             primary_percentage.append(None)
 
         if len(usages) >= 2:
-            secondary_usages.append(usages[1, 0])
-            secondary_percentage.append(float(usages[1, 1]))
+            secondary_usages.append(usages.iloc[1]['usage'])
+            secondary_percentage.append(usages.iloc[1]['percentage'])
         else:
             secondary_usages.append(None)
             secondary_percentage.append(None)
 
         if len(usages) >= 3:
-            tertiary_usages.append(usages[2, 0])
-            tertiary_percentage.append(float(usages[2, 1]))
+            tertiary_usages.append(usages.iloc[2]['usage'])
+            tertiary_percentage.append(usages.iloc[2]['percentage'])
         else:
             tertiary_usages.append(None)
             tertiary_percentage.append(None)
 
         if len(usages) >= 4:
-            quaternary_usages.append(usages[3, 0])
-            quaternary_percentage.append(float(usages[3, 1]))
+            quaternary_usages.append(usages.iloc[3]['usage'])
+            quaternary_percentage.append(usages.iloc[3]['percentage'])
         else:
             quaternary_usages.append(None)
             quaternary_percentage.append(None)
@@ -128,7 +133,7 @@ def __extract_usages(df):
 
 
 #  extract garages
-def __extract_garages(data):
+def __extract_garages(df):
     # prepare lists
     indoor_present = []
     outdoor_present = []
@@ -136,8 +141,8 @@ def __extract_garages(data):
     indoor_percentages = []
     outdoor_percentages = []
 
-    # check all entries for garages
-    for index, row in data.iterrows():
+    # check for garages
+    for index, row in df.iterrows():
         usages_json = row[c.FIELD_USAGES]
         parking_garage_found, outdoor_garage_found, indoor_percentage, outdoor_percentage = __decode_garages(
             usages_json)
