@@ -3,7 +3,6 @@ from typing import Final
 # check data/README.me for more info about package
 
 # general data info
-
 FIELD_ID: Final = "id"
 FIELD_SOURCE: Final = "source"
 FIELD_TITLE: Final = "title"
@@ -64,3 +63,19 @@ FIELD_COST_REF_GF: Final = "cost_ref_gf"
 FIELD_COST_REF_GSF: Final = "cost_ref_gfs"
 JSON_FIELD_GF: Final = "GF"
 JSON_FIELD_GSF: Final = "GSF"
+
+# garage
+GARAGE_INDOOR_PRESENT: Final = "garage_indoor"
+GARAGE_OUTDOOR_PRESENT: Final = "garage_outdoor"
+GARAGE_INDOOR_PERCENTAGE: Final = "garage_indoor_percentage"
+GARAGE_OUTDOOR_PERCENTAGE: Final = "garage_outdoor_percentage"
+
+# detailed usages
+NOM_PRIMARY_USAGE: Final = "nom_primary_usage"
+NOM_SECONDARY_USAGE: Final = "nom_secondary_usage"
+NOM_TERTIARY_USAGE: Final = "nom_tertiary_usage"
+NOM_QUATERNARY_USAGE: Final = "nom_quaternary_usage"
+PRIMARY_USAGE_PERCENTAGE: Final = "primary_percentage"
+SECONDARY_USAGE_PERCENTAGE: Final = "secondary_percentage"
+TERTIARY_USAGE_PERCENTAGE: Final = "tertiary_percentage"
+QUATERNARY_USAGE_PERCENTAGE: Final = "quaternary_percentage"
