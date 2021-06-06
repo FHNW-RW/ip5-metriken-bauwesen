@@ -5,7 +5,10 @@ import pandas as pd
 from pandas import DataFrame
 
 import src.package.consts as c
+import src.package.importer as imp
 import json
+
+# TODO extract to consts
 
 # JSON CODES
 USAGE_TYPE: Final = "type"
@@ -29,6 +32,7 @@ TERTIARY_USAGE_PERCENTAGE: Final = "tertiary_percentage"
 QUATERNARY_USAGE_PERCENTAGE: Final = "quaternary_percentage"
 
 
+# TODO combine garage and usages in one function
 # decode usage types and percentages
 def __decode_usages(raw_json: str):
     decoded_usages = []
@@ -173,8 +177,9 @@ def __describe_garages(df):
                ]]
 
 
+#  TODO import from basic importer automatically
 # extract usages and add features to df
-def extract_usage_details(df: DataFrame, shortened_df: bool):
+def extract_usage_details(df: DataFrame, shortened_df: bool = False):
     data = df.copy()
     primary, secondary, tertiary, quaternary = __extract_usages(data)
 
@@ -201,8 +206,9 @@ def extract_usage_details(df: DataFrame, shortened_df: bool):
     return data
 
 
+#  TODO import from basic importer automatically
 # extract garages and add features to df
-def extract_garage_details(df: DataFrame, shortened_df: bool):
+def extract_garage_details(df: DataFrame, shortened_df: bool = False):
     data = df.copy()
     garages_info = __extract_garages(data)
 
@@ -221,3 +227,23 @@ def extract_garage_details(df: DataFrame, shortened_df: bool):
         return data, short
 
     return data
+
+
+# select relevant features including garage and multiple usage features
+def select_relevant_features(df: DataFrame) -> DataFrame:
+    df_rel = imp.select_relevant_features(df)
+    df_rel_usg = df.copy().loc[:, [
+                                      NOM_PRIMARY_USAGE,
+                                      PRIMARY_USAGE_PERCENTAGE,
+                                      NOM_SECONDARY_USAGE,
+                                      SECONDARY_USAGE_PERCENTAGE,
+                                      NOM_TERTIARY_USAGE,
+                                      TERTIARY_USAGE_PERCENTAGE,
+                                      NOM_QUATERNARY_USAGE,
+                                      QUATERNARY_USAGE_PERCENTAGE,
+                                      GARAGE_INDOOR_PRESENT,
+                                      GARAGE_INDOOR_PERCENTAGE,
+                                      GARAGE_OUTDOOR_PRESENT,
+                                      GARAGE_OUTDOOR_PERCENTAGE
+                                  ]]
+    return pd.concat([df_rel_usg, df_rel], axis=1)

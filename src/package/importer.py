@@ -88,4 +88,5 @@ def select_relevant_features(df: DataFrame) -> DataFrame:
                                 c.FIELD_TOTAL_EXPENSES,
                                 c.FIELD_COST_REF_GF,
                                 c.FIELD_COST_REF_GSF,
+                                c.FIELD_HNF_GF_RATIO
                             ]]
