@@ -7,7 +7,7 @@ import seaborn as sns
 from pandas import DataFrame
 from seaborn import FacetGrid
 
-import src.package.importer as im
+import src.package.consts as c
 
 LABEL_GF: Final = "Geschossfläche GF"
 LABEL_HNF: Final = "Hauptnutzfläche HNF"
@@ -24,7 +24,7 @@ def set_plot_size(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH)):
 def lmplot_gf_hnf(df: DataFrame, hue=None) -> FacetGrid:
     gf = sns.lmplot(
         data=df,
-        x=im.FIELD_AREA_TOTAL_FLOOR_416, y=im.FIELD_AREA_MAIN_USAGE,
+        x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
         scatter_kws={'alpha': 0.5},
         hue=hue,
         height=CHART_HEIGHT, aspect=CHART_HEIGHT / CHART_WIDTH,
@@ -39,7 +39,7 @@ def lmplot_gf_hnf(df: DataFrame, hue=None) -> FacetGrid:
 def regplot_gf_hnf(df: DataFrame, logscale=False) -> FacetGrid:
     gf = sns.regplot(
         data=df,
-        x=im.FIELD_AREA_TOTAL_FLOOR_416, y=im.FIELD_AREA_MAIN_USAGE,
+        x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
         scatter_kws={'alpha': 0.5},
     )
 
@@ -53,7 +53,7 @@ def regplot_gf_hnf(df: DataFrame, logscale=False) -> FacetGrid:
     return gf
 
 
-def plot_feature_importance(importance, names, model_type):
+def plot_feature_cportance(importance, names, model_type):
     # Create arrays from feature importance and feature names
     feature_importance = np.array(importance)
     feature_names = np.array(names)
