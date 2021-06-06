@@ -32,12 +32,6 @@ FIELD_NUM_ELEVATOR: Final = "num_elevators"
 FIELD_ELEVATOR_INCLINED_PRESENT: Final = "bool_elevators_inclined"
 FIELD_NUM_ELEVATOR_INCLINED: Final = "num_elevators_inclined"
 
-# usages
-FIELD_USAGES: Final = "usages"
-FIELD_USAGE_CLUSTER: Final = "usage_cluster"
-FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
-FIELD_COMBINED_USAGE: Final = "combined_usage"
-
 # garage type
 GARAGE_TYPE_INDOOR: Final = "EINSTELLHALLEN"
 GARAGE_TYPE_OUTDOOR: Final = "GARAGEN_FREISTEHEND"
@@ -64,3 +58,28 @@ FIELD_COST_REF_GF: Final = "cost_ref_gf"
 FIELD_COST_REF_GSF: Final = "cost_ref_gfs"
 JSON_FIELD_GF: Final = "GF"
 JSON_FIELD_GSF: Final = "GSF"
+
+# usages
+FIELD_USAGES: Final = "usages"
+FIELD_USAGE_CLUSTER: Final = "usage_cluster"
+FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
+FIELD_COMBINED_USAGE: Final = "combined_usage"
+
+USAGE_TYPE: Final = "type"
+USAGE_PERCENTAGE: Final = "percentage"
+
+GARAGE_INDOOR_PRESENT: Final = "garage_indoor"
+GARAGE_OUTDOOR_PRESENT: Final = "garage_outdoor"
+
+GARAGE_INDOOR_PERCENTAGE: Final = "garage_indoor_percentage"
+GARAGE_OUTDOOR_PERCENTAGE: Final = "garage_outdoor_percentage"
+
+NOM_PRIMARY_USAGE: Final = "nom_primary_usage"
+NOM_SECONDARY_USAGE: Final = "nom_secondary_usage"
+NOM_TERTIARY_USAGE: Final = "nom_tertiary_usage"
+NOM_QUATERNARY_USAGE: Final = "nom_quaternary_usage"
+
+PRIMARY_USAGE_PERCENTAGE: Final = "primary_percentage"
+SECONDARY_USAGE_PERCENTAGE: Final = "secondary_percentage"
+TERTIARY_USAGE_PERCENTAGE: Final = "tertiary_percentage"
+QUATERNARY_USAGE_PERCENTAGE: Final = "quaternary_percentage"
