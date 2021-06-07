@@ -72,10 +72,6 @@ def __extract_usages(df):
     for index, row in df.iterrows():
         usages_json = row[c.FIELD_USAGES]
 
-        # TODO
-        if row[c.FIELD_ID] == 353.0:
-            print(row)
-
         usages = __decode_usages(usages_json)
 
         # sort ascending percentages
