@@ -8,28 +8,9 @@ import src.package.consts as c
 import src.package.importer as imp
 import json
 
-# TODO extract to consts
-
 # JSON CODES
 USAGE_TYPE: Final = "type"
 USAGE_PERCENTAGE: Final = "percentage"
-
-# new features
-GARAGE_INDOOR_PRESENT: Final = "garage_indoor"
-GARAGE_OUTDOOR_PRESENT: Final = "garage_outdoor"
-
-GARAGE_INDOOR_PERCENTAGE: Final = "garage_indoor_percentage"
-GARAGE_OUTDOOR_PERCENTAGE: Final = "garage_outdoor_percentage"
-
-NOM_PRIMARY_USAGE: Final = "nom_primary_usage"
-NOM_SECONDARY_USAGE: Final = "nom_secondary_usage"
-NOM_TERTIARY_USAGE: Final = "nom_tertiary_usage"
-NOM_QUATERNARY_USAGE: Final = "nom_quaternary_usage"
-
-PRIMARY_USAGE_PERCENTAGE: Final = "primary_percentage"
-SECONDARY_USAGE_PERCENTAGE: Final = "secondary_percentage"
-TERTIARY_USAGE_PERCENTAGE: Final = "tertiary_percentage"
-QUATERNARY_USAGE_PERCENTAGE: Final = "quaternary_percentage"
 
 
 # TODO combine garage and usages in one function
@@ -163,17 +144,17 @@ def __extract_garages(df):
 # prepare df to describe usages
 def __describe_usages(df):
     return df[[c.FIELD_ID,
-               NOM_PRIMARY_USAGE, PRIMARY_USAGE_PERCENTAGE,
-               NOM_SECONDARY_USAGE, SECONDARY_USAGE_PERCENTAGE,
-               NOM_TERTIARY_USAGE, TERTIARY_USAGE_PERCENTAGE,
-               NOM_QUATERNARY_USAGE, QUATERNARY_USAGE_PERCENTAGE
+               c.NOM_PRIMARY_USAGE, c.PRIMARY_USAGE_PERCENTAGE,
+               c.NOM_SECONDARY_USAGE, c.SECONDARY_USAGE_PERCENTAGE,
+               c.NOM_TERTIARY_USAGE, c.TERTIARY_USAGE_PERCENTAGE,
+               c.NOM_QUATERNARY_USAGE, c.QUATERNARY_USAGE_PERCENTAGE
                ]]
 
 
 # prepare df to describe garages
 def __describe_garages(df):
-    return df[[GARAGE_INDOOR_PRESENT, GARAGE_INDOOR_PERCENTAGE,
-               GARAGE_OUTDOOR_PRESENT, GARAGE_OUTDOOR_PERCENTAGE
+    return df[[c.GARAGE_INDOOR_PRESENT, c.GARAGE_INDOOR_PERCENTAGE,
+               c.GARAGE_OUTDOOR_PRESENT, c.GARAGE_OUTDOOR_PERCENTAGE
                ]]
 
 
@@ -183,21 +164,21 @@ def extract_usage_details(df: DataFrame, shortened_df: bool = False):
     data = df.copy()
     primary, secondary, tertiary, quaternary = __extract_usages(data)
 
-    data[NOM_PRIMARY_USAGE] = primary[:, 0]
-    data[NOM_SECONDARY_USAGE] = secondary[:, 0]
-    data[NOM_TERTIARY_USAGE] = tertiary[:, 0]
-    data[NOM_QUATERNARY_USAGE] = quaternary[:, 0]
+    data[c.NOM_PRIMARY_USAGE] = primary[:, 0]
+    data[c.NOM_SECONDARY_USAGE] = secondary[:, 0]
+    data[c.NOM_TERTIARY_USAGE] = tertiary[:, 0]
+    data[c.NOM_QUATERNARY_USAGE] = quaternary[:, 0]
 
-    data[PRIMARY_USAGE_PERCENTAGE] = primary[:, 1]
-    data[SECONDARY_USAGE_PERCENTAGE] = secondary[:, 1]
-    data[TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
-    data[QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
+    data[c.PRIMARY_USAGE_PERCENTAGE] = primary[:, 1]
+    data[c.SECONDARY_USAGE_PERCENTAGE] = secondary[:, 1]
+    data[c.TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
+    data[c.QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
 
     # set dtype to numeric
-    data[PRIMARY_USAGE_PERCENTAGE] = pd.to_numeric(data[PRIMARY_USAGE_PERCENTAGE], errors='coerce')
-    data[SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(data[SECONDARY_USAGE_PERCENTAGE], errors='coerce')
-    data[TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(data[TERTIARY_USAGE_PERCENTAGE], errors='coerce')
-    data[QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(data[QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
+    data[c.PRIMARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.PRIMARY_USAGE_PERCENTAGE], errors='coerce')
+    data[c.SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.SECONDARY_USAGE_PERCENTAGE], errors='coerce')
+    data[c.TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.TERTIARY_USAGE_PERCENTAGE], errors='coerce')
+    data[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
 
     if shortened_df:
         short = __describe_usages(data)
@@ -212,15 +193,15 @@ def extract_garage_details(df: DataFrame, shortened_df: bool = False):
     data = df.copy()
     garages_info = __extract_garages(data)
 
-    data[GARAGE_INDOOR_PRESENT] = garages_info[:, 0]
-    data[GARAGE_INDOOR_PERCENTAGE] = garages_info[:, 1]
+    data[c.GARAGE_INDOOR_PRESENT] = garages_info[:, 0]
+    data[c.GARAGE_INDOOR_PERCENTAGE] = garages_info[:, 1]
 
-    data[GARAGE_OUTDOOR_PRESENT] = garages_info[:, 2]
-    data[GARAGE_OUTDOOR_PERCENTAGE] = garages_info[:, 3]
+    data[c.GARAGE_OUTDOOR_PRESENT] = garages_info[:, 2]
+    data[c.GARAGE_OUTDOOR_PERCENTAGE] = garages_info[:, 3]
 
     # set dtype to numeric
-    data[GARAGE_INDOOR_PERCENTAGE] = pd.to_numeric(data[GARAGE_INDOOR_PERCENTAGE], errors='coerce')
-    data[GARAGE_OUTDOOR_PERCENTAGE] = pd.to_numeric(data[GARAGE_OUTDOOR_PERCENTAGE], errors='coerce')
+    data[c.GARAGE_INDOOR_PERCENTAGE] = pd.to_numeric(data[c.GARAGE_INDOOR_PERCENTAGE], errors='coerce')
+    data[c.GARAGE_OUTDOOR_PERCENTAGE] = pd.to_numeric(data[c.GARAGE_OUTDOOR_PERCENTAGE], errors='coerce')
 
     if shortened_df:
         short = __describe_garages(data)
@@ -233,17 +214,17 @@ def extract_garage_details(df: DataFrame, shortened_df: bool = False):
 def select_relevant_features(df: DataFrame) -> DataFrame:
     df_rel = imp.select_relevant_features(df)
     df_rel_usg = df.copy().loc[:, [
-                                      NOM_PRIMARY_USAGE,
-                                      PRIMARY_USAGE_PERCENTAGE,
-                                      NOM_SECONDARY_USAGE,
-                                      SECONDARY_USAGE_PERCENTAGE,
-                                      NOM_TERTIARY_USAGE,
-                                      TERTIARY_USAGE_PERCENTAGE,
-                                      NOM_QUATERNARY_USAGE,
-                                      QUATERNARY_USAGE_PERCENTAGE,
-                                      GARAGE_INDOOR_PRESENT,
-                                      GARAGE_INDOOR_PERCENTAGE,
-                                      GARAGE_OUTDOOR_PRESENT,
-                                      GARAGE_OUTDOOR_PERCENTAGE
+                                      c.NOM_PRIMARY_USAGE,
+                                      c.PRIMARY_USAGE_PERCENTAGE,
+                                      c.NOM_SECONDARY_USAGE,
+                                      c.SECONDARY_USAGE_PERCENTAGE,
+                                      c.NOM_TERTIARY_USAGE,
+                                      c.TERTIARY_USAGE_PERCENTAGE,
+                                      c.NOM_QUATERNARY_USAGE,
+                                      c.QUATERNARY_USAGE_PERCENTAGE,
+                                      c.GARAGE_INDOOR_PRESENT,
+                                      c.GARAGE_INDOOR_PERCENTAGE,
+                                      c.GARAGE_OUTDOOR_PRESENT,
+                                      c.GARAGE_OUTDOOR_PERCENTAGE
                                   ]]
     return pd.concat([df_rel_usg, df_rel], axis=1)
