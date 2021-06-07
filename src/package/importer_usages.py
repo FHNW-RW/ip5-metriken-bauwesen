@@ -86,28 +86,28 @@ def __extract_usages(df):
             primary_percentage.append(usages.iloc[0]['percentage'])
         else:
             primary_usages.append(None)
-            primary_percentage.append(None)
+            primary_percentage.append(float(0.0))
 
         if len(usages) >= 2:
             secondary_usages.append(usages.iloc[1]['usage'])
             secondary_percentage.append(usages.iloc[1]['percentage'])
         else:
             secondary_usages.append(None)
-            secondary_percentage.append(None)
+            secondary_percentage.append(float(0.0))
 
         if len(usages) >= 3:
             tertiary_usages.append(usages.iloc[2]['usage'])
             tertiary_percentage.append(usages.iloc[2]['percentage'])
         else:
             tertiary_usages.append(None)
-            tertiary_percentage.append(None)
+            tertiary_percentage.append(float(0.0))
 
         if len(usages) >= 4:
             quaternary_usages.append(usages.iloc[3]['usage'])
             quaternary_percentage.append(usages.iloc[3]['percentage'])
         else:
             quaternary_usages.append(None)
-            quaternary_percentage.append(None)
+            quaternary_percentage.append(float(0.0))
 
     primary = np.column_stack((primary_usages, primary_percentage))
     secondary = np.column_stack((secondary_usages, secondary_percentage))
@@ -142,12 +142,20 @@ def __extract_garages(df):
 
 
 # prepare df to describe usages
-def __describe_usages(df):
+def __describe_usages(df, percentages: bool = True):
+    if percentages:
+        return df[[c.FIELD_ID,
+                   c.NOM_PRIMARY_USAGE, c.PRIMARY_USAGE_PERCENTAGE,
+                   c.NOM_SECONDARY_USAGE, c.SECONDARY_USAGE_PERCENTAGE,
+                   c.NOM_TERTIARY_USAGE, c.TERTIARY_USAGE_PERCENTAGE,
+                   c.NOM_QUATERNARY_USAGE, c.QUATERNARY_USAGE_PERCENTAGE
+                   ]]
+
     return df[[c.FIELD_ID,
-               c.NOM_PRIMARY_USAGE, c.PRIMARY_USAGE_PERCENTAGE,
-               c.NOM_SECONDARY_USAGE, c.SECONDARY_USAGE_PERCENTAGE,
-               c.NOM_TERTIARY_USAGE, c.TERTIARY_USAGE_PERCENTAGE,
-               c.NOM_QUATERNARY_USAGE, c.QUATERNARY_USAGE_PERCENTAGE
+               c.NOM_PRIMARY_USAGE,
+               c.NOM_SECONDARY_USAGE,
+               c.NOM_TERTIARY_USAGE,
+               c.NOM_QUATERNARY_USAGE,
                ]]
 
 
