@@ -27,12 +27,12 @@ class CombineFeatures(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         # calculate HNF / GF ratio
-        X[c.FIELD_HNF_GF_RATIO] = X.eval(f'{c.FIELD_AREA_MAIN_USAGE} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
+        # X[c.FIELD_HNF_GF_RATIO] = X.eval(f'{c.FIELD_AREA_MAIN_USAGE} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
 
         # combine usage cluster with main usage
-        X[c.FIELD_COMBINED_USAGE] = X.apply(
-            lambda x: combine_usage(x[c.FIELD_NOM_USAGE_MAIN], x[c.FIELD_USAGE_CLUSTER]), axis=1
-        )
+        # X[c.FIELD_COMBINED_USAGE] = X.apply(
+        #     lambda x: combine_usage(x[c.FIELD_NOM_USAGE_MAIN], x[c.FIELD_USAGE_CLUSTER]), axis=1
+        # )
 
         return X
 
@@ -44,8 +44,15 @@ class EncodeLabelsTransformer(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         # encode and serialize usage
-        usage_encoder = Le()
-        X[c.FIELD_USAGE_CLUSTER] = usage_encoder.fit_transform(X[c.FIELD_USAGE_CLUSTER])
+        # usage_encoder = Le()
+        if c.FIELD_USAGE_CLUSTER in X.columns:
+            X[c.FIELD_USAGE_CLUSTER] = Le().fit_transform(X[c.FIELD_USAGE_CLUSTER])
+
+        if c.FIELD_NOM_USAGE_MAIN in X.columns:
+            X[c.FIELD_NOM_USAGE_MAIN] = Le().fit_transform(X[c.FIELD_NOM_USAGE_MAIN])
+
+        if c.FIELD_COMBINED_USAGE in X.columns:
+            X[c.FIELD_COMBINED_USAGE] = Le().fit_transform(X[c.FIELD_COMBINED_USAGE])
         # mlh.serialize_object(usage_encoder, 'usage_encoder')  # serialize to reuse in API
 
         return X

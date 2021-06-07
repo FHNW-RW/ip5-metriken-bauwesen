@@ -41,19 +41,25 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
 
 def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
     # TODO: use volume? Combine 116 & 416 in single feature?
-    # TODO: secondary, tertiary etc. usage? What to do if empty?
+    # TODO: nom_facade & nom_usage_main encode?
 
     # add default features
     if features is None:
-        features = [c.FIELD_AREA_TOTAL_FLOOR_416,
-                    c.FIELD_USAGE_CLUSTER,
-                    c.FIELD_NOM_USAGE_MAIN,
-                    c.FIELD_NUM_FLOORS_UNDERGROUND,
-                    c.FIELD_NUM_FLOORS_OVERGROUND,
-                    c.GARAGE_INDOOR_PRESENT,
-                    c.GARAGE_INDOOR_PERCENTAGE,
-                    c.FIELD_TOTAL_EXPENSES,
-                    c.PRIMARY_USAGE_PERCENTAGE]
+        features = [
+            c.FIELD_AREA_TOTAL_FLOOR_416,
+            # c.FIELD_USAGE_CLUSTER,
+            # c.FIELD_NOM_USAGE_MAIN,
+            # c.FIELD_NUM_FLOORS_UNDERGROUND,
+            # c.FIELD_NUM_FLOORS_OVERGROUND,
+            # c.GARAGE_INDOOR_PRESENT,
+            # c.GARAGE_INDOOR_PERCENTAGE,
+            # c.FIELD_TOTAL_EXPENSES,
+            # c.PRIMARY_USAGE_PERCENTAGE,
+            # c.SECONDARY_USAGE_PERCENTAGE,
+            # c.TERTIARY_USAGE_PERCENTAGE,
+            # c.QUATERNARY_USAGE_PERCENTAGE,
+            c.FIELD_VOLUME_TOTAL_416
+        ]
 
     # remove certain features
     if remove_features is not None:
@@ -77,7 +83,7 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
 
     # features / labels
     features.remove(c.FIELD_AREA_MAIN_USAGE)
-    features.remove(c.FIELD_NOM_USAGE_MAIN)
+
     X = dataset[features]
     y = dataset[c.FIELD_AREA_MAIN_USAGE]
 
