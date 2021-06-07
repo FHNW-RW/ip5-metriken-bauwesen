@@ -122,3 +122,12 @@ def print_predictions(predictions, actual, preview_count=10):
     print("Prediction: ", predictions[:preview_count])
     print("Actual: ", actual[:preview_count])
     print()
+
+
+def get_outliers(df, feature, factor=3):
+    print(f'mean {df[feature].mean()} - std {df[feature].std()}')
+    upper_lim = df[feature].mean() + df[feature].std() * factor
+    lower_lim = df[feature].mean() - df[feature].std() * factor
+    print(f'{lower_lim} < x < {upper_lim}')
+
+    return df[(df[feature] > upper_lim) | (df[feature] < lower_lim)]

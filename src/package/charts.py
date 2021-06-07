@@ -73,3 +73,13 @@ def plot_feature_cportance(importance, names, model_type):
     plt.title(model_type + 'FEATURE IMPORTANCE')
     plt.xlabel('FEATURE IMPORTANCE')
     plt.ylabel('FEATURE NAMES')
+
+
+def scatter_highlight(df, df_highlight, x, y):
+    fig, ax = plt.subplots()
+
+    ax.scatter(x=df[x], y=df[y])
+    ax.scatter(x=df_highlight[x], y=df_highlight[y], c='red')
+
+    plt.gcf()
+    plt.plot()
