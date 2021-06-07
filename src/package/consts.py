@@ -3,7 +3,6 @@ from typing import Final
 # check data/README.me for more info about package
 
 # general data info
-
 FIELD_ID: Final = "id"
 FIELD_SOURCE: Final = "source"
 FIELD_TITLE: Final = "title"

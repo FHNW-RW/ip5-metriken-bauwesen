@@ -8,6 +8,10 @@ import src.package.consts as c
 import src.package.importer as imp
 import json
 
+# JSON CODES
+USAGE_TYPE: Final = "type"
+USAGE_PERCENTAGE: Final = "percentage"
+
 
 # TODO combine garage and usages in one function
 # decode usage types and percentages
