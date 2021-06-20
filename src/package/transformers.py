@@ -2,6 +2,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import LabelEncoder as Le
 
 import src.package.consts as c
+import src.package.shared as sh
 import src.package.importer_usages as im_usages
 
 usage_wohnen_mfh = ['WOHNBAUTEN__MFH_HIGH', 'WOHNBAUTEN__MFH_MEDIUM', 'WOHNBAUTEN__MFH_LOW']
@@ -47,6 +48,6 @@ class EncodeLabelsTransformer(BaseEstimator, TransformerMixin):
         # encode and serialize usage
         usage_encoder = Le()
         X[c.FIELD_COMBINED_USAGE] = usage_encoder.fit_transform(X[c.FIELD_COMBINED_USAGE])
-        # mlh.serialize_object(usage_encoder, 'usage_encoder')  # serialize to reuse in API
+        # sh.serialize_object(usage_encoder, 'usage_encoder')  # serialize to reuse in API
 
         return X
