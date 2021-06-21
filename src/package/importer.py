@@ -72,21 +72,26 @@ def cap_upper_gf_hnf(df: DataFrame, upper_percentile='75%') -> DataFrame:
     return capped_df
 
 
-def select_relevant_features(df: DataFrame) -> DataFrame:
-    return df.copy().loc[:, [
-                                c.FIELD_NOM_USAGE_MAIN,
-                                c.FIELD_USAGE_CLUSTER,
-                                c.FIELD_NOM_FACADE,
-                                c.FIELD_AREA_TOTAL_FLOOR_416,
-                                c.FIELD_AREA_NET_FLOOR_416,
-                                c.FIELD_AREA_MAIN_USAGE,
-                                c.FIELD_VOLUME_TOTAL_416,
-                                c.FIELD_VOLUME_TOTAL_116,
-                                c.FIELD_NUM_BUILDINGS,
-                                c.FIELD_NUM_FLOORS_OVERGROUND,
-                                c.FIELD_NUM_FLOORS_UNDERGROUND,
-                                c.FIELD_TOTAL_EXPENSES,
-                                c.FIELD_COST_REF_GF,
-                                c.FIELD_COST_REF_GSF,
-                                c.FIELD_HNF_GF_RATIO
-                            ]]
+def select_relevant_features(df: DataFrame, additional_features=None) -> DataFrame:
+    features = [
+        c.FIELD_NOM_USAGE_MAIN,
+        c.FIELD_USAGE_CLUSTER,
+        c.FIELD_NOM_FACADE,
+        c.FIELD_AREA_TOTAL_FLOOR_416,
+        c.FIELD_AREA_NET_FLOOR_416,
+        c.FIELD_AREA_MAIN_USAGE,
+        c.FIELD_VOLUME_TOTAL_416,
+        c.FIELD_VOLUME_TOTAL_116,
+        c.FIELD_NUM_BUILDINGS,
+        c.FIELD_NUM_FLOORS_OVERGROUND,
+        c.FIELD_NUM_FLOORS_UNDERGROUND,
+        c.FIELD_TOTAL_EXPENSES,
+        c.FIELD_COST_REF_GF,
+        c.FIELD_COST_REF_GSF,
+        c.FIELD_HNF_GF_RATIO
+    ]
+
+    if additional_features is not None:
+        features = additional_features + features
+
+    return df.copy().loc[:, features]
