@@ -53,7 +53,7 @@ def regplot_gf_hnf(df: DataFrame, logscale=False) -> FacetGrid:
     return gf
 
 
-def plot_feature_cportance(importance, names, model_type):
+def plot_feature_importance(importance, names, model_type):
     # Create arrays from feature importance and feature names
     feature_importance = np.array(importance)
     feature_names = np.array(names)

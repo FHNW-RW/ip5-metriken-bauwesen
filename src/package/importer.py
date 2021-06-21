@@ -27,7 +27,7 @@ def _fillna_cluster_median(df, field):
     df[field] = df[field].fillna(df.groupby(c.FIELD_USAGE_CLUSTER)[field].transform('mean'))
 
 
-def get_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None) -> DataFrame:
+def get_dataset(csv_path, verification_status=None) -> DataFrame:
     df = pd.read_csv(csv_path, sep=';')
 
     # only use neubau data from switzerland
@@ -38,6 +38,12 @@ def get_dataset(csv_path, remove_na=False, fill_cluster_median=False, verificati
     if verification_status is None:
         verification_status = [c.STATUS_VERIFIED, c.STATUS_PARTIALLY_VERIFIED]
     df = df[df[c.FIELD_VERIFICATION_STATUS].isin(verification_status)]
+
+    return df
+
+
+def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None) -> DataFrame:
+    df = get_dataset(csv_path=csv_path, verification_status=verification_status)
 
     # extract cost and expenses from json
     df[c.FIELD_TOTAL_EXPENSES] = df[c.FIELD_DYN_EXPENSES_JSON].apply(
