@@ -60,19 +60,6 @@ class EncodeLabelsTransformer(BaseEstimator, TransformerMixin):
         return X
 
 
-def __apply_cluster_mean(grp, grp_name, field, other, imps):
-    factor = imps[grp_name]
-    grp[field] = grp[field].fillna(grp[other] * float(factor))
-
-    return grp
-
-
-def __apply_mean(df, field, other, factor):
-    df[field] = df[field].fillna(df[other] * float(factor))
-
-    return df
-
-
 class NumericalImputationTransformer(BaseEstimator, TransformerMixin):
 
     def __init__(self, imputation_values):
@@ -81,12 +68,23 @@ class NumericalImputationTransformer(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self  # nothing else to do
 
+    def __apply_cluster_mean(self, grp, grp_name, field, other, imps):
+        factor = imps[grp_name]
+        grp[field] = grp[field].fillna(grp[other] * float(factor))
+
+        return grp
+
+    def __apply_mean(self, df, field, other, factor):
+        df[field] = df[field].fillna(df[other] * float(factor))
+
+        return df
+
     def transform(self, X, y=None):
         # impute volume values
-        field = c.FIELD_VOLUME_TOTAL_116
-        other = c.FIELD_VOLUME_TOTAL_416
+        field = c.FIELD_VOLUME_TOTAL_416
+        other = c.FIELD_VOLUME_TOTAL_116
 
-        X = X.groupby(c.FIELD_USAGE_CLUSTER).apply(
-            lambda x: __apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, self.imputation_values))
+        X.groupby(c.FIELD_USAGE_CLUSTER).apply(
+            lambda x: self.__apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, self.imputation_values))
 
         return X

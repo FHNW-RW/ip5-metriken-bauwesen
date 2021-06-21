@@ -6,7 +6,8 @@ from sklearn.pipeline import Pipeline
 
 import src.package.consts as c
 import src.package.importer as im
-from src.package.transformers import CombineFeatures, EncodeLabelsTransformer
+import src.package.numeric_imputations as nimp
+from src.package.transformers import CombineFeatures, EncodeLabelsTransformer, NumericalImputationTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -46,14 +47,15 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
             c.FIELD_NOM_USAGE_MAIN,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
             c.FIELD_NUM_FLOORS_OVERGROUND,
-            c.GARAGE_INDOOR_PRESENT,
-            c.GARAGE_INDOOR_PERCENTAGE,
-            c.FIELD_TOTAL_EXPENSES,
-            c.PRIMARY_USAGE_PERCENTAGE,
-            c.SECONDARY_USAGE_PERCENTAGE,
-            c.TERTIARY_USAGE_PERCENTAGE,
-            c.QUATERNARY_USAGE_PERCENTAGE,
-            c.FIELD_VOLUME_TOTAL_416
+            # c.GARAGE_INDOOR_PRESENT,
+            # c.GARAGE_INDOOR_PERCENTAGE,
+            # c.FIELD_TOTAL_EXPENSES,
+            # c.PRIMARY_USAGE_PERCENTAGE,
+            # c.SECONDARY_USAGE_PERCENTAGE,
+            # c.TERTIARY_USAGE_PERCENTAGE,
+            # c.QUATERNARY_USAGE_PERCENTAGE,
+            c.FIELD_VOLUME_TOTAL_416,
+            c.FIELD_VOLUME_TOTAL_116
         ]
 
     # remove certain features
@@ -72,7 +74,8 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
 
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
-        ('encode_labels', EncodeLabelsTransformer()),
+        ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset)),
+        ('encode_labels', EncodeLabelsTransformer()),)
     ])
     dataset = transform_pipeline.fit_transform(dataset)
 
