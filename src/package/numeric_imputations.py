@@ -1,6 +1,7 @@
 from pandas import DataFrame
 
 import src.package.consts as c
+import src.package.ml_helper as mlh
 
 
 def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered: bool = True, percentile: float = 0.5):
@@ -36,7 +37,8 @@ def __get_imputation_factors(df, field, other, clustered, percentile):
         imp_df = imp_df[[c.FIELD_USAGE_CLUSTER, 'filler_ratio']]
         imp_df = imp_df.groupby(c.FIELD_USAGE_CLUSTER).describe().reset_index()
         imp_df.columns = imp_df.columns.droplevel(0)
-        return imp_df[["", "{:.0%}".format(percentile)]]
+        imp_df = imp_df[["", "{:.0%}".format(percentile)]]
+        return imp_df.set_index(imp_df[""]).to_dict()["{:.0%}".format(percentile)]
 
     imp_df = imp_df['filler_ratio'].describe()["{:.0%}".format(percentile)]
     imps = imp_df.set_index(imp_df[c.FIELD_USAGE_CLUSTER]).to_dict()['filler_ratio']
@@ -45,7 +47,7 @@ def __get_imputation_factors(df, field, other, clustered, percentile):
 
 
 def __apply_cluster_mean(grp, grp_name, field, other, imps):
-    factor = imps[imps[""] == grp_name].iloc[:, 1]
+    factor = imps[grp_name]
     grp[field] = grp[field].fillna(grp[other] * float(factor))
 
     return grp
