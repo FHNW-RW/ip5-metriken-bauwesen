@@ -3,7 +3,6 @@ from pandas import DataFrame
 import src.package.consts as c
 
 
-# TODO Create class file
 def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered: bool = True, percentile: float = 0.5):
     """ fills missing values for specified field based on (clustered) mean values of other column """
 
@@ -15,20 +14,18 @@ def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered: bool
         other = c.FIELD_VOLUME_TOTAL_116
 
     # compute desired multiplication factors
-    imp_df = __get_imputation_factors(df, field, other, clustered, percentile)
+    imps = __get_imputation_factors(df, field, other, clustered, percentile)
+    # mlh.serialize_object(imps, 'cluster_means')  # serialize to reuse in API
 
     # if clustered, fill based on clustering
     if clustered:
         df_cpy = df.groupby(c.FIELD_USAGE_CLUSTER).apply(
-            lambda x: __apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, imp_df))
-        # TODO instead of return, save
-        # TODO serialize
+            lambda x: __apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, imps))
         return df_cpy
 
-    # TODO serialize
     # fill unclustered
     return df.apply(
-        lambda x: __apply_mean(x, field, other, imp_df))
+        lambda x: __apply_mean(x, field, other, imps))
 
 
 def __get_imputation_factors(df, field, other, clustered, percentile):
@@ -41,7 +38,10 @@ def __get_imputation_factors(df, field, other, clustered, percentile):
         imp_df.columns = imp_df.columns.droplevel(0)
         return imp_df[["", "{:.0%}".format(percentile)]]
 
-    return imp_df['filler_ratio'].describe()["{:.0%}".format(percentile)]
+    imp_df = imp_df['filler_ratio'].describe()["{:.0%}".format(percentile)]
+    imps = imp_df.set_index(imp_df[c.FIELD_USAGE_CLUSTER]).to_dict()['filler_ratio']
+
+    return imps
 
 
 def __apply_cluster_mean(grp, grp_name, field, other, imps):
@@ -55,9 +55,3 @@ def __apply_mean(df, field, other, factor):
     df[field] = df[field].fillna(df[other] * float(factor))
 
     return df
-
-
-class NumericalImputations:
-
-    def impute_mean(self):
-        return None
