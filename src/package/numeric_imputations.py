@@ -16,17 +16,17 @@ def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered: bool
 
     # compute desired multiplication factors
     imps = __get_imputation_factors(df, field, other, clustered, percentile)
-    # mlh.serialize_object(imps, 'cluster_means')  # serialize to reuse in API
+    mlh.serialize_object(imps, 'cluster_means')  # serialize to reuse in API
 
-    # if clustered, fill based on clustering
-    if clustered:
-        df_cpy = df.groupby(c.FIELD_USAGE_CLUSTER).apply(
-            lambda x: __apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, imps))
-        return df_cpy
-
-    # fill unclustered
-    return df.apply(
-        lambda x: __apply_mean(x, field, other, imps))
+    # # if clustered, fill based on clustering
+    # if clustered:
+    #     df_cpy = df.groupby(c.FIELD_USAGE_CLUSTER).apply(
+    #         lambda x: __apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, imps))
+    #     return df_cpy
+    #
+    # # fill unclustered
+    # return df.apply(
+    #     lambda x: __apply_mean(x, field, other, imps))
 
 
 def __get_imputation_factors(df, field, other, clustered, percentile):
@@ -46,14 +46,14 @@ def __get_imputation_factors(df, field, other, clustered, percentile):
     return imps
 
 
-def __apply_cluster_mean(grp, grp_name, field, other, imps):
-    factor = imps[grp_name]
-    grp[field] = grp[field].fillna(grp[other] * float(factor))
+# def __apply_cluster_mean(grp, grp_name, field, other, imps):
+#     factor = imps[grp_name]
+#     grp[field] = grp[field].fillna(grp[other] * float(factor))
+#
+#     return grp
 
-    return grp
 
-
-def __apply_mean(df, field, other, factor):
-    df[field] = df[field].fillna(df[other] * float(factor))
-
-    return df
+# def __apply_mean(df, field, other, factor):
+#     df[field] = df[field].fillna(df[other] * float(factor))
+#
+#     return df

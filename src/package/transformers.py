@@ -2,6 +2,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import LabelEncoder as Le
 
 import src.package.consts as c
+import src.package.numeric_imputations as nimp
+import src.package.ml_helper as mlh
 
 usage_wohnen_mfh = ['WOHNBAUTEN__MFH_HIGH', 'WOHNBAUTEN__MFH_MEDIUM', 'WOHNBAUTEN__MFH_LOW']
 usage_wohnen_efh = ['WOHNBAUTEN__EFH_REIHEN_LOW', 'WOHNBAUTEN__EFH_REIHEN_MEDIUM', 'WOHNBAUTEN__EFH_REIHEN_HIGH']
@@ -54,5 +56,37 @@ class EncodeLabelsTransformer(BaseEstimator, TransformerMixin):
         if c.FIELD_COMBINED_USAGE in X.columns:
             X[c.FIELD_COMBINED_USAGE] = Le().fit_transform(X[c.FIELD_COMBINED_USAGE])
         # mlh.serialize_object(usage_encoder, 'usage_encoder')  # serialize to reuse in API
+
+        return X
+
+
+def __apply_cluster_mean(grp, grp_name, field, other, imps):
+    factor = imps[grp_name]
+    grp[field] = grp[field].fillna(grp[other] * float(factor))
+
+    return grp
+
+
+def __apply_mean(df, field, other, factor):
+    df[field] = df[field].fillna(df[other] * float(factor))
+
+    return df
+
+
+class NumericalImputationTransformer(BaseEstimator, TransformerMixin):
+
+    def __init__(self, imputation_values):
+        self.imputation_values = imputation_values
+
+    def fit(self, X, y=None):
+        return self  # nothing else to do
+
+    def transform(self, X, y=None):
+        # impute volume values
+        field = c.FIELD_VOLUME_TOTAL_116
+        other = c.FIELD_VOLUME_TOTAL_416
+
+        X = X.groupby(c.FIELD_USAGE_CLUSTER).apply(
+            lambda x: __apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, self.imputation_values))
 
         return X
