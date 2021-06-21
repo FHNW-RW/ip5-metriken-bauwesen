@@ -1,7 +1,7 @@
 from pandas import DataFrame
 
 import src.package.consts as c
-import src.package.ml_helper as mlh
+import src.package.shared as sh
 
 
 def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered: bool = True, percentile: float = 0.5):
@@ -16,7 +16,7 @@ def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered: bool
 
     # compute desired multiplication factors
     imps = __get_imputation_factors(df, field, other, clustered, percentile)
-    mlh.serialize_object(imps, 'cluster_means')  # serialize to reuse in API
+    sh.serialize_object(imps, 'cluster_means')  # serialize to reuse in API
 
     # # if clustered, fill based on clustering
     # if clustered:
