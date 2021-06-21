@@ -73,3 +73,18 @@ def plot_feature_importance(importance, names, model_type):
     plt.title(model_type + 'FEATURE IMPORTANCE')
     plt.xlabel('FEATURE IMPORTANCE')
     plt.ylabel('FEATURE NAMES')
+
+
+def scatter_highlight(df, df_highlight, x, y, show_id=True):
+    fig, ax = plt.subplots()
+
+    ax.scatter(x=df[x], y=df[y])
+    ax.scatter(x=df_highlight[x], y=df_highlight[y], c='red')
+
+    # show id on highlighted data points
+    if show_id:
+        for i, row in df_highlight.iterrows():
+            ax.annotate(row[c.FIELD_ID], (row[x], row[y]))
+
+    plt.gcf()
+    plt.plot()
