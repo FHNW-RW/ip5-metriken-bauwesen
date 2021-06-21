@@ -46,7 +46,7 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
             c.FIELD_USAGE_CLUSTER,
             c.FIELD_NOM_USAGE_MAIN,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
-            c.FIELD_NUM_FLOORS_OVERGROUND,
+            # c.FIELD_NUM_FLOORS_OVERGROUND,
             # c.GARAGE_INDOOR_PRESENT,
             # c.GARAGE_INDOOR_PERCENTAGE,
             # c.FIELD_TOTAL_EXPENSES,
@@ -69,15 +69,17 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
 
     # preprocess dataset
 
-    # TODO: use median for some of the fields?
-    dataset = dataset.dropna(how="any")
-
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
-        ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset)),
-        ('encode_labels', EncodeLabelsTransformer()),)
+        ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset))),
+        ('encode_labels', EncodeLabelsTransformer()),
     ])
     dataset = transform_pipeline.fit_transform(dataset)
+
+    # TODO: use median for some of the fields?
+    dataset = dataset.drop(columns=[c.FIELD_VOLUME_TOTAL_116])
+    features.remove(c.FIELD_VOLUME_TOTAL_116)
+    dataset = dataset.dropna(how="any")
 
     # features / labels
     features.remove(c.FIELD_AREA_MAIN_USAGE)

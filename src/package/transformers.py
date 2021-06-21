@@ -77,14 +77,13 @@ class NumericalImputationTransformer(BaseEstimator, TransformerMixin):
     def __apply_mean(self, df, field, other, factor):
         df[field] = df[field].fillna(df[other] * float(factor))
 
-        return df
-
     def transform(self, X, y=None):
         # impute volume values
         field = c.FIELD_VOLUME_TOTAL_416
         other = c.FIELD_VOLUME_TOTAL_116
 
-        X.groupby(c.FIELD_USAGE_CLUSTER).apply(
-            lambda x: self.__apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other, self.imputation_values))
+        X = X.groupby(c.FIELD_USAGE_CLUSTER).apply(
+            lambda x: self.__apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other,
+                                                self.imputation_values))
 
         return X
