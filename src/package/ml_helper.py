@@ -23,7 +23,8 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
 
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
-        ('encode_labels', EncodeLabelsTransformer()),
+        ('one_hot_encoder', OneHotEncodingTransformer()),
+        # ('encode_labels', EncodeLabelsTransformer()),
     ])
     dataset = transform_pipeline.fit_transform(dataset)
 
@@ -65,14 +66,14 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
             while to_remove in features: features.remove(to_remove)
 
     features.append(c.FIELD_AREA_MAIN_USAGE)
-    features.append(df[c.FIELD_USAGE_CLUSTER].unique())
-
     dataset = df.copy().loc[:, features]
 
-    # preprocess dataset
+    # add features for one hot encoding
+    features.extend(df[c.FIELD_USAGE_CLUSTER].unique())
 
+    # preprocess dataset
     transform_pipeline = Pipeline([
-        ('combine_features', CombineFeatures()),
+        # ('combine_features', CombineFeatures()),
         ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset))),
         # ('encode_labels', EncodeLabelsTransformer()),
         ('one_hot_encoding', OneHotEncodingTransformer())
@@ -81,11 +82,12 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
 
     # TODO: use median for some of the fields?
     dataset = dataset.drop(columns=[c.FIELD_VOLUME_TOTAL_116])
-    features.remove(c.FIELD_VOLUME_TOTAL_116)
     dataset = dataset.dropna(how="any")
 
     # features / labels
+    features.remove(c.FIELD_VOLUME_TOTAL_116)
     features.remove(c.FIELD_AREA_MAIN_USAGE)
+    features.remove(c.FIELD_USAGE_CLUSTER)
 
     X = dataset[features]
     y = dataset[c.FIELD_AREA_MAIN_USAGE]
@@ -156,7 +158,7 @@ def get_outliers(df, feature, factor=3.0):
     return df[(df[feature] > upper_lim) | (df[feature] < lower_lim)]
 
 
-def remove_outliers(df, factor=2.3):
+def remove_outliers(df, factor=3.0):
     ratio_outliers = get_outliers(df, c.FIELD_HNF_GF_RATIO, factor)
     removal_list = ratio_outliers[c.FIELD_ID].values
     return df[~df[c.FIELD_ID].isin(removal_list.tolist())]
