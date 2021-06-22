@@ -2,6 +2,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import LabelEncoder as Le
 
 import src.package.consts as c
+import pandas as pd
 import src.package.shared as sh
 import src.package.importer_usages as im_usages
 
@@ -85,5 +86,19 @@ class NumericalImputationTransformer(BaseEstimator, TransformerMixin):
         X = X.groupby(c.FIELD_USAGE_CLUSTER).apply(
             lambda x: self.__apply_cluster_mean(x, x[c.FIELD_USAGE_CLUSTER].iloc[0], field, other,
                                                 self.imputation_values))
+
+        return X
+
+
+class OneHotEncodingTransformer(BaseEstimator, TransformerMixin):
+
+    def fit(self, X, y=None):
+        return self  # nothing else to do
+
+    def transform(self, X, y=None):
+        # transform clusters
+
+        encoded_columns = pd.get_dummies(X[c.FIELD_USAGE_CLUSTER])
+        X = X.join(encoded_columns).drop(c.FIELD_USAGE_CLUSTER, axis=1)
 
         return X
