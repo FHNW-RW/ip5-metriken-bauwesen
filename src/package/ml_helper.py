@@ -7,7 +7,8 @@ from sklearn.pipeline import Pipeline
 import src.package.consts as c
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
-from src.package.transformers import CombineFeatures, EncodeLabelsTransformer, NumericalImputationTransformer
+from src.package.transformers import CombineFeatures, EncodeLabelsTransformer, NumericalImputationTransformer, \
+    OneHotEncodingTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -44,12 +45,12 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
         features = [
             c.FIELD_AREA_TOTAL_FLOOR_416,
             c.FIELD_USAGE_CLUSTER,
-            c.FIELD_NOM_USAGE_MAIN,
-            c.FIELD_NUM_FLOORS_UNDERGROUND,
+            # c.FIELD_NOM_USAGE_MAIN,
+            # c.FIELD_NUM_FLOORS_UNDERGROUND,
             # c.FIELD_NUM_FLOORS_OVERGROUND,
             # c.GARAGE_INDOOR_PRESENT,
             # c.GARAGE_INDOOR_PERCENTAGE,
-            # c.FIELD_TOTAL_EXPENSES,
+            c.FIELD_TOTAL_EXPENSES,
             # c.PRIMARY_USAGE_PERCENTAGE,
             # c.SECONDARY_USAGE_PERCENTAGE,
             # c.TERTIARY_USAGE_PERCENTAGE,
@@ -64,6 +65,7 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
             while to_remove in features: features.remove(to_remove)
 
     features.append(c.FIELD_AREA_MAIN_USAGE)
+    features.append(df[c.FIELD_USAGE_CLUSTER].unique())
 
     dataset = df.copy().loc[:, features]
 
@@ -72,7 +74,8 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
         ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset))),
-        ('encode_labels', EncodeLabelsTransformer()),
+        # ('encode_labels', EncodeLabelsTransformer()),
+        ('one_hot_encoding', OneHotEncodingTransformer())
     ])
     dataset = transform_pipeline.fit_transform(dataset)
 
@@ -147,7 +150,13 @@ def print_predictions(predictions, actual, preview_count=10):
     print()
 
 
-def get_outliers(df, feature, factor=3):
+def get_outliers(df, feature, factor=3.0):
     upper_lim = df[feature].mean() + df[feature].std() * factor
     lower_lim = df[feature].mean() - df[feature].std() * factor
     return df[(df[feature] > upper_lim) | (df[feature] < lower_lim)]
+
+
+def remove_outliers(df, factor=2.3):
+    ratio_outliers = get_outliers(df, c.FIELD_HNF_GF_RATIO, factor)
+    removal_list = ratio_outliers[c.FIELD_ID].values
+    return df[~df[c.FIELD_ID].isin(removal_list.tolist())]
