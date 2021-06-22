@@ -6,7 +6,8 @@ from sklearn.pipeline import Pipeline
 
 import src.package.consts as c
 import src.package.importer as im
-from src.package.transformers import CombineFeatures, EncodeLabelsTransformer
+import src.package.numeric_imputations as nimp
+from src.package.transformers import CombineFeatures, EncodeLabelsTransformer, NumericalImputationTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -29,23 +30,64 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
         dataset = im.cap_upper_gf_hnf(dataset, upper_percentile=upper_percentile)
 
     # features / labels
-    X = dataset[[c.FIELD_AREA_TOTAL_FLOOR_416, c.FIELD_COMBINED_USAGE]]
+    X = dataset[[c.FIELD_AREA_TOTAL_FLOOR_416, c.FIELD_USAGE_CLUSTER]]
     y = dataset[c.FIELD_AREA_MAIN_USAGE]
 
     return X, y
 
 
-def hnf_dataset_full(df: DataFrame):
-    # TODO: Dataset with as many features as possible that could be useful
-    # num_floors_overground
-    # num_floors_underground
-    # area_net_floor_416
-    # num_buildings
-    # garage_indoor
-    # garage_outdoor
-    # Maybe others?
+def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
+    # TODO: nom_facade & nom_usage_main encode?
 
-    return None
+    # add default features
+    if features is None:
+        features = [
+            c.FIELD_AREA_TOTAL_FLOOR_416,
+            c.FIELD_USAGE_CLUSTER,
+            c.FIELD_NOM_USAGE_MAIN,
+            c.FIELD_NUM_FLOORS_UNDERGROUND,
+            # c.FIELD_NUM_FLOORS_OVERGROUND,
+            # c.GARAGE_INDOOR_PRESENT,
+            # c.GARAGE_INDOOR_PERCENTAGE,
+            # c.FIELD_TOTAL_EXPENSES,
+            # c.PRIMARY_USAGE_PERCENTAGE,
+            # c.SECONDARY_USAGE_PERCENTAGE,
+            # c.TERTIARY_USAGE_PERCENTAGE,
+            # c.QUATERNARY_USAGE_PERCENTAGE,
+            c.FIELD_VOLUME_TOTAL_416,
+            c.FIELD_VOLUME_TOTAL_116
+        ]
+
+    # remove certain features
+    if remove_features is not None:
+        for to_remove in remove_features:
+            while to_remove in features: features.remove(to_remove)
+
+    features.append(c.FIELD_AREA_MAIN_USAGE)
+
+    dataset = df.copy().loc[:, features]
+
+    # preprocess dataset
+
+    transform_pipeline = Pipeline([
+        ('combine_features', CombineFeatures()),
+        ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset))),
+        ('encode_labels', EncodeLabelsTransformer()),
+    ])
+    dataset = transform_pipeline.fit_transform(dataset)
+
+    # TODO: use median for some of the fields?
+    dataset = dataset.drop(columns=[c.FIELD_VOLUME_TOTAL_116])
+    features.remove(c.FIELD_VOLUME_TOTAL_116)
+    dataset = dataset.dropna(how="any")
+
+    # features / labels
+    features.remove(c.FIELD_AREA_MAIN_USAGE)
+
+    X = dataset[features]
+    y = dataset[c.FIELD_AREA_MAIN_USAGE]
+
+    return X, y
 
 
 def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=3, random_state=0)):
