@@ -23,6 +23,3 @@ src/weight_and_bias/wandb
 # Model export
 export/
 *.joblib
-
-#Learning Directories
-/src/testing.ipynb
