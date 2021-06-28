@@ -5,6 +5,7 @@ from sklearn.model_selection import cross_validate, RepeatedKFold
 from sklearn.pipeline import Pipeline
 
 import src.package.consts as c
+import src.package.shared as sh
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
 from src.package.transformers import CombineFeatures, NumericalImputer, OneHotEncodingTransformer
@@ -74,6 +75,9 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
             ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
         ])
         dataset = transform_pipeline.fit_transform(dataset)
+
+        # serialize pipeline
+        sh.serialize_object(transform_pipeline, 'fitted_pipeline')
     else:
         dataset = fitted_pipeline.transform(dataset)
 
