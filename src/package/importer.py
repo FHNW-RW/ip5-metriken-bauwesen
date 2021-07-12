@@ -27,17 +27,18 @@ def _fillna_cluster_median(df, field):
     df[field] = df[field].fillna(df.groupby(c.FIELD_USAGE_CLUSTER)[field].transform('mean'))
 
 
-def get_dataset(csv_path, verification_status=None) -> DataFrame:
+def get_dataset(csv_path, raw=False, verification_status=None) -> DataFrame:
     df = pd.read_csv(csv_path, sep=';')
 
-    # only use neubau data from switzerland
-    df = df[df[c.FIELD_NOM_COUNTRY] == c.COUNTRY_CH]
-    df = df[df[c.FIELD_NEUBAU_UMBAU] == c.CONSTRUCTION_TYPE_NEUBAU]
+    if not raw:
+        # only use neubau data from switzerland
+        df = df[df[c.FIELD_NOM_COUNTRY] == c.COUNTRY_CH]
+        df = df[df[c.FIELD_NEUBAU_UMBAU] == c.CONSTRUCTION_TYPE_NEUBAU]
 
-    # use verified or partially verified if not set
-    if verification_status is None:
-        verification_status = [c.STATUS_VERIFIED, c.STATUS_PARTIALLY_VERIFIED]
-    df = df[df[c.FIELD_VERIFICATION_STATUS].isin(verification_status)]
+        # use verified or partially verified if not set
+        if verification_status is None:
+            verification_status = [c.STATUS_VERIFIED, c.STATUS_PARTIALLY_VERIFIED]
+        df = df[df[c.FIELD_VERIFICATION_STATUS].isin(verification_status)]
 
     return df
 
