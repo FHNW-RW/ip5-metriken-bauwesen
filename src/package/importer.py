@@ -99,6 +99,6 @@ def select_relevant_features(df: DataFrame, additional_features=None) -> DataFra
     ]
 
     if additional_features is not None:
-        features = additional_features + features
+        features.extend(additional_features)
 
     return df.copy().loc[:, features]

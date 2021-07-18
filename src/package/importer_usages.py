@@ -171,4 +171,4 @@ def extract_usage_details(df: DataFrame, highest_only: bool = False, include_gar
     if not include_garages:
         df.drop(columns=[c.GARAGE_TYPE_UG, c.GARAGE_TYPE_OG, c.GARAGE_COMBINED], errors='ignore')
 
-    return data
+    return data, usage_types

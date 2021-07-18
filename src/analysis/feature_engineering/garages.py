@@ -14,6 +14,17 @@ def garage_count_per_usage(df, ug_garages_separately: bool = False):
     return grp_df
 
 
+def add_garage_present(df, ug_garages_separately: bool = False):
+    if ug_garages_separately:
+        df[c.GARAGE_COMBINED_PRESENT] = df[
+            (df[c.GARAGE_TYPE_UG] > 0.0) | (df[c.GARAGE_TYPE_OG] > 0.0)]
+
+    else:
+        df[c.GARAGE_COMBINED_PRESENT] = df[c.GARAGE_COMBINED] > 0.0
+
+    return df
+
+
 def garage_avg_per_usage(df):
     """ adds field with average percentage of garage per main usage cluster """
     grp_df = df.groupby(c.NOM_PRIMARY_USAGE).apply(__add_avg_garage_percentage)
