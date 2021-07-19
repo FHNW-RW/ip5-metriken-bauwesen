@@ -1,6 +1,7 @@
 import json
 
 import pandas as pd
+import numpy as np
 from pandas import DataFrame
 
 import src.package.consts as c
@@ -40,11 +41,14 @@ def get_dataset(csv_path, raw=False, verification_status=None) -> DataFrame:
             verification_status = [c.STATUS_VERIFIED, c.STATUS_PARTIALLY_VERIFIED]
         df = df[df[c.FIELD_VERIFICATION_STATUS].isin(verification_status)]
 
+        # remove small or irrelevant usage types
+        df = df[~df[c.FIELD_USAGE_CLUSTER].isin(['AUSSENANLAGEN', 'IRRELEVANT'])]
+
     return df
 
 
-def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None) -> DataFrame:
-    df = get_dataset(csv_path=csv_path, verification_status=verification_status)
+def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None, cluster_threshold: int = 280) -> DataFrame:
+    df = get_dataset(csv_path=csv_path, verification_status=verification_status,)
 
     # extract cost and expenses from json
     df[c.FIELD_TOTAL_EXPENSES] = df[c.FIELD_DYN_EXPENSES_JSON].apply(
