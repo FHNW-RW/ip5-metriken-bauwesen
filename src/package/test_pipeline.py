@@ -14,7 +14,7 @@ from joblib import load
 pd.set_option('display.max_columns', 200)
 pd.set_option('display.max_rows', 200)
 
-df = im.get_extended_dataset('../package/datasets/train_set.csv')
+df = im.get_extended_dataset('datasets/previous_versions/train_set.csv')
 
 df = df.copy().loc[:, [c.FIELD_AREA_TOTAL_FLOOR_416,
                        c.FIELD_USAGE_CLUSTER,
@@ -52,7 +52,7 @@ sh.serialize_object(transform_pipeline, 'transform_pipeline')
 
 print(df)
 
-test_set = im.get_extended_dataset('../package/datasets/test_set.csv')
+test_set = im.get_extended_dataset('datasets/previous_versions/test_set.csv')
 
 test_set = test_set.copy().loc[:, [c.FIELD_AREA_TOTAL_FLOOR_416,
                                    c.FIELD_USAGE_CLUSTER,
