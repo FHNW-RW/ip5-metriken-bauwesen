@@ -13,7 +13,6 @@ USAGE_TYPE: Final = "type"
 USAGE_PERCENTAGE: Final = "percentage"
 
 
-# TODO combine garage and usages in one function
 # decode usage types and percentages
 def __decode_usages(raw_json: str):
     decoded_usages = []
@@ -33,30 +32,38 @@ def __decode_usages(raw_json: str):
     return pd.DataFrame(list(zip(decoded_usages, decoded_percentages)), columns=['usage', 'percentage'])
 
 
-# decode garages
-def __decode_garages(raw_json: str):
-    parking_garage = False
-    outdoor_garage = False
+# extract usages as columns
+def __extract_usages(df: DataFrame):
+    extracted_usages = pd.DataFrame()
+    usage_types = []
 
-    parking_garage_percentage = 0.0
-    outdoor_garage_percentage = 0.0
+    # extract usages for each row
+    for index, row in df.iterrows():
+        usages_json = row[c.FIELD_USAGES]
+        decoded_usages = __decode_usages(usages_json)
 
-    usages = __decode_usages(raw_json)
+        # assign percentages for each usage type for current row
+        for inner_index, inner_row in decoded_usages.iterrows():
+            name = inner_row['usage']
+            percentage = inner_row['percentage']
 
-    # check for garages
-    if len(usages[usages['usage'].str.contains(c.GARAGE_TYPE_INDOOR)]) > 0:
-        parking_garage = True
-        parking_garage_percentage = usages[usages['usage'].str.contains(c.GARAGE_TYPE_INDOOR)]['percentage'].sum()
+            # add column if type not present in source df
+            if name not in extracted_usages:
+                extracted_usages[name] = 0.0
+                usage_types.append(name)
 
-    if len(usages[usages['usage'].str.contains(c.GARAGE_TYPE_OUTDOOR)]) > 0:
-        outdoor_garage = True
-        outdoor_garage_percentage = usages[usages['usage'].str.contains(c.GARAGE_TYPE_OUTDOOR)]['percentage'].sum()
+            extracted_usages.at[index, name] = percentage
 
-    return parking_garage, outdoor_garage, parking_garage_percentage, outdoor_garage_percentage
+        extracted_usages.fillna(inplace=True, value=0.0)
+
+    return extracted_usages, usage_types
 
 
-# extract usages
-def __extract_usages(df):
+# reduce usages to highest values (primary, secondary, tertiary and quaternary)
+def __reduce_to_highest(df: DataFrame, usage_types: list):
+    # copy usages only
+    usages = df[usage_types]
+
     # prepare lists
     primary_usages = []
     secondary_usages = []
@@ -69,166 +76,99 @@ def __extract_usages(df):
     quaternary_percentage = []
 
     # extract values
-    for index, row in df.iterrows():
-        usages_json = row[c.FIELD_USAGES]
+    for object_index, object_row in usages.iterrows():
+        decoded_usages = []
+        decoded_percentages = []
 
-        usages = __decode_usages(usages_json)
+        for usage_name, usage_percentage in object_row.iteritems():
+            decoded_usages.append(usage_name)
+            decoded_percentages.append(usage_percentage)
 
-        # sort ascending percentages
-        usages = usages.sort_values(by='percentage', ascending=False)
+        object_usages = pd.DataFrame(list(zip(decoded_usages, decoded_percentages)), columns=['usage', 'percentage'])
 
-        if len(usages) >= 1:
-            primary_usages.append(usages.iloc[0]['usage'])
-            primary_percentage.append(usages.iloc[0]['percentage'])
+        # sort usages ascending and select highest values
+        decoded_usages = object_usages.sort_values(by='percentage', ascending=False)
+
+        if len(decoded_usages) >= 1:
+            primary_usages.append(decoded_usages.iloc[0]['usage'])
+            primary_percentage.append(decoded_usages.iloc[0]['percentage'])
         else:
             primary_usages.append(None)
             primary_percentage.append(float(0.0))
 
-        if len(usages) >= 2:
-            secondary_usages.append(usages.iloc[1]['usage'])
-            secondary_percentage.append(usages.iloc[1]['percentage'])
+        if len(decoded_usages) >= 2:
+            secondary_usages.append(decoded_usages.iloc[1]['usage'])
+            secondary_percentage.append(decoded_usages.iloc[1]['percentage'])
         else:
             secondary_usages.append(None)
             secondary_percentage.append(float(0.0))
 
-        if len(usages) >= 3:
-            tertiary_usages.append(usages.iloc[2]['usage'])
-            tertiary_percentage.append(usages.iloc[2]['percentage'])
+        if len(decoded_usages) >= 3:
+            tertiary_usages.append(decoded_usages.iloc[2]['usage'])
+            tertiary_percentage.append(decoded_usages.iloc[2]['percentage'])
         else:
             tertiary_usages.append(None)
             tertiary_percentage.append(float(0.0))
 
-        if len(usages) >= 4:
-            quaternary_usages.append(usages.iloc[3]['usage'])
-            quaternary_percentage.append(usages.iloc[3]['percentage'])
+        if len(decoded_usages) >= 4:
+            quaternary_usages.append(decoded_usages.iloc[3]['usage'])
+            quaternary_percentage.append(decoded_usages.iloc[3]['percentage'])
         else:
             quaternary_usages.append(None)
             quaternary_percentage.append(float(0.0))
 
+    # prepare data to be inserted to df
     primary = np.column_stack((primary_usages, primary_percentage))
     secondary = np.column_stack((secondary_usages, secondary_percentage))
     tertiary = np.column_stack((tertiary_usages, tertiary_percentage))
     quaternary = np.column_stack((quaternary_usages, quaternary_percentage))
 
-    return primary, secondary, tertiary, quaternary
+    # replace usages in df with primary, secondary, tertiary and quaternary usages and percentages
+    df[c.NOM_PRIMARY_USAGE] = primary[:, 0]
+    df[c.NOM_SECONDARY_USAGE] = secondary[:, 0]
+    df[c.NOM_TERTIARY_USAGE] = tertiary[:, 0]
+    df[c.NOM_QUATERNARY_USAGE] = quaternary[:, 0]
 
+    df[c.PRIMARY_USAGE_PERCENTAGE] = primary[:, 1]
+    df[c.SECONDARY_USAGE_PERCENTAGE] = secondary[:, 1]
+    df[c.TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
+    df[c.QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
 
-#  extract garages
-def __extract_garages(df):
-    # prepare lists
-    indoor_present = []
-    outdoor_present = []
+    # set dtype to numeric
+    df[c.PRIMARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.PRIMARY_USAGE_PERCENTAGE], errors='coerce')
+    df[c.SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.SECONDARY_USAGE_PERCENTAGE], errors='coerce')
+    df[c.TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.TERTIARY_USAGE_PERCENTAGE], errors='coerce')
+    df[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
 
-    indoor_percentages = []
-    outdoor_percentages = []
+    # remove usage features except garages
+    usage_types.remove(c.GARAGE_TYPE_UG)
+    usage_types.remove(c.GARAGE_TYPE_OG)
+    df.drop(inplace=True, columns=usage_types)
 
-    # check for garages
-    for index, row in df.iterrows():
-        usages_json = row[c.FIELD_USAGES]
-        parking_garage_found, outdoor_garage_found, indoor_percentage, outdoor_percentage = __decode_garages(
-            usages_json)
-
-        indoor_present.append(parking_garage_found)
-        indoor_percentages.append(indoor_percentage)
-
-        outdoor_present.append(outdoor_garage_found)
-        outdoor_percentages.append(outdoor_percentage)
-
-    return np.column_stack((indoor_present, indoor_percentages, outdoor_present, outdoor_percentages))
-
-
-# prepare df to describe usages
-def __describe_usages(df, percentages: bool = True):
-    if percentages:
-        return df[[c.FIELD_ID,
-                   c.NOM_PRIMARY_USAGE, c.PRIMARY_USAGE_PERCENTAGE,
-                   c.NOM_SECONDARY_USAGE, c.SECONDARY_USAGE_PERCENTAGE,
-                   c.NOM_TERTIARY_USAGE, c.TERTIARY_USAGE_PERCENTAGE,
-                   c.NOM_QUATERNARY_USAGE, c.QUATERNARY_USAGE_PERCENTAGE
-                   ]]
-
-    return df[[c.FIELD_ID,
-               c.NOM_PRIMARY_USAGE,
-               c.NOM_SECONDARY_USAGE,
-               c.NOM_TERTIARY_USAGE,
-               c.NOM_QUATERNARY_USAGE,
-               ]]
-
-
-# prepare df to describe garages
-def __describe_garages(df):
-    return df[[c.GARAGE_INDOOR_PRESENT, c.GARAGE_INDOOR_PERCENTAGE,
-               c.GARAGE_OUTDOOR_PRESENT, c.GARAGE_OUTDOOR_PERCENTAGE
-               ]]
+    return df
 
 
 #  TODO import from basic importer automatically
-# extract usages and add features to df
-def extract_usage_details(df: DataFrame, shortened_df: bool = False):
+# extract usages and add features to source df
+def extract_usage_details(df: DataFrame, highest_only: bool = False, include_garages: bool = True,
+                          combine_garages: bool = True) -> DataFrame:
     data = df.copy()
-    primary, secondary, tertiary, quaternary = __extract_usages(data)
 
-    data[c.NOM_PRIMARY_USAGE] = primary[:, 0]
-    data[c.NOM_SECONDARY_USAGE] = secondary[:, 0]
-    data[c.NOM_TERTIARY_USAGE] = tertiary[:, 0]
-    data[c.NOM_QUATERNARY_USAGE] = quaternary[:, 0]
+    # extract usages
+    usages, usage_types = __extract_usages(data)
+    data = pd.concat([data, usages], axis=1)
 
-    data[c.PRIMARY_USAGE_PERCENTAGE] = primary[:, 1]
-    data[c.SECONDARY_USAGE_PERCENTAGE] = secondary[:, 1]
-    data[c.TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
-    data[c.QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
+    # replace usages by primary - quaternary
+    if highest_only:
+        data = __reduce_to_highest(data, usage_types)
 
-    # set dtype to numeric
-    data[c.PRIMARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.PRIMARY_USAGE_PERCENTAGE], errors='coerce')
-    data[c.SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.SECONDARY_USAGE_PERCENTAGE], errors='coerce')
-    data[c.TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.TERTIARY_USAGE_PERCENTAGE], errors='coerce')
-    data[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(data[c.QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
+    # combine garages
+    if combine_garages:
+        data[c.GARAGE_COMBINED] = data[c.GARAGE_TYPE_UG] + data[c.GARAGE_TYPE_OG]
+        data.drop(columns=[c.GARAGE_TYPE_UG, c.GARAGE_TYPE_OG], errors='ignore')
 
-    if shortened_df:
-        short = __describe_usages(data)
-        return data, short
+    # remove garages
+    if not include_garages:
+        df.drop(columns=[c.GARAGE_TYPE_UG, c.GARAGE_TYPE_OG, c.GARAGE_COMBINED], errors='ignore')
 
-    return data
-
-
-#  TODO import from basic importer automatically
-# extract garages and add features to df
-def extract_garage_details(df: DataFrame, shortened_df: bool = False):
-    data = df.copy()
-    garages_info = __extract_garages(data)
-
-    data[c.GARAGE_INDOOR_PRESENT] = garages_info[:, 0]
-    data[c.GARAGE_INDOOR_PERCENTAGE] = garages_info[:, 1]
-
-    data[c.GARAGE_OUTDOOR_PRESENT] = garages_info[:, 2]
-    data[c.GARAGE_OUTDOOR_PERCENTAGE] = garages_info[:, 3]
-
-    # set dtype to numeric
-    data[c.GARAGE_INDOOR_PERCENTAGE] = pd.to_numeric(data[c.GARAGE_INDOOR_PERCENTAGE], errors='coerce')
-    data[c.GARAGE_OUTDOOR_PERCENTAGE] = pd.to_numeric(data[c.GARAGE_OUTDOOR_PERCENTAGE], errors='coerce')
-
-    if shortened_df:
-        short = __describe_garages(data)
-        return data, short
-
-    return data
-
-
-# select relevant features including garage and multiple usage features
-def select_relevant_features(df: DataFrame) -> DataFrame:
-    df_rel = imp.select_relevant_features(df)
-    df_rel_usg = df.copy().loc[:, [
-                                      c.NOM_PRIMARY_USAGE,
-                                      c.PRIMARY_USAGE_PERCENTAGE,
-                                      c.NOM_SECONDARY_USAGE,
-                                      c.SECONDARY_USAGE_PERCENTAGE,
-                                      c.NOM_TERTIARY_USAGE,
-                                      c.TERTIARY_USAGE_PERCENTAGE,
-                                      c.NOM_QUATERNARY_USAGE,
-                                      c.QUATERNARY_USAGE_PERCENTAGE,
-                                      c.GARAGE_INDOOR_PRESENT,
-                                      c.GARAGE_INDOOR_PERCENTAGE,
-                                      c.GARAGE_OUTDOOR_PRESENT,
-                                      c.GARAGE_OUTDOOR_PERCENTAGE
-                                  ]]
-    return pd.concat([df_rel_usg, df_rel], axis=1)
+    return data, usage_types

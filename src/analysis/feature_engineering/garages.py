@@ -1,55 +1,67 @@
 import pandas as pd
 
-import src.package.consts
-import src.package.importer_usages as im_usages
+import src.package.consts as c
 
 
-def garage_count_per_usage(df):
+def garage_count_per_usage(df, ug_garages_separately: bool = False):
     """ adds fields with percentage of objects with garage per object primary usage type  """
-    grp_df = df.groupby(src.package.consts.NOM_PRIMARY_USAGE).apply(__add_total_garage_count)
-    grp_df = grp_df.groupby(src.package.consts.NOM_PRIMARY_USAGE).apply(__add_total_indoor_garage_count)
+
+    grp_df = df.groupby(c.NOM_PRIMARY_USAGE).apply(__add_total_garage_count)
+
+    if ug_garages_separately:
+        grp_df = grp_df.groupby(c.NOM_PRIMARY_USAGE).apply(__add_total_underground_garage_count)
 
     return grp_df
 
 
-def garage_avg_per_usage(df):
-    """ adds field with average percentage of garage per main usage cluster """
-    garages = garage_total_percentage(df)
-    grp_df = garages.groupby(src.package.consts.NOM_PRIMARY_USAGE).apply(__add_avg_garage_percentage)
+def add_garage_present(df, ug_garages_separately: bool = False):
+    if ug_garages_separately:
+        df[c.GARAGE_COMBINED_PRESENT] = df[
+            (df[c.GARAGE_TYPE_UG] > 0.0) | (df[c.GARAGE_TYPE_OG] > 0.0)]
 
-    return grp_df
-
-
-def garage_total_percentage(df):
-    """ adds field with total percentage of garage for each object """
-
-    df['garage_total_percentage'] = df[src.package.consts.GARAGE_INDOOR_PERCENTAGE] + df[
-        src.package.consts.GARAGE_OUTDOOR_PERCENTAGE]
-    df['garage_total_percentage'] = pd.to_numeric(df['garage_total_percentage']) # change dtype to float
+    else:
+        df[c.GARAGE_COMBINED_PRESENT] = df[c.GARAGE_COMBINED] > 0.0
 
     return df
 
 
+def garage_avg_per_usage(df):
+    """ adds field with average percentage of garage per main usage cluster """
+    grp_df = df.groupby(c.NOM_PRIMARY_USAGE).apply(__add_avg_garage_percentage)
+
+    return grp_df
+
+
 def __add_total_garage_count(grp):
     """ calculates percentage of objects with garage (either indoor or outdoor) for the respecting group  """
-    garages_present = grp[
-        (grp[src.package.consts.GARAGE_INDOOR_PRESENT] == 1.0) | (grp[
-                                                                      src.package.consts.GARAGE_OUTDOOR_PRESENT] == 1.0)]
-    grp['garages_total'] = (len(garages_present.index) / len(grp))
+    if c.GARAGE_COMBINED in grp:
+        garages_present = grp[(grp[c.GARAGE_COMBINED] > 0.0)]
+
+    else:
+        garages_present = grp[
+            (grp[c.GARAGE_TYPE_UG] > 0.0) | (grp[c.GARAGE_TYPE_OG] > 0.0)]
+
+    grp[c.OBJECTS_WITH_GARAGES_PER_MAIN_USAGE] = (len(garages_present.index) / len(grp))
 
     return grp
 
 
-def __add_total_indoor_garage_count(grp):
-    """ calculates percentage of objects with garage (indoor) for the respecting group  """
-    garages_present = grp[(grp[src.package.consts.GARAGE_INDOOR_PRESENT] == 1.0)]
-    grp['indoor_garages_total'] = (len(garages_present.index) / len(grp))
+def __add_total_underground_garage_count(grp):
+    """ calculates share of objects with garage, grouped by main usage of objects  """
+    garages_present = grp[(grp[c.GARAGE_TYPE_UG] > 1.0)]
+    grp[c.OBJECTS_WITH_GARAGES_UG_PER_MAIN_USAGE] = (len(garages_present.index) / len(grp))
 
     return grp
 
 
 def __add_avg_garage_percentage(grp):
-    """ calculates percentage of objects with garage (indoor) for the respecting group  """
-    grp['garages_avg'] = grp['garage_total_percentage'].mean()
+    """ calculates the average percentages of garagen area per main usage cluster  """
+
+    if c.GARAGE_COMBINED in grp:
+        grp[c.GARAGE_COMBINED_AVG_PERCENTAGE_PER_MAIN_USAGE] = grp[c.GARAGE_COMBINED].mean()
+
+    else:
+        grp[c.GARAGE_COMBINED_AVG_PERCENTAGE_PER_MAIN_USAGE] = (grp[c.GARAGE_TYPE_UG].sum() + grp[
+            c.GARAGE_TYPE_OG].sum()) / len(grp.index)
 
     return grp

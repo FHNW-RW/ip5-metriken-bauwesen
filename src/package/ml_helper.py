@@ -45,7 +45,7 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
         features = [
             c.FIELD_AREA_TOTAL_FLOOR_416,
             c.FIELD_USAGE_CLUSTER,
-            # c.FIELD_NOM_USAGE_MAIN,
+            c.FIELD_NOM_USAGE_MAIN,
             # c.FIELD_NUM_FLOORS_UNDERGROUND,
             # c.FIELD_NUM_FLOORS_OVERGROUND,
             # c.GARAGE_INDOOR_PRESENT,
@@ -59,18 +59,11 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
             c.FIELD_VOLUME_TOTAL_116
         ]
 
-    # remove certain features
-    if remove_features is not None:
-        for to_remove in remove_features:
-            while to_remove in features: features.remove(to_remove)
-
     features.append(c.FIELD_AREA_MAIN_USAGE)
-    features.append(df[c.FIELD_USAGE_CLUSTER].unique())
 
     dataset = df.copy().loc[:, features]
 
     # preprocess dataset
-
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
         ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset))),
@@ -78,6 +71,18 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
         ('one_hot_encoding', OneHotEncodingTransformer())
     ])
     dataset = transform_pipeline.fit_transform(dataset)
+
+    # remove certain features
+    if remove_features is not None:
+        for to_remove in remove_features:
+            while to_remove in features: features.remove(to_remove)
+
+    # after One Hot Encoding, remove cluster and add encoded columns
+    features.extend(df[c.FIELD_USAGE_CLUSTER].unique())
+    features.remove(c.FIELD_USAGE_CLUSTER)
+    features.remove(c.FIELD_NOM_USAGE_MAIN)
+
+    dataset = dataset.copy().loc[:, features]
 
     # TODO: use median for some of the fields?
     dataset = dataset.drop(columns=[c.FIELD_VOLUME_TOTAL_116])
