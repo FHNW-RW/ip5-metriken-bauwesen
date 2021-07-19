@@ -141,8 +141,10 @@ def __reduce_to_highest(df: DataFrame, usage_types: list):
     df[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
 
     # remove usage features except garages
-    usage_types.remove(c.GARAGE_TYPE_UG)
-    usage_types.remove(c.GARAGE_TYPE_OG)
+    if c.GARAGE_TYPE_UG in usage_types:
+        usage_types.remove(c.GARAGE_TYPE_UG)
+    if c.GARAGE_TYPE_OG in usage_types:
+        usage_types.remove(c.GARAGE_TYPE_OG)
     df.drop(inplace=True, columns=usage_types)
 
     return df

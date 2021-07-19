@@ -71,7 +71,7 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
     # preprocess dataset
     if fitted_pipeline is None:
         transform_pipeline = Pipeline([
-            ('volume_imputer', NumericalImputer(nimp.impute_mean(df))),
+            ('volume_imputer', NumericalImputer(nimp.impute_mean(df, serialize=True))),
             ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
         ])
         dataset = transform_pipeline.fit_transform(dataset)
