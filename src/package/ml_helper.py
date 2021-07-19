@@ -38,14 +38,12 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     return X, y
 
 
-def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_pipeline=None):
-    # TODO: nom_facade & nom_usage_main encode?
+def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, features=None, remove_features=None,
+                    additional_features=None, fitted_pipeline=None):
 
     # add default features
     if features is None:
         features = [
-            c.FIELD_AREA_MAIN_USAGE,
-            c.FIELD_AREA_TOTAL_FLOOR_416,
             c.FIELD_USAGE_CLUSTER,
             # c.FIELD_NOM_USAGE_MAIN,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
@@ -62,11 +60,16 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
             c.FIELD_VOLUME_TOTAL_116,
         ]
 
+    # add additional fields
+    if additional_features is not None:
+        features.extend(additional_features)
+
     # remove certain features
     if remove_features is not None:
         for to_remove in remove_features:
             while to_remove in features: features.remove(to_remove)
 
+    features.append(field_to_predict)
     dataset = df.copy().reindex(columns=features)
 
     # preprocess dataset
@@ -85,8 +88,8 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
     # TODO: use median for some of the fields?
     dataset = dataset.dropna(how="any")
 
-    X = dataset.drop(c.FIELD_AREA_MAIN_USAGE, axis=1)
-    y = dataset[c.FIELD_AREA_MAIN_USAGE].copy()
+    X = dataset.drop(field_to_predict, axis=1)
+    y = dataset[field_to_predict].copy()
 
     return X, y
 
