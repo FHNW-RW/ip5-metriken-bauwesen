@@ -31,10 +31,6 @@ FIELD_NUM_ELEVATOR: Final = "num_elevators"
 FIELD_ELEVATOR_INCLINED_PRESENT: Final = "bool_elevators_inclined"
 FIELD_NUM_ELEVATOR_INCLINED: Final = "num_elevators_inclined"
 
-# garage type
-GARAGE_TYPE_INDOOR: Final = "EINSTELLHALLEN"
-GARAGE_TYPE_OUTDOOR: Final = "GARAGEN_FREISTEHEND"
-
 # relevant features
 FIELD_NOM_FACADE: Final = "nom_facade"
 FIELD_AREA_TOTAL_FLOOR_416: Final = "area_total_floor_416"
@@ -67,11 +63,17 @@ FIELD_COMBINED_USAGE: Final = "combined_usage"
 USAGE_TYPE: Final = "type"
 USAGE_PERCENTAGE: Final = "percentage"
 
-GARAGE_INDOOR_PRESENT: Final = "garage_indoor"
-GARAGE_OUTDOOR_PRESENT: Final = "garage_outdoor"
+GARAGE_TYPE_UG_PRESENT: Final = "garage_ug_present"
+GARAGE_TYPE_OG_PRESENT: Final = "garage_og_present"
+GARAGE_COMBINED_PRESENT: Final = "garage_combined_present"
 
-GARAGE_INDOOR_PERCENTAGE: Final = "garage_indoor_percentage"
-GARAGE_OUTDOOR_PERCENTAGE: Final = "garage_outdoor_percentage"
+GARAGE_TYPE_UG: Final = "VERKEHRSBAUTEN__TIEFGARAGEN_EINSTELLHALLEN"
+GARAGE_TYPE_OG: Final = "VERKEHRSBAUTEN__GARAGEN_FREISTEHEND"
+GARAGE_COMBINED: Final = "GARAGEN_KOMBINIERT"
+
+OBJECTS_WITH_GARAGES_UG_PER_MAIN_USAGE: Final = "underground_garages_total"
+OBJECTS_WITH_GARAGES_PER_MAIN_USAGE: Final = "garages_total"
+GARAGE_COMBINED_AVG_PERCENTAGE_PER_MAIN_USAGE: Final = "garages_avg"
 
 NOM_PRIMARY_USAGE: Final = "nom_primary_usage"
 NOM_SECONDARY_USAGE: Final = "nom_secondary_usage"
