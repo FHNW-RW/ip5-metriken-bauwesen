@@ -5,9 +5,9 @@ from sklearn.model_selection import cross_validate, RepeatedKFold
 from sklearn.pipeline import Pipeline
 
 import src.package.consts as c
-import src.package.shared as sh
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
+import src.package.shared as sh
 from src.package.transformers import CombineFeatures, NumericalImputer, OneHotEncodingTransformer
 
 
@@ -48,17 +48,18 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
             c.FIELD_AREA_TOTAL_FLOOR_416,
             c.FIELD_USAGE_CLUSTER,
             # c.FIELD_NOM_USAGE_MAIN,
-            # c.FIELD_NUM_FLOORS_UNDERGROUND,
-            # c.FIELD_NUM_FLOORS_OVERGROUND,
-            # c.GARAGE_INDOOR_PRESENT,
-            # c.GARAGE_INDOOR_PERCENTAGE,
+            c.FIELD_NUM_FLOORS_UNDERGROUND,
+            c.FIELD_NUM_FLOORS_OVERGROUND,
+            # c.GARAGE_TYPE_UG,
+            # c.GARAGE_TYPE_OG,
+            c.GARAGE_COMBINED,
             c.FIELD_TOTAL_EXPENSES,
-            # c.PRIMARY_USAGE_PERCENTAGE,
+            c.PRIMARY_USAGE_PERCENTAGE,
             # c.SECONDARY_USAGE_PERCENTAGE,
             # c.TERTIARY_USAGE_PERCENTAGE,
             # c.QUATERNARY_USAGE_PERCENTAGE,
             c.FIELD_VOLUME_TOTAL_416,
-            c.FIELD_VOLUME_TOTAL_116
+            c.FIELD_VOLUME_TOTAL_116,
         ]
 
     # remove certain features
@@ -66,7 +67,7 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
         for to_remove in remove_features:
             while to_remove in features: features.remove(to_remove)
 
-    dataset = df.copy().loc[:, features]
+    dataset = df.copy().reindex(columns=features)
 
     # preprocess dataset
     if fitted_pipeline is None:
