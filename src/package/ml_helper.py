@@ -5,10 +5,10 @@ from sklearn.model_selection import cross_validate, RepeatedKFold
 from sklearn.pipeline import Pipeline
 
 import src.package.consts as c
+import src.package.shared as sh
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
-from src.package.transformers import CombineFeatures, EncodeLabelsTransformer, NumericalImputationTransformer, \
-    OneHotEncodingTransformer
+from src.package.transformers import CombineFeatures, NumericalImputer, OneHotEncodingTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -23,7 +23,8 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
 
     transform_pipeline = Pipeline([
         ('combine_features', CombineFeatures()),
-        ('encode_labels', EncodeLabelsTransformer()),
+        ('one_hot_encoder', OneHotEncodingTransformer()),
+        # ('encode_labels', EncodeLabelsTransformer()),
     ])
     dataset = transform_pipeline.fit_transform(dataset)
 
@@ -37,15 +38,16 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     return X, y
 
 
-def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
+def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_pipeline=None):
     # TODO: nom_facade & nom_usage_main encode?
 
     # add default features
     if features is None:
         features = [
+            c.FIELD_AREA_MAIN_USAGE,
             c.FIELD_AREA_TOTAL_FLOOR_416,
             c.FIELD_USAGE_CLUSTER,
-            c.FIELD_NOM_USAGE_MAIN,
+            # c.FIELD_NOM_USAGE_MAIN,
             # c.FIELD_NUM_FLOORS_UNDERGROUND,
             # c.FIELD_NUM_FLOORS_OVERGROUND,
             # c.GARAGE_INDOOR_PRESENT,
@@ -59,41 +61,31 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None):
             c.FIELD_VOLUME_TOTAL_116
         ]
 
-    features.append(c.FIELD_AREA_MAIN_USAGE)
-
-    dataset = df.copy().loc[:, features]
-
-    # preprocess dataset
-    transform_pipeline = Pipeline([
-        ('combine_features', CombineFeatures()),
-        ('volume_imputation', NumericalImputationTransformer(nimp.impute_mean(dataset))),
-        # ('encode_labels', EncodeLabelsTransformer()),
-        ('one_hot_encoding', OneHotEncodingTransformer())
-    ])
-    dataset = transform_pipeline.fit_transform(dataset)
-
     # remove certain features
     if remove_features is not None:
         for to_remove in remove_features:
             while to_remove in features: features.remove(to_remove)
 
-    # after One Hot Encoding, remove cluster and add encoded columns
-    features.extend(df[c.FIELD_USAGE_CLUSTER].unique())
-    features.remove(c.FIELD_USAGE_CLUSTER)
-    features.remove(c.FIELD_NOM_USAGE_MAIN)
+    dataset = df.copy().loc[:, features]
 
-    dataset = dataset.copy().loc[:, features]
+    # preprocess dataset
+    if fitted_pipeline is None:
+        transform_pipeline = Pipeline([
+            ('volume_imputer', NumericalImputer(nimp.impute_mean(df))),
+            ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
+        ])
+        dataset = transform_pipeline.fit_transform(dataset)
+
+        # serialize pipeline
+        sh.serialize_object(transform_pipeline, 'fitted_pipeline')
+    else:
+        dataset = fitted_pipeline.transform(dataset)
 
     # TODO: use median for some of the fields?
-    dataset = dataset.drop(columns=[c.FIELD_VOLUME_TOTAL_116])
-    features.remove(c.FIELD_VOLUME_TOTAL_116)
     dataset = dataset.dropna(how="any")
 
-    # features / labels
-    features.remove(c.FIELD_AREA_MAIN_USAGE)
-
-    X = dataset[features]
-    y = dataset[c.FIELD_AREA_MAIN_USAGE]
+    X = dataset.drop(c.FIELD_AREA_MAIN_USAGE, axis=1)
+    y = dataset[c.FIELD_AREA_MAIN_USAGE].copy()
 
     return X, y
 
@@ -161,7 +153,7 @@ def get_outliers(df, feature, factor=3.0):
     return df[(df[feature] > upper_lim) | (df[feature] < lower_lim)]
 
 
-def remove_outliers(df, factor=2.3):
+def remove_outliers(df, factor=3.0):
     ratio_outliers = get_outliers(df, c.FIELD_HNF_GF_RATIO, factor)
     removal_list = ratio_outliers[c.FIELD_ID].values
     return df[~df[c.FIELD_ID].isin(removal_list.tolist())]
