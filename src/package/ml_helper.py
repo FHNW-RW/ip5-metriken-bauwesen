@@ -45,17 +45,11 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
     if features is None:
         features = [
             c.FIELD_USAGE_CLUSTER,
-            # c.FIELD_NOM_USAGE_MAIN,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
             c.FIELD_NUM_FLOORS_OVERGROUND,
-            # c.GARAGE_TYPE_UG,
-            # c.GARAGE_TYPE_OG,
             c.GARAGE_COMBINED,
             c.FIELD_TOTAL_EXPENSES,
             c.PRIMARY_USAGE_PERCENTAGE,
-            # c.SECONDARY_USAGE_PERCENTAGE,
-            # c.TERTIARY_USAGE_PERCENTAGE,
-            # c.QUATERNARY_USAGE_PERCENTAGE,
             c.FIELD_VOLUME_TOTAL_416,
             c.FIELD_VOLUME_TOTAL_116,
         ]
