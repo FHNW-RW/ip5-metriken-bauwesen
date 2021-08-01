@@ -141,10 +141,10 @@ def __reduce_to_highest(df: DataFrame, usage_types: list):
     df[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
 
     # remove usage features except garages
-    if c.GARAGE_TYPE_UG in usage_types:
-        usage_types.remove(c.GARAGE_TYPE_UG)
-    if c.GARAGE_TYPE_OG in usage_types:
-        usage_types.remove(c.GARAGE_TYPE_OG)
+    if c.FIELD_GARAGE_TYPE_UG in usage_types:
+        usage_types.remove(c.FIELD_GARAGE_TYPE_UG)
+    if c.FIELD_GARAGE_TYPE_OG in usage_types:
+        usage_types.remove(c.FIELD_GARAGE_TYPE_OG)
     df.drop(inplace=True, columns=usage_types)
 
     return df
@@ -166,11 +166,11 @@ def extract_usage_details(df: DataFrame, highest_only: bool = False, include_gar
 
     # combine garages
     if combine_garages:
-        data[c.GARAGE_COMBINED] = data[c.GARAGE_TYPE_UG] + data[c.GARAGE_TYPE_OG]
-        data.drop(columns=[c.GARAGE_TYPE_UG, c.GARAGE_TYPE_OG], errors='ignore')
+        data[c.FIELD_GARAGE_COMBINED] = data[c.FIELD_GARAGE_TYPE_UG] + data[c.FIELD_GARAGE_TYPE_OG]
+        data.drop(columns=[c.FIELD_GARAGE_TYPE_UG, c.FIELD_GARAGE_TYPE_OG], errors='ignore')
 
     # remove garages
     if not include_garages:
-        df.drop(columns=[c.GARAGE_TYPE_UG, c.GARAGE_TYPE_OG, c.GARAGE_COMBINED], errors='ignore')
+        df.drop(columns=[c.FIELD_GARAGE_TYPE_UG, c.FIELD_GARAGE_TYPE_OG, c.FIELD_GARAGE_COMBINED], errors='ignore')
 
     return data, usage_types

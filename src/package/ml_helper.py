@@ -47,7 +47,7 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
             c.FIELD_USAGE_CLUSTER,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
             c.FIELD_NUM_FLOORS_OVERGROUND,
-            c.GARAGE_COMBINED,
+            c.FIELD_GARAGE_COMBINED,
             c.FIELD_TOTAL_EXPENSES,
             c.PRIMARY_USAGE_PERCENTAGE,
             c.FIELD_VOLUME_TOTAL_416,
