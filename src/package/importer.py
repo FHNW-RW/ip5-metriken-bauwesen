@@ -47,8 +47,9 @@ def get_dataset(csv_path, raw=False, verification_status=None) -> DataFrame:
     return df
 
 
-def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None, cluster_threshold: int = 280) -> DataFrame:
-    df = get_dataset(csv_path=csv_path, verification_status=verification_status,)
+def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None,
+                         cluster_threshold: int = 0) -> DataFrame:
+    df = get_dataset(csv_path=csv_path, verification_status=verification_status, )
 
     # extract cost and expenses from json
     df[c.FIELD_TOTAL_EXPENSES] = df[c.FIELD_DYN_EXPENSES_JSON].apply(
@@ -70,6 +71,13 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
 
     # calculate HNF / GF ratio
     df[c.FIELD_HNF_GF_RATIO] = df.eval(f'{c.FIELD_AREA_MAIN_USAGE} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
+    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] > 1.0].index, inplace=True)
+
+    # remove rows with too less cluster entries
+    for cluster in df[c.FIELD_USAGE_CLUSTER].unique().copy():
+        rows_of_cluster = df[df[c.FIELD_USAGE_CLUSTER] == cluster]
+        if len(rows_of_cluster.index) < cluster_threshold:
+            df.drop(rows_of_cluster.index, inplace=True)
 
     return df
 
