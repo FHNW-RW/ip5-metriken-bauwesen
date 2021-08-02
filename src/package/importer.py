@@ -48,7 +48,7 @@ def get_dataset(csv_path, raw=False, verification_status=None) -> DataFrame:
 
 
 def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None,
-                         cluster_threshold: int = 0) -> DataFrame:
+                         cluster_threshold: int = 0, hnf_gf_ratio: bool = True) -> DataFrame:
     df = get_dataset(csv_path=csv_path, verification_status=verification_status, )
 
     # extract cost and expenses from json
@@ -69,13 +69,11 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
         _fillna_cluster_median(df, c.FIELD_AREA_MAIN_USAGE)
         _fillna_cluster_median(df, c.FIELD_AREA_TOTAL_FLOOR_416)
 
-    # calculate HNF / GF ratio
-    df[c.FIELD_HNF_GF_RATIO] = df.eval(f'{c.FIELD_AREA_MAIN_USAGE} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
-    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] > 1.0].index, inplace=True)  # ratio can not be higher than 1
-    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] < 0.0].index, inplace=True)  # ratio can not be lower than 1
-
-    df = __calculate_gd_ratio(df, other_field=c.FIELD_AREA_MAIN_USAGE, ratio_label=c.FIELD_HNF_GF_RATIO)
-    df = __calculate_gd_ratio(df, other_field=c.FIELD_VOLUME_TOTAL_416, ratio_label=c.FIELD_GV_GF_RATIO)
+    df = calculate_gf_ratio(df,
+                            other_field=c.FIELD_AREA_MAIN_USAGE,
+                            ratio_label=c.FIELD_HNF_GF_RATIO,
+                            cut_lower=0.0,
+                            cut_upper=1.0)
 
     # remove rows with too less cluster entries
     for cluster in df[c.FIELD_USAGE_CLUSTER].unique().copy():
@@ -127,8 +125,10 @@ def select_relevant_features(df: DataFrame, additional_features=None) -> DataFra
     return df.copy().loc[:, features]
 
 
-def __calculate_gd_ratio(df: DataFrame, other_field: str, ratio_label: str, cut_values: bool = True):
+def calculate_gf_ratio(df: DataFrame, other_field: str, ratio_label: str, cut_upper=None, cut_lower=None):
     df[ratio_label] = df.eval(f'{other_field} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
-    df.drop(df.loc[df[ratio_label] > 1.0].index, inplace=True)  # ratio can not be higher than 1
-    df.drop(df.loc[df[ratio_label] < 0.0].index, inplace=True)  # ratio can not be lower than 1
+    if cut_lower is not None:
+        df.drop(df.loc[df[ratio_label] < cut_lower].index, inplace=True)  # ratio can not be lower than x
+    if cut_upper is not None:
+        df.drop(df.loc[df[ratio_label] > cut_upper].index, inplace=True)  # ratio can not be higher than x
     return df

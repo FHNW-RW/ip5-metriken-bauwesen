@@ -59,9 +59,9 @@ def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, s
     return gf
 
 
-def lmplot_clustered(df: DataFrame, x: str = None, y: str = None, x_label: str = None, y_label: str = None,
+def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None,
                      save_label: str = None):
-    if x is None or y is None:
+    if y is None:
         gf = sns.lmplot(
             data=df,
             x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
@@ -71,21 +71,20 @@ def lmplot_clustered(df: DataFrame, x: str = None, y: str = None, x_label: str =
             ci=None, col_wrap=4,
         )
     else:
-        if x is None or y is None:
             gf = sns.lmplot(
                 data=df,
-                x=x, y=y,
+                x=c.FIELD_AREA_TOTAL_FLOOR_416, y=y,
                 col=c.FIELD_USAGE_CLUSTER,
                 hue=c.FIELD_USAGE_CLUSTER,
                 scatter_kws={'alpha': 0.5},
                 ci=None, col_wrap=4,
             )
 
-    if x is None or y is None:
+    if y is None:
         gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
         plt.subplots_adjust(hspace=0.2, wspace=0.4)
     else:
-        gf.set(xlabel=x_label, ylabel=y_label)
+        gf.set(xlabel=LABEL_GF, ylabel=y_label)
         plt.subplots_adjust(hspace=0.2, wspace=0.4)
 
     # Save figure
@@ -93,15 +92,25 @@ def lmplot_clustered(df: DataFrame, x: str = None, y: str = None, x_label: str =
         gf.savefig(f'exports/lmplot_{save_label}_clustered.png', bbox_inches="tight", dpi=200)
 
 
-def regplot_gf_hnf(df: DataFrame, logscale=False) -> FacetGrid:
-    gf = sns.regplot(
-        data=df,
-        x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
-        scatter_kws={'alpha': 0.5},
-    )
+def regplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, logscale=False) -> FacetGrid:
+    if field is None:
+        gf = sns.regplot(
+            data=df,
+            x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
+            scatter_kws={'alpha': 0.5},
+        )
 
-    gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
-    gf.figure.set_size_inches(CHART_HEIGHT, CHART_WIDTH)
+        gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
+        gf.figure.set_size_inches(CHART_HEIGHT, CHART_WIDTH)
+    else:
+        gf = sns.regplot(
+            data=df,
+            x=c.FIELD_AREA_TOTAL_FLOOR_416, y=field,
+            scatter_kws={'alpha': 0.5},
+        )
+
+        gf.set(xlabel=LABEL_GF, ylabel=field_label)
+        gf.figure.set_size_inches(CHART_HEIGHT, CHART_WIDTH)
 
     if logscale:
         gf.set_xscale('log')
@@ -147,7 +156,7 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
     plt.plot()
 
 
-def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, label: str, percentile: int):
+def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, save_label: str = None, upper_limit=None, lower_limit=None):
     # preprocess data
     percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile) / 100])
     percentiles = percentiles[[f'{percentile}%']]
@@ -158,26 +167,30 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, labe
     percentiles = percentiles.reset_index(level=[0, 1])
     percentiles.columns = [c.FIELD_USAGE_CLUSTER, 'percentile', 'ratio']
 
-    # setp preferences
+    # setup preferences
     set_preferences(sns, rc=[15, 8], font_scale=2)
+    sns.set_style("whitegrid")
+
+    if upper_limit is not None and lower_limit is not None:
+        plt.xlim(lower_limit, upper_limit)
 
     # Plot data
-    sns.set_style("whitegrid")
-    plt.xlim(0, 1)
     ax = sns.barplot(y=c.FIELD_USAGE_CLUSTER, x='ratio', data=percentiles,
                      order=percentiles.sort_values('ratio')[c.FIELD_USAGE_CLUSTER],
                      palette=sns.color_palette("Set2"))
     for p in ax.patches:
-        width = p.get_width()  # get bar length
-        ax.text(width + 0.01,  # set the text at 1 unit right of the bar
+        width = p.get_width()
+        width = width + 0.05 # get bar length
+        ax.text(width,  # set the text at 1 unit right of the bar
                 p.get_y() + p.get_height() / 2,  # get Y coordinate + X coordinate / 2
                 '{:1.2f}'.format(width),  # set variable to display, 2 decimals
                 ha='left',  # horizontal alignment
                 va='center')  # vertical alignment
     ax.set(xlabel=f'{100 - percentile}% mit Ratio grösser als', ylabel='Nutzungstyp')
 
-    # Save figure
-    plt.savefig(f'exports/barplot_{label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
+    if save_label is not None:
+        # Save figure
+        plt.savefig(f'exports/barplot_{save_label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
 
 
 def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str = None, save_label: str = None):
@@ -213,7 +226,6 @@ def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str
 
 
 def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = None):
-
     if ratio_field is None:
         gf = sns.catplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, kind="box", data=data)
 
@@ -250,4 +262,3 @@ def describe_ratios(df_full: DataFrame, ratio_field: str = None):
         pd.options.mode.chained_assignment = 'warn'
         data = df_full[ratio_field]
         return data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
-
