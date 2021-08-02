@@ -83,10 +83,10 @@ def lmplot_clustered(df: DataFrame, x: str = None, y: str = None, x_label: str =
 
     if x is None or y is None:
         gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
-        plt.subplots_adjust(hspace=0.2, wspace=0.2)
+        plt.subplots_adjust(hspace=0.2, wspace=0.4)
     else:
         gf.set(xlabel=x_label, ylabel=y_label)
-        plt.subplots_adjust(hspace=0.2, wspace=0.2)
+        plt.subplots_adjust(hspace=0.2, wspace=0.4)
 
     # Save figure
     if save_label is not None:
@@ -237,13 +237,17 @@ def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = N
 
 
 def describe_ratios(df_full: DataFrame, ratio_field: str = None):
+    pd.options.mode.chained_assignment = None
     if ratio_field is None:
         # Check different cluster sizes
         df_full[c.FIELD_USAGE_CLUSTER] = df_full[c.FIELD_USAGE_CLUSTER].astype('category')
+        pd.options.mode.chained_assignment = 'warn'
         data = df_full[c.FIELD_HNF_GF_RATIO]
-        data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
+        return data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
     else:
         # Check different cluster sizes
         df_full[c.FIELD_USAGE_CLUSTER] = df_full[c.FIELD_USAGE_CLUSTER].astype('category')
+        pd.options.mode.chained_assignment = 'warn'
         data = df_full[ratio_field]
-        data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
+        return data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
+

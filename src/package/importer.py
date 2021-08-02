@@ -71,8 +71,11 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
 
     # calculate HNF / GF ratio
     df[c.FIELD_HNF_GF_RATIO] = df.eval(f'{c.FIELD_AREA_MAIN_USAGE} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
-    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] > 1.0].index, inplace=True) # ratio can not be higher than 1
-    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] < 0.0].index, inplace=True) # ratio can not be lower than 1
+    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] > 1.0].index, inplace=True)  # ratio can not be higher than 1
+    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] < 0.0].index, inplace=True)  # ratio can not be lower than 1
+
+    df = __calculate_gd_ratio(df, other_field=c.FIELD_AREA_MAIN_USAGE, ratio_label=c.FIELD_HNF_GF_RATIO)
+    df = __calculate_gd_ratio(df, other_field=c.FIELD_VOLUME_TOTAL_416, ratio_label=c.FIELD_GV_GF_RATIO)
 
     # remove rows with too less cluster entries
     for cluster in df[c.FIELD_USAGE_CLUSTER].unique().copy():
@@ -89,7 +92,7 @@ def cap_upper_gf_field(df: DataFrame, upper_percentile='75%', field: str = None)
         field_upper = df[c.FIELD_AREA_MAIN_USAGE].describe()[upper_percentile]
     else:
         field_upper = df[field].describe()[upper_percentile]
-        
+
     if field is None:
         capped_df = df[df[c.FIELD_AREA_MAIN_USAGE] <= field_upper]
     else:
@@ -122,3 +125,10 @@ def select_relevant_features(df: DataFrame, additional_features=None) -> DataFra
         features.extend(additional_features)
 
     return df.copy().loc[:, features]
+
+
+def __calculate_gd_ratio(df: DataFrame, other_field: str, ratio_label: str, cut_values: bool = True):
+    df[ratio_label] = df.eval(f'{other_field} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
+    df.drop(df.loc[df[ratio_label] > 1.0].index, inplace=True)  # ratio can not be higher than 1
+    df.drop(df.loc[df[ratio_label] < 0.0].index, inplace=True)  # ratio can not be lower than 1
+    return df

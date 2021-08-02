@@ -42,7 +42,9 @@ FIELD_VOLUME_TOTAL_116: Final = "volume_total_116"
 FIELD_NUM_BUILDINGS: Final = "num_buildings"
 FIELD_NUM_FLOORS_OVERGROUND: Final = "num_floors_overground"
 FIELD_NUM_FLOORS_UNDERGROUND: Final = "num_floors_underground"
+
 FIELD_HNF_GF_RATIO: Final = "ratio_hnf_gf"
+FIELD_GV_GF_RATIO: Final = "ratio_gv_gf"
 
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
 FIELD_TOTAL_EXPENSES: Final = "total_expenses"
