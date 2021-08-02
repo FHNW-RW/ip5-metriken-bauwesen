@@ -72,14 +72,14 @@ def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None,
             ci=None, col_wrap=4,
         )
     else:
-            gf = sns.lmplot(
-                data=df,
-                x=c.FIELD_AREA_TOTAL_FLOOR_416, y=y,
-                col=c.FIELD_USAGE_CLUSTER,
-                hue=c.FIELD_USAGE_CLUSTER,
-                scatter_kws={'alpha': 0.5},
-                ci=None, col_wrap=4,
-            )
+        gf = sns.lmplot(
+            data=df,
+            x=c.FIELD_AREA_TOTAL_FLOOR_416, y=y,
+            col=c.FIELD_USAGE_CLUSTER,
+            hue=c.FIELD_USAGE_CLUSTER,
+            scatter_kws={'alpha': 0.5},
+            ci=None, col_wrap=4,
+        )
 
     if y is None:
         gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
@@ -157,7 +157,8 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
     plt.plot()
 
 
-def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, save_label: str = None, upper_limit=None, lower_limit=None):
+def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, save_label: str = None,
+                                 upper_limit=None, lower_limit=None):
     # preprocess data
     percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile) / 100])
     percentiles = percentiles[[f'{percentile}%']]
@@ -181,7 +182,7 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
                      palette=sns.color_palette("Set2"))
     for p in ax.patches:
         width = p.get_width()
-        width = width + 0.05 # get bar length
+        width = width + 0.05  # get bar length
         ax.text(width,  # set the text at 1 unit right of the bar
                 p.get_y() + p.get_height() / 2,  # get Y coordinate + X coordinate / 2
                 '{:1.2f}'.format(width),  # set variable to display, 2 decimals
@@ -191,32 +192,48 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
 
     if save_label is not None:
         # Save figure
-        plt.savefig(f'../exports/barplot_{save_label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
+        plt.savefig(f'../exports/barplot_{save_label}_{percentile}percentile_reversed.png', bbox_inches="tight",
+                    dpi=200)
 
 
-def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str = None, save_label: str = None, cut: float = 2, bw='scott'):
+def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str = None, save_label: str = None,
+                      cut: float = 2, bw='scott', garage_hue: bool = True):
     # Add Garage Present Field
-    plotData = grg.add_garage_present(data)
+    plot_data = grg.add_garage_present(data)
 
     set_preferences(sns, rc=[15, 8], font_scale=2)
+
     if ratio_field is None:
-        ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
-                            split=True,
-                            data=plotData,
-                            cut=cut,
-                            bw=bw)
+        if garage_hue:
+            ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
+                                split=True,
+                                data=plot_data,
+                                cut=cut,
+                                bw=bw)
+            ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
+        else:
+            ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO,
+                                data=plot_data,
+                                cut=cut,
+                                bw=bw)
 
         ax.set(xlabel='Nutzungstyp (Cluster)', ylabel='Ratio HNF - GF')
-        ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
+
     else:
-        ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
-                            split=True,
-                            data=plotData,
-                            cut=cut,
-                            bw=bw)
+        if garage_hue:
+            ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
+                                split=True,
+                                data=plot_data,
+                                cut=cut,
+                                bw=bw)
+            ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
+        else:
+            ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field,
+                                data=plot_data,
+                                cut=cut,
+                                bw=bw)
 
         ax.set(xlabel='Nutzungstyp (Cluster)', ylabel=ratio_label)
-        ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
 
     plt.xticks(
         rotation=45,
