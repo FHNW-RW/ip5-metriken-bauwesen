@@ -83,11 +83,18 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
     return df
 
 
-def cap_upper_gf_hnf(df: DataFrame, upper_percentile='75%') -> DataFrame:
+def cap_upper_gf_field(df: DataFrame, upper_percentile='75%', field: str = None) -> DataFrame:
     gf_upper = df[c.FIELD_AREA_TOTAL_FLOOR_416].describe()[upper_percentile]
-    hnf_upper = df[c.FIELD_AREA_MAIN_USAGE].describe()[upper_percentile]
+    if field is None:
+        field_upper = df[c.FIELD_AREA_MAIN_USAGE].describe()[upper_percentile]
+    else:
+        field_upper = df[field].describe()[upper_percentile]
+        
+    if field is None:
+        capped_df = df[df[c.FIELD_AREA_MAIN_USAGE] <= field_upper]
+    else:
+        capped_df = df[df[field] <= field_upper]
 
-    capped_df = df[df[c.FIELD_AREA_MAIN_USAGE] <= hnf_upper]
     capped_df = capped_df[df[c.FIELD_AREA_TOTAL_FLOOR_416] <= gf_upper]
     return capped_df
 

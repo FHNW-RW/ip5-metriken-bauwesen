@@ -8,9 +8,11 @@ from pandas import DataFrame
 from seaborn import FacetGrid
 
 import src.package.consts as c
+import src.analysis.feature_engineering.garages as grg
 
 LABEL_GF: Final = "Geschossfläche GF"
 LABEL_HNF: Final = "Hauptnutzfläche HNF"
+LABEL_GV: Final = "Geschossvolumen GV"
 
 CHART_HEIGHT: Final = 10
 CHART_WIDTH: Final = 8
@@ -22,20 +24,73 @@ def set_preferences(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH), font_scale: int = 1
     sns.set(font_scale=font_scale)
 
 
-def lmplot_gf_hnf(df: DataFrame, hue=None) -> FacetGrid:
-    gf = sns.lmplot(
-        data=df,
-        x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
-        scatter_kws={'alpha': 0.5},
-        hue=hue,
-        height=CHART_HEIGHT,
-        aspect=CHART_HEIGHT / CHART_WIDTH,
-        truncate=False,
-    )
+def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, save_label: str = None,
+                    hue=None) -> FacetGrid:
+    if field is None:
+        gf = sns.lmplot(
+            data=df,
+            x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
+            scatter_kws={'alpha': 0.5},
+            hue=hue,
+            height=CHART_HEIGHT,
+            aspect=CHART_HEIGHT / CHART_WIDTH,
+            truncate=False,
+        )
 
-    gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
+        gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
+
+    else:
+        gf = sns.lmplot(
+            data=df,
+            x=c.FIELD_AREA_TOTAL_FLOOR_416, y=field,
+            scatter_kws={'alpha': 0.5},
+            hue=hue,
+            height=CHART_HEIGHT,
+            aspect=CHART_HEIGHT / CHART_WIDTH,
+            truncate=False,
+        )
+
+        gf.set(xlabel=LABEL_GF, ylabel=field_label)
+
+    # Save figure
+    if save_label is not None:
+        gf.savefig(f'exports/lmplot_{save_label}.png', bbox_inches="tight", dpi=200)
 
     return gf
+
+
+def lmplot_clustered(df: DataFrame, x: str = None, y: str = None, x_label: str = None, y_label: str = None,
+                     save_label: str = None):
+    if x is None or y is None:
+        gf = sns.lmplot(
+            data=df,
+            x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
+            col=c.FIELD_USAGE_CLUSTER,
+            hue=c.FIELD_USAGE_CLUSTER,
+            scatter_kws={'alpha': 0.5},
+            ci=None, col_wrap=4,
+        )
+    else:
+        if x is None or y is None:
+            gf = sns.lmplot(
+                data=df,
+                x=x, y=y,
+                col=c.FIELD_USAGE_CLUSTER,
+                hue=c.FIELD_USAGE_CLUSTER,
+                scatter_kws={'alpha': 0.5},
+                ci=None, col_wrap=4,
+            )
+
+    if x is None or y is None:
+        gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
+        plt.subplots_adjust(hspace=0.2, wspace=0.2)
+    else:
+        gf.set(xlabel=x_label, ylabel=y_label)
+        plt.subplots_adjust(hspace=0.2, wspace=0.2)
+
+    # Save figure
+    if save_label is not None:
+        gf.savefig(f'exports/lmplot_{save_label}_clustered.png', bbox_inches="tight", dpi=200)
 
 
 def regplot_gf_hnf(df: DataFrame, logscale=False) -> FacetGrid:
@@ -92,12 +147,11 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
     plt.plot()
 
 
-def barplot_reversed_percentiles(data: DataFrame, df_full: DataFrame, label: str, percentile: int):
-
+def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, label: str, percentile: int):
     # preprocess data
-    percentiles = data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile)/100])
+    percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile) / 100])
     percentiles = percentiles[[f'{percentile}%']]
-    percentiles.columns = [f'{100-percentile}%']  # reversed percentiles
+    percentiles.columns = [f'{100 - percentile}%']  # reversed percentiles
 
     # reshape and sort data
     percentiles = percentiles.stack()
@@ -120,8 +174,76 @@ def barplot_reversed_percentiles(data: DataFrame, df_full: DataFrame, label: str
                 '{:1.2f}'.format(width),  # set variable to display, 2 decimals
                 ha='left',  # horizontal alignment
                 va='center')  # vertical alignment
-    ax.set(xlabel=f'{100-percentile}% mit Ratio grösser als', ylabel='Nutzungstyp')
+    ax.set(xlabel=f'{100 - percentile}% mit Ratio grösser als', ylabel='Nutzungstyp')
 
     # Save figure
     plt.savefig(f'exports/barplot_{label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
 
+
+def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str = None, save_label: str = None):
+    # Add Garage Present Field
+    plotData = grg.add_garage_present(data)
+
+    set_preferences(sns, rc=[15, 8], font_scale=2)
+    if ratio_field is None:
+        ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
+                            split=True,
+                            data=plotData)
+
+        ax.set(xlabel='Nutzungstyp (Cluster)', ylabel='Ratio HNF - GF')
+        ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
+    else:
+        ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
+                            split=True,
+                            data=plotData)
+
+        ax.set(xlabel='Nutzungstyp (Cluster)', ylabel=ratio_label)
+        ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
+
+    plt.xticks(
+        rotation=45,
+        horizontalalignment='right',
+        fontweight='normal',
+        fontsize='medium'
+    )
+
+    # Save figure
+    if save_label is not None:
+        plt.savefig(f'exports/violin_{save_label}_garage_clustered.png', bbox_inches="tight", dpi=200)
+
+
+def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = None):
+
+    if ratio_field is None:
+        gf = sns.catplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, kind="box", data=data)
+
+        gf.set(xlabel='Nutzungstyp (Cluster))', ylabel='Ratio HNF - GF')
+        plt.xticks(
+            rotation=45,
+            horizontalalignment='right',
+            fontweight='normal',
+            fontsize='medium'
+        )
+    else:
+        gf = sns.catplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field, kind="box", data=data)
+
+        gf.set(xlabel='Nutzungstyp (Cluster))', ylabel=ratio_label)
+        plt.xticks(
+            rotation=45,
+            horizontalalignment='right',
+            fontweight='normal',
+            fontsize='medium'
+        )
+
+
+def describe_ratios(df_full: DataFrame, ratio_field: str = None):
+    if ratio_field is None:
+        # Check different cluster sizes
+        df_full[c.FIELD_USAGE_CLUSTER] = df_full[c.FIELD_USAGE_CLUSTER].astype('category')
+        data = df_full[c.FIELD_HNF_GF_RATIO]
+        data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
+    else:
+        # Check different cluster sizes
+        df_full[c.FIELD_USAGE_CLUSTER] = df_full[c.FIELD_USAGE_CLUSTER].astype('category')
+        data = df_full[ratio_field]
+        data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])

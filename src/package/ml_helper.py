@@ -29,7 +29,7 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     dataset = transform_pipeline.fit_transform(dataset)
 
     if upper_percentile is not None:
-        dataset = im.cap_upper_gf_hnf(dataset, upper_percentile=upper_percentile)
+        dataset = im.cap_upper_gf_field(dataset, upper_percentile=upper_percentile)
 
     # features / labels
     X = dataset[[c.FIELD_AREA_TOTAL_FLOOR_416, c.FIELD_USAGE_CLUSTER]]
