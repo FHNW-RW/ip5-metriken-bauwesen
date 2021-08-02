@@ -71,7 +71,8 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
 
     # calculate HNF / GF ratio
     df[c.FIELD_HNF_GF_RATIO] = df.eval(f'{c.FIELD_AREA_MAIN_USAGE} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
-    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] > 1.0].index, inplace=True)
+    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] > 1.0].index, inplace=True) # ratio can not be higher than 1
+    df.drop(df.loc[df[c.FIELD_HNF_GF_RATIO] < 0.0].index, inplace=True) # ratio can not be lower than 1
 
     # remove rows with too less cluster entries
     for cluster in df[c.FIELD_USAGE_CLUSTER].unique().copy():

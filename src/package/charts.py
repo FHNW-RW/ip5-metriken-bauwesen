@@ -16,9 +16,10 @@ CHART_HEIGHT: Final = 10
 CHART_WIDTH: Final = 8
 
 
-def set_plot_size(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH)):
+def set_preferences(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH), font_scale: int = 1):
     """ set size of seaborn plots """
     seaborn.set(rc={'figure.figsize': rc})
+    sns.set(font_scale=font_scale)
 
 
 def lmplot_gf_hnf(df: DataFrame, hue=None) -> FacetGrid:
@@ -89,3 +90,38 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
 
     plt.gcf()
     plt.plot()
+
+
+def barplot_reversed_percentiles(data: DataFrame, df_full: DataFrame, label: str, percentile: int):
+
+    # preprocess data
+    percentiles = data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile)/100])
+    percentiles = percentiles[[f'{percentile}%']]
+    percentiles.columns = [f'{100-percentile}%']  # reversed percentiles
+
+    # reshape and sort data
+    percentiles = percentiles.stack()
+    percentiles = percentiles.reset_index(level=[0, 1])
+    percentiles.columns = [c.FIELD_USAGE_CLUSTER, 'percentile', 'ratio']
+
+    # setp preferences
+    set_preferences(sns, rc=[15, 8], font_scale=2)
+
+    # Plot data
+    sns.set_style("whitegrid")
+    plt.xlim(0, 1)
+    ax = sns.barplot(y=c.FIELD_USAGE_CLUSTER, x='ratio', data=percentiles,
+                     order=percentiles.sort_values('ratio')[c.FIELD_USAGE_CLUSTER],
+                     palette=sns.color_palette("Set2"))
+    for p in ax.patches:
+        width = p.get_width()  # get bar length
+        ax.text(width + 0.01,  # set the text at 1 unit right of the bar
+                p.get_y() + p.get_height() / 2,  # get Y coordinate + X coordinate / 2
+                '{:1.2f}'.format(width),  # set variable to display, 2 decimals
+                ha='left',  # horizontal alignment
+                va='center')  # vertical alignment
+    ax.set(xlabel=f'{100-percentile}% mit Ratio grösser als', ylabel='Nutzungstyp')
+
+    # Save figure
+    plt.savefig(f'exports/barplot_{label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
+

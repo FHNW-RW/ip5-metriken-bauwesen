@@ -16,11 +16,11 @@ def garage_count_per_usage(df, ug_garages_separately: bool = False):
 
 def add_garage_present(df, ug_garages_separately: bool = False):
     if ug_garages_separately:
-        df[c.FIELD_FIELD_GARAGE_COMBINED_PRESENT] = df[
+        df[c.FIELD_GARAGE_COMBINED_PRESENT] = df[
             (df[c.FIELD_GARAGE_TYPE_UG] > 0.0) | (df[c.FIELD_GARAGE_TYPE_OG] > 0.0)]
 
     else:
-        df[c.FIELD_FIELD_GARAGE_COMBINED_PRESENT] = df[c.FIELD_GARAGE_COMBINED] > 0.0
+        df[c.FIELD_GARAGE_COMBINED_PRESENT] = df[c.FIELD_GARAGE_COMBINED] > 0.0
 
     return df
 
