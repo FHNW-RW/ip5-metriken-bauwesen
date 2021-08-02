@@ -34,6 +34,7 @@ FIELD_NUM_ELEVATOR_INCLINED: Final = "num_elevators_inclined"
 # relevant features
 FIELD_NOM_FACADE: Final = "nom_facade"
 FIELD_AREA_TOTAL_FLOOR_416: Final = "area_total_floor_416"
+FIELD_AREA_PROPERTY: Final = "area_total"
 FIELD_AREA_NET_FLOOR_416: Final = "area_net_floor_416"
 FIELD_AREA_MAIN_USAGE: Final = "area_main_usage"
 FIELD_AREA_USAGE: Final = "area_usage"
@@ -43,8 +44,10 @@ FIELD_NUM_BUILDINGS: Final = "num_buildings"
 FIELD_NUM_FLOORS_OVERGROUND: Final = "num_floors_overground"
 FIELD_NUM_FLOORS_UNDERGROUND: Final = "num_floors_underground"
 
+# ratios
 FIELD_HNF_GF_RATIO: Final = "ratio_hnf_gf"
 FIELD_GV_GF_RATIO: Final = "ratio_gv_gf"
+FIELD_GSF_GF_RATIO: Final = "ratio_gsf_gf"
 
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
 FIELD_TOTAL_EXPENSES: Final = "total_expenses"

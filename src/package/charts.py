@@ -13,6 +13,7 @@ import src.analysis.feature_engineering.garages as grg
 LABEL_GF: Final = "Geschossfläche GF"
 LABEL_HNF: Final = "Hauptnutzfläche HNF"
 LABEL_GV: Final = "Geschossvolumen GV"
+Label_GSF: Final = "Grundstückfläche GSF"
 
 CHART_HEIGHT: Final = 10
 CHART_WIDTH: Final = 8
@@ -54,7 +55,7 @@ def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, s
 
     # Save figure
     if save_label is not None:
-        gf.savefig(f'exports/lmplot_{save_label}.png', bbox_inches="tight", dpi=200)
+        gf.savefig(f'../exports/lmplot_{save_label}.png', bbox_inches="tight", dpi=200)
 
     return gf
 
@@ -89,7 +90,7 @@ def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None,
 
     # Save figure
     if save_label is not None:
-        gf.savefig(f'exports/lmplot_{save_label}_clustered.png', bbox_inches="tight", dpi=200)
+        gf.savefig(f'../exports/lmplot_{save_label}_clustered.png', bbox_inches="tight", dpi=200)
 
 
 def regplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, logscale=False) -> FacetGrid:
@@ -190,10 +191,10 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
 
     if save_label is not None:
         # Save figure
-        plt.savefig(f'exports/barplot_{save_label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
+        plt.savefig(f'../exports/barplot_{save_label}_{percentile}percentile_reversed.png', bbox_inches="tight", dpi=200)
 
 
-def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str = None, save_label: str = None):
+def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str = None, save_label: str = None, cut: float = 2, bw='scott'):
     # Add Garage Present Field
     plotData = grg.add_garage_present(data)
 
@@ -201,14 +202,18 @@ def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str
     if ratio_field is None:
         ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
                             split=True,
-                            data=plotData)
+                            data=plotData,
+                            cut=cut,
+                            bw=bw)
 
         ax.set(xlabel='Nutzungstyp (Cluster)', ylabel='Ratio HNF - GF')
         ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
     else:
         ax = sns.violinplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field, hue=c.FIELD_GARAGE_COMBINED_PRESENT,
                             split=True,
-                            data=plotData)
+                            data=plotData,
+                            cut=cut,
+                            bw=bw)
 
         ax.set(xlabel='Nutzungstyp (Cluster)', ylabel=ratio_label)
         ax.legend(title='Garage vorhanden', handles=ax.legend_.legendHandles, labels=['Nein', 'Ja'])
@@ -222,7 +227,7 @@ def violinplot_ratios(data: DataFrame, ratio_field: str = None, ratio_label: str
 
     # Save figure
     if save_label is not None:
-        plt.savefig(f'exports/violin_{save_label}_garage_clustered.png', bbox_inches="tight", dpi=200)
+        plt.savefig(f'../exports/violin_{save_label}_garage_clustered.png', bbox_inches="tight", dpi=200)
 
 
 def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = None):
