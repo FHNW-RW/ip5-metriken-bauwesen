@@ -55,11 +55,7 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
     df[c.FIELD_TOTAL_EXPENSES] = df[c.FIELD_DYN_EXPENSES_JSON].apply(
         lambda jsonstr: _get_total_expenses(jsonstr))
 
-    df[c.FIELD_COST_REF_GF] = df[c.FIELD_DYN_COST_REF].apply(
-        lambda jsonstr: _get_from_json(jsonstr, c.JSON_FIELD_GF))
-
-    df[c.FIELD_COST_REF_GSF] = df[c.FIELD_DYN_COST_REF].apply(
-        lambda jsonstr: _get_from_json(jsonstr, c.JSON_FIELD_GSF))
+    df = __import_cost_ref_fields(df)
 
     # remove missing data
     if remove_na:
@@ -131,4 +127,14 @@ def calculate_gf_ratio(df: DataFrame, other_field: str, ratio_label: str, cut_up
         df.drop(df.loc[df[ratio_label] < cut_lower].index, inplace=True)  # ratio can not be lower than x
     if cut_upper is not None:
         df.drop(df.loc[df[ratio_label] > cut_upper].index, inplace=True)  # ratio can not be higher than x
+    return df
+
+
+def __import_cost_ref_fields(df):
+    areas = ['GF', 'GSF', 'FAW', 'FB', 'BUF', 'VAU']
+
+    for area in areas:
+        df[eval(f'c.FIELD_COST_REF_{area}')] = df[c.FIELD_DYN_COST_REF].apply(
+            lambda jsonstr: _get_from_json(jsonstr, eval(f'c.JSON_FIELD_{area}')))
+
     return df

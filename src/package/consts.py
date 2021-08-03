@@ -49,16 +49,26 @@ FIELD_HNF_GF_RATIO: Final = "ratio_hnf_gf"
 FIELD_GV_GF_RATIO: Final = "ratio_gv_gf"
 FIELD_GSF_GF_RATIO: Final = "ratio_gsf_gf"
 
+# expenses fields
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
 FIELD_TOTAL_EXPENSES: Final = "total_expenses"
 JSON_FIELD_TOTAL_EXPENSES_BKP: Final = "BKP_08"
 JSON_FIELD_TOTAL_EXPENSES_EBKP: Final = "EBKP_12"
 
+# cost ref fields (areas)
 FIELD_DYN_COST_REF: Final = "dyn_cost_ref"
 FIELD_COST_REF_GF: Final = "cost_ref_gf"
 FIELD_COST_REF_GSF: Final = "cost_ref_gfs"
+FIELD_COST_REF_FAW: Final = "cost_ref_faw"
+FIELD_COST_REF_FB: Final = "cost_ref_fb"
+FIELD_COST_REF_BUF: Final = "cost_ref_buf"
+FIELD_COST_REF_VAU: Final = "cost_ref_vau"
 JSON_FIELD_GF: Final = "GF"
 JSON_FIELD_GSF: Final = "GSF"
+JSON_FIELD_FAW: Final = "FAW"
+JSON_FIELD_FB: Final = "FB"
+JSON_FIELD_BUF: Final = "BUF"
+JSON_FIELD_VAU: Final = "VAU"
 
 # usages
 FIELD_USAGES: Final = "usages"
