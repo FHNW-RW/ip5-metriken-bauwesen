@@ -13,7 +13,11 @@ import src.analysis.feature_engineering.garages as grg
 LABEL_GF: Final = "Geschossfläche GF"
 LABEL_HNF: Final = "Hauptnutzfläche HNF"
 LABEL_GV: Final = "Geschossvolumen GV"
-Label_GSF: Final = "Grundstückfläche GSF"
+LABEL_GSF: Final = "Grundstückfläche GSF"
+Label_FAW: Final = "Äussere Wandbekleidung FAW"
+Label_FB: Final = "Bedachung FB"
+Label_BUF: Final = "Bearbeitete Umgebungsfläche BUF"
+Label_VAU: Final = "Volumenaushub VAU"
 
 CHART_HEIGHT: Final = 10
 CHART_WIDTH: Final = 8

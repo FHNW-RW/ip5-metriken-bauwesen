@@ -48,6 +48,10 @@ FIELD_NUM_FLOORS_UNDERGROUND: Final = "num_floors_underground"
 FIELD_HNF_GF_RATIO: Final = "ratio_hnf_gf"
 FIELD_GV_GF_RATIO: Final = "ratio_gv_gf"
 FIELD_GSF_GF_RATIO: Final = "ratio_gsf_gf"
+FIELD_FAW_GF_RATIO: Final = "ratio_faw_gf"
+FIELD_FB_GF_RATIO: Final = "ratio_fb_gf"
+FIELD_BUF_GF_RATIO: Final = "ratio_buf_gf"
+FIELD_VAU_GF_RATIO: Final = "ratio_vau_gf"
 
 # expenses fields
 FIELD_DYN_EXPENSES_JSON: Final = "dyn_expenses_json"
