@@ -67,7 +67,7 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
 
     df = calculate_gf_ratio(df,
                             other_field=c.FIELD_AREA_MAIN_USAGE,
-                            ratio_label=c.FIELD_HNF_GF_RATIO,
+                            ratio_field=c.FIELD_HNF_GF_RATIO,
                             cut_lower=0.0,
                             cut_upper=1.0)
 
@@ -121,12 +121,12 @@ def select_relevant_features(df: DataFrame, additional_features=None) -> DataFra
     return df.copy().loc[:, features]
 
 
-def calculate_gf_ratio(df: DataFrame, other_field: str, ratio_label: str, cut_upper=None, cut_lower=None):
-    df[ratio_label] = df.eval(f'{other_field} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
+def calculate_gf_ratio(df: DataFrame, other_field: str, ratio_field: str, cut_upper=None, cut_lower=None):
+    df[ratio_field] = df.eval(f'{other_field} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
     if cut_lower is not None:
-        df.drop(df.loc[df[ratio_label] < cut_lower].index, inplace=True)  # ratio can not be lower than x
+        df.drop(df.loc[df[ratio_field] < cut_lower].index, inplace=True)  # ratio can not be lower than x
     if cut_upper is not None:
-        df.drop(df.loc[df[ratio_label] > cut_upper].index, inplace=True)  # ratio can not be higher than x
+        df.drop(df.loc[df[ratio_field] > cut_upper].index, inplace=True)  # ratio can not be higher than x
     return df
 
 
