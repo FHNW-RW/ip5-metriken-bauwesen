@@ -19,13 +19,13 @@ LABEL_FB: Final = "Bedachung FB"
 LABEL_BUF: Final = "Bearbeitete Umgebungsfläche BUF"
 LABEL_VAU: Final = "Volumenaushub VAU"
 
-LABEL_RATIO_HNF_GF: Final = "Ratio HNF – GF"
-LABEL_RATIO_GV_GF: Final = "Ratio GV – GF"
-LABEL_RATIO_GSF_GF: Final = "Ratio GSF – GF"
-LABEL_RATIO_FAW_GF: Final = "Ratio FAW – GF"
-LABEL_RATIO_FB_GF: Final = "Ratio FB – GF"
-LABEL_RATIO_BUF_GF: Final = "Ratio BUF – GF"
-LABEL_RATIO_VAU_GF: Final = "Ratio VAU – GF"
+LABEL_RATIO_HNF_GF: Final = "Verhältnis HNF – GF"
+LABEL_RATIO_GV_GF: Final = "Verhältnis GV – GF"
+LABEL_RATIO_GSF_GF: Final = "Verhältnis GSF – GF"
+LABEL_RATIO_FAW_GF: Final = "Verhältnis FAW – GF"
+LABEL_RATIO_FB_GF: Final = "Verhältnis FB – GF"
+LABEL_RATIO_BUF_GF: Final = "Verhältnis BUF – GF"
+LABEL_RATIO_VAU_GF: Final = "Verhältnis VAU – GF"
 
 CHART_HEIGHT: Final = 10
 CHART_WIDTH: Final = 8
@@ -169,7 +169,7 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
     plt.plot()
 
 
-def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, ratio_label: str = None,
+def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, ratio_field: str = None,
                                  upper_limit=None, lower_limit=None):
     # preprocess data
     percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile) / 100])
@@ -200,11 +200,11 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
                 '{:1.2f}'.format(width),  # set variable to display, 2 decimals
                 ha='left',  # horizontal alignment
                 va='center')  # vertical alignment
-    ax.set(xlabel=f'{100 - percentile}% mit Ratio grösser als', ylabel='Nutzungstyp')
+    ax.set(xlabel=f'{100 - percentile}% mit Verhältnis grösser als', ylabel='Nutzungstyp')
 
     if ratio_label is not None:
         # Save figure
-        plt.savefig(f'../exports/{ratio_label}/barplot_{ratio_label}_{percentile}percentile_reversed.png', bbox_inches="tight",
+        plt.savefig(f'../exports/{ratio_field}/barplot_{ratio_field}_{percentile}percentile_reversed.png', bbox_inches="tight",
                     dpi=200)
 
 
