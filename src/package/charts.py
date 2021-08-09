@@ -186,17 +186,18 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
     percentiles = percentiles.reset_index(level=[0, 1])
     percentiles.columns = [c.FIELD_USAGE_CLUSTER, 'percentile', 'ratio']
 
-    # setup preferences
+    # setup preferences and colors
     set_preferences(sns, rc=[15, 8], font_scale=2)
     sns.set_style("whitegrid")
+    palette = __cluster_colors(df_full)
 
     if upper_limit is not None and lower_limit is not None:
         plt.xlim(lower_limit, upper_limit)
 
-    # Plot data
+    # plot data
     ax = sns.barplot(y=c.FIELD_USAGE_CLUSTER, x='ratio', data=percentiles,
                      order=percentiles.sort_values('ratio')[c.FIELD_USAGE_CLUSTER],
-                     palette=sns.color_palette("Set2"))
+                     palette=palette)
     for p in ax.patches:
         width = p.get_width()
         width = width + 0.05  # get bar length
@@ -207,8 +208,8 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
                 va='center')  # vertical alignment
     ax.set(xlabel=f'{100 - percentile}% mit {ratio_label} grösser als', ylabel='Nutzungstyp')
 
+    # save figure
     if ratio_field is not None:
-        # Save figure
         plt.savefig(f'../exports/{ratio_field}/barplot_{ratio_field}_{percentile}percentile_reversed.png',
                     bbox_inches="tight",
                     dpi=200)
@@ -301,3 +302,13 @@ def describe_ratios(df_full: DataFrame, ratio_field: str = None):
         pd.options.mode.chained_assignment = 'warn'
         data = df_full[ratio_field]
         return data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
+
+
+def __cluster_colors(df: DataFrame):
+    colors = sns.color_palette(n_colors=len(df[c.FIELD_USAGE_CLUSTER].unique()), palette="Set2")
+    palette = dict()
+
+    for cluster in df[c.FIELD_USAGE_CLUSTER].unique():
+        palette[cluster] = colors.pop(0)
+
+    return palette
