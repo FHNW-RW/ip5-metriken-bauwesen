@@ -81,11 +81,12 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
 
 
 def cap_upper_gf_field(df: DataFrame, upper_percentile='75%', field: str = None) -> DataFrame:
-    gf_upper = df[c.FIELD_AREA_TOTAL_FLOOR_416].describe()[upper_percentile]
+    percentile_decimal = float(upper_percentile.strip('%')) / 100.0
+    gf_upper = df[c.FIELD_AREA_TOTAL_FLOOR_416].describe(percentiles=[percentile_decimal])[upper_percentile]
     if field is None:
-        field_upper = df[c.FIELD_AREA_MAIN_USAGE].describe()[upper_percentile]
+        field_upper = df[c.FIELD_AREA_MAIN_USAGE].describe(percentiles=[percentile_decimal])[upper_percentile]
     else:
-        field_upper = df[field].describe()[upper_percentile]
+        field_upper = df[field].describe(percentiles=[percentile_decimal])[upper_percentile]
 
     if field is None:
         capped_df = df[df[c.FIELD_AREA_MAIN_USAGE] <= field_upper]

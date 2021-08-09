@@ -31,13 +31,14 @@ CHART_HEIGHT: Final = 10
 CHART_WIDTH: Final = 8
 
 
-def set_preferences(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH), font_scale: int = 1):
+def set_preferences(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH), font_scale: float = 1.0):
     """ set size of seaborn plots """
     seaborn.set(rc={'figure.figsize': rc})
     sns.set(font_scale=font_scale)
 
 
-def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, ratio_label: str = None, percentile:str = None,
+def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, ratio_label: str = None,
+                    percentile: str = None,
                     hue=None) -> FacetGrid:
     if field is None:
         gf = sns.lmplot(
@@ -74,12 +75,15 @@ def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, r
 
 def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None, ratio_label: str = None,
                      save_label: str = None):
+    df = df.copy()
+    df = df.rename(columns={c.FIELD_USAGE_CLUSTER: "Typ"})
+
     if y is None:
         gf = sns.lmplot(
             data=df,
             x=c.FIELD_AREA_TOTAL_FLOOR_416, y=c.FIELD_AREA_MAIN_USAGE,
-            col=c.FIELD_USAGE_CLUSTER,
-            hue=c.FIELD_USAGE_CLUSTER,
+            col="Typ",
+            hue="Typ",
             scatter_kws={'alpha': 0.5},
             ci=None, col_wrap=4,
         )
@@ -87,18 +91,18 @@ def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None, ratio_la
         gf = sns.lmplot(
             data=df,
             x=c.FIELD_AREA_TOTAL_FLOOR_416, y=y,
-            col=c.FIELD_USAGE_CLUSTER,
-            hue=c.FIELD_USAGE_CLUSTER,
+            col="Typ",
+            hue="Typ",
             scatter_kws={'alpha': 0.5},
             ci=None, col_wrap=4,
         )
 
     if y is None:
         gf.set(xlabel=LABEL_GF, ylabel=LABEL_HNF)
-        plt.subplots_adjust(hspace=0.2, wspace=0.4)
+        plt.subplots_adjust(hspace=0.5, wspace=0.5)
     else:
         gf.set(xlabel=LABEL_GF, ylabel=y_label)
-        plt.subplots_adjust(hspace=0.2, wspace=0.4)
+        plt.subplots_adjust(hspace=0.5, wspace=0.5)
 
     # Save figure
     if save_label is not None:
@@ -169,7 +173,8 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
     plt.plot()
 
 
-def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, ratio_field: str = None,
+def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, ratio_label: str,
+                                 ratio_field: str = None,
                                  upper_limit=None, lower_limit=None):
     # preprocess data
     percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile) / 100])
@@ -200,11 +205,12 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
                 '{:1.2f}'.format(width),  # set variable to display, 2 decimals
                 ha='left',  # horizontal alignment
                 va='center')  # vertical alignment
-    ax.set(xlabel=f'{100 - percentile}% mit Verhältnis grösser als', ylabel='Nutzungstyp')
+    ax.set(xlabel=f'{100 - percentile}% mit {ratio_label} grösser als', ylabel='Nutzungstyp')
 
-    if ratio_label is not None:
+    if ratio_field is not None:
         # Save figure
-        plt.savefig(f'../exports/{ratio_field}/barplot_{ratio_field}_{percentile}percentile_reversed.png', bbox_inches="tight",
+        plt.savefig(f'../exports/{ratio_field}/barplot_{ratio_field}_{percentile}percentile_reversed.png',
+                    bbox_inches="tight",
                     dpi=200)
 
 
@@ -212,8 +218,6 @@ def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
                       cut: float = 2, bw='scott', garage_hue: bool = True):
     # Add Garage Present Field
     plot_data = grg.add_garage_present(data)
-
-    set_preferences(sns, rc=[15, 8], font_scale=2)
 
     if ratio_field is None:
         if garage_hue:
@@ -256,7 +260,8 @@ def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
 
     # Save figure
     additional_label = '_garages' if garage_hue else ''
-    plt.savefig(f'../exports/{ratio_field}/violin_{ratio_field}{additional_label}_clustered.png', bbox_inches="tight", dpi=200)
+    plt.savefig(f'../exports/{ratio_field}/violin_{ratio_field}{additional_label}_clustered.png', bbox_inches="tight",
+                dpi=200)
 
 
 def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = None):
