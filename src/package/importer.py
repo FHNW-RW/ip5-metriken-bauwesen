@@ -131,7 +131,7 @@ def calculate_gf_ratio(df: DataFrame, other_field: str, ratio_field: str, cut_up
     return df
 
 
-def __import_cost_ref_fields(df):
+def __import_cost_ref_fields(df: DataFrame):
     areas = ['GF', 'GSF', 'FAW', 'FB', 'BUF', 'VAU']
 
     for area in areas:

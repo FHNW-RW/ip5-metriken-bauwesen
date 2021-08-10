@@ -12,13 +12,12 @@ def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered=True,
         field = c.FIELD_VOLUME_TOTAL_416
         other = c.FIELD_VOLUME_TOTAL_116
 
-    # if field is c.FIELD_VOLUME_TOTAL_416:
-    #     other = c.FIELD_VOLUME_TOTAL_116
-
     # compute desired multiplication factors
     imps = __get_imputation_factors(df, field, other, clustered, percentile)
+
+    # serialize to reuse in api
     if serialize:
-        sh.serialize_object(imps, 'cluster_means')  # serialize to reuse in API
+        sh.serialize_object(imps, 'cluster_means')
 
     return imps
 

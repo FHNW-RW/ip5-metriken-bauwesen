@@ -160,7 +160,7 @@ def plot_feature_importance(importance, names, model_type):
     plt.ylabel('FEATURE NAMES')
 
 
-def scatter_highlight(df, df_highlight, x, y, show_id=True):
+def scatter_highlight(df, df_highlight, x, y, show_id=True, x_label: str = None, y_label:str = None, save_label: str = None):
     fig, ax = plt.subplots()
 
     ax.scatter(x=df[x], y=df[y])
@@ -171,8 +171,16 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True):
         for i, row in df_highlight.iterrows():
             ax.annotate(row[c.FIELD_ID], (row[x], row[y]))
 
+    # set labels
+    x_label = x_label if x_label is not None else x
+    y_label = y_label if y_label is not None else y
+    ax.set(xlabel=x_label, ylabel=y_label)
+
+    # plot and save
     plt.gcf()
     plt.plot()
+    if save_label is not None:
+        plt.savefig(f"exports/outliers/scatter_outliers_{save_label}.png", bbox_inches="tight", dpi=200)
 
 
 def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, ratio_label: str,
