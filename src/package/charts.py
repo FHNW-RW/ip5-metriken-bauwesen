@@ -317,6 +317,13 @@ def correlation_hmp(df: DataFrame):
     heatmap = sns.heatmap(df.corr(), mask=mask, vmin=-1, vmax=1, annot=True, cmap='BrBG')
     heatmap.set_title('Correlation Heatmap', fontdict={'fontsize': 12}, pad=16)
 
+    # set rotation of ticks
+    plt.xticks(
+        rotation=45,
+        horizontalalignment='right'
+    )
+
+    # save figure
     plt.savefig('exports/correlation/correlation_heatmap_general.png', bbox_inches="tight", dpi=200)
 
 
