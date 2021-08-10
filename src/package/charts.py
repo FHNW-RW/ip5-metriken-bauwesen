@@ -66,7 +66,7 @@ def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, r
 
         gf.set(xlabel=LABEL_GF, ylabel=field_label)
 
-    # Save figure
+    # save figure
     if percentile is not None:
         gf.savefig(f'../exports/{ratio_label}/lmplot_{ratio_label}_{percentile}.png', bbox_inches="tight", dpi=200)
 
@@ -104,7 +104,7 @@ def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None, ratio_la
         gf.set(xlabel=LABEL_GF, ylabel=y_label)
         plt.subplots_adjust(hspace=0.5, wspace=0.5)
 
-    # Save figure
+    # save figure
     if save_label is not None:
         gf.savefig(f'../exports/{ratio_label}/lmplot_{save_label}_clustered.png', bbox_inches="tight", dpi=200)
 
@@ -137,22 +137,24 @@ def regplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, 
 
 
 def plot_feature_importance(importance, names, model_type):
-    # Create arrays from feature importance and feature names
+    # create arrays from feature importance and feature names
     feature_importance = np.array(importance)
     feature_names = np.array(names)
 
-    # Create a DataFrame using a Dictionary
+    # create DataFrame using a Dictionary
     data = {'feature_names': feature_names, 'feature_importance': feature_importance}
     fi_df = pd.DataFrame(data)
 
-    # Sort the DataFrame in order decreasing feature importance
+    # sort the DataFrame in order decreasing feature importance
     fi_df.sort_values(by=['feature_importance'], ascending=False, inplace=True)
 
-    # Define size of bar plot
+    # define size of bar plot
     plt.figure(figsize=(10, 8))
-    # Plot Searborn bar chart
+
+    # plot seaborn bar chart
     sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
-    # Add chart labels
+
+    # add chart labels
     plt.title(model_type + 'FEATURE IMPORTANCE')
     plt.xlabel('FEATURE IMPORTANCE')
     plt.ylabel('FEATURE NAMES')
@@ -189,8 +191,9 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
     # setup preferences and colors
     set_preferences(sns, rc=[15, 8], font_scale=2)
     sns.set_style("whitegrid")
-    palette = __cluster_colors(df_full)
+    palette = __cluster_colors(df_full)  # guarantees color continuity
 
+    # set plot limits
     if upper_limit is not None and lower_limit is not None:
         plt.xlim(lower_limit, upper_limit)
 
@@ -198,14 +201,16 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
     ax = sns.barplot(y=c.FIELD_USAGE_CLUSTER, x='ratio', data=percentiles,
                      order=percentiles.sort_values('ratio')[c.FIELD_USAGE_CLUSTER],
                      palette=palette)
+
+    # set labels and ticks
     for p in ax.patches:
         width = p.get_width()
-        width = width + 0.05  # get bar length
-        ax.text(width,  # set the text at 1 unit right of the bar
-                p.get_y() + p.get_height() / 2,  # get Y coordinate + X coordinate / 2
-                '{:1.2f}'.format(width),  # set variable to display, 2 decimals
-                ha='left',  # horizontal alignment
-                va='center')  # vertical alignment
+        width = width + 0.05
+        ax.text(width,
+                p.get_y() + p.get_height() / 2,
+                '{:1.2f}'.format(width),
+                ha='left',
+                va='center')
     ax.set(xlabel=f'{100 - percentile}% mit {ratio_label} grösser als', ylabel='Nutzungstyp')
 
     # save figure
@@ -217,7 +222,7 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
 
 def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
                       cut: float = 2, bw='scott', garage_hue: bool = True):
-    # Add Garage Present Field
+    # add garage present
     plot_data = grg.add_garage_present(data)
 
     if ratio_field is None:
@@ -259,7 +264,7 @@ def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
         fontsize='medium'
     )
 
-    # Save figure
+    # save figure
     additional_label = '_garages' if garage_hue else ''
     plt.savefig(f'../exports/{ratio_field}/violin_{ratio_field}{additional_label}_clustered.png', bbox_inches="tight",
                 dpi=200)
@@ -291,23 +296,55 @@ def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = N
 def describe_ratios(df_full: DataFrame, ratio_field: str = None):
     pd.options.mode.chained_assignment = None
     if ratio_field is None:
-        # Check different cluster sizes
+        # check different cluster sizes
         df_full[c.FIELD_USAGE_CLUSTER] = df_full[c.FIELD_USAGE_CLUSTER].astype('category')
         pd.options.mode.chained_assignment = 'warn'
         data = df_full[c.FIELD_HNF_GF_RATIO]
         return data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
     else:
-        # Check different cluster sizes
+        # check different cluster sizes
         df_full[c.FIELD_USAGE_CLUSTER] = df_full[c.FIELD_USAGE_CLUSTER].astype('category')
         pd.options.mode.chained_assignment = 'warn'
         data = df_full[ratio_field]
         return data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[.25, 0.4, .5, .75])
 
 
+def correlation_hmp(df: DataFrame):
+    # select relevant features and preprocces plot
+    mask = np.triu(np.ones_like(df.corr(), dtype=np.bool))
+
+    # prepare and plot heatmap
+    heatmap = sns.heatmap(df.corr(), mask=mask, vmin=-1, vmax=1, annot=True, cmap='BrBG')
+    heatmap.set_title('Correlation Heatmap', fontdict={'fontsize': 12}, pad=16)
+
+    plt.savefig('exports/correlation/correlation_heatmap_general.png', bbox_inches="tight", dpi=200)
+
+
+def correlation_ratio(df: DataFrame, ratio_field: str = None, ratio_label: str = "Verhältnis HNF – GF"):
+    if ratio_field is None:
+        ratio_field = c.FIELD_HNF_GF_RATIO
+
+    # preprocess dataset
+    cor_data = df.copy()
+    # cor_data = filtered_df[filtered_df[imp_usg.NOM_PRIMARY_USAGE].str.contains("WOHNBAUTEN", na=False)]
+    if ratio_field is None:
+        cor_data = cor_data.corr()[[c.FIELD_HNF_GF_RATIO]].sort_values(by=c.FIELD_HNF_GF_RATIO, ascending=False)
+    else:
+        cor_data = cor_data.corr()[[ratio_field]].sort_values(by=ratio_field, ascending=False)
+
+    # plot heatmap
+    heatmap = sns.heatmap(cor_data, vmin=-1, vmax=1, annot=True, cmap='BrBG')
+    heatmap.set_title(f'Korrelation mit {ratio_label}', fontdict={'fontsize': 18}, pad=16)
+
+    plt.savefig(f'exports/correlation/correlation_heatmap_{ratio_field}.png', bbox_inches="tight", dpi=200)
+
+
 def __cluster_colors(df: DataFrame):
+    # get color palette
     colors = sns.color_palette(n_colors=len(df[c.FIELD_USAGE_CLUSTER].unique()), palette="Set2")
     palette = dict()
 
+    # assign colors to categories
     for cluster in df[c.FIELD_USAGE_CLUSTER].unique():
         palette[cluster] = colors.pop(0)
 
