@@ -136,7 +136,7 @@ def regplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, 
     return gf
 
 
-def plot_feature_importance(importance, names, model_type):
+def plot_feature_importance(importance, names, model_type, save_label: str = None):
     # create arrays from feature importance and feature names
     feature_importance = np.array(importance)
     feature_names = np.array(names)
@@ -147,6 +147,7 @@ def plot_feature_importance(importance, names, model_type):
 
     # sort the DataFrame in order decreasing feature importance
     fi_df.sort_values(by=['feature_importance'], ascending=False, inplace=True)
+    fi_df = fi_df.nlargest(n=10, columns='feature_importance')
 
     # define size of bar plot
     plt.figure(figsize=(10, 8))
@@ -155,12 +156,18 @@ def plot_feature_importance(importance, names, model_type):
     sns.barplot(x=fi_df['feature_importance'], y=fi_df['feature_names'])
 
     # add chart labels
-    plt.title(model_type + 'FEATURE IMPORTANCE')
-    plt.xlabel('FEATURE IMPORTANCE')
-    plt.ylabel('FEATURE NAMES')
+    plt.title(model_type + ' Feature Importance')
+    plt.xlabel('Feature Importance')
+    plt.ylabel('Feature Namen')
+
+    # save plot
+    if save_label is not None:
+        plt.savefig(f"../analysis/exports/feature_importance/barplot_fe_importance_{save_label}.png",
+                    bbox_inches="tight", dpi=200)
 
 
-def scatter_highlight(df, df_highlight, x, y, show_id=True, x_label: str = None, y_label:str = None, save_label: str = None):
+def scatter_highlight(df, df_highlight, x, y, show_id=True, x_label: str = None, y_label: str = None,
+                      save_label: str = None):
     fig, ax = plt.subplots()
 
     ax.scatter(x=df[x], y=df[y])

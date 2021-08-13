@@ -1,8 +1,8 @@
-from typing import Final
+from typing import Final, Union
 
 import numpy as np
 import pandas as pd
-from pandas import DataFrame
+from pandas import DataFrame, Series
 
 import src.package.consts as c
 import src.package.importer as imp
@@ -60,7 +60,7 @@ def __extract_usages(df: DataFrame):
 
 
 # reduce usages to highest values (primary, secondary, tertiary and quaternary)
-def __reduce_to_highest(df: DataFrame, usage_types: list):
+def __reduce_to_highest(df: DataFrame, usage_types: list, max_fields: int = 4, percentages_only: bool = False):
     # copy usages only
     usages = df[usage_types]
 
@@ -119,26 +119,28 @@ def __reduce_to_highest(df: DataFrame, usage_types: list):
 
     # prepare data to be inserted to df
     primary = np.column_stack((primary_usages, primary_percentage))
-    secondary = np.column_stack((secondary_usages, secondary_percentage))
-    tertiary = np.column_stack((tertiary_usages, tertiary_percentage))
-    quaternary = np.column_stack((quaternary_usages, quaternary_percentage))
+    if max_fields > 1: secondary = np.column_stack((secondary_usages, secondary_percentage))
+    if max_fields > 2: tertiary = np.column_stack((tertiary_usages, tertiary_percentage))
+    if max_fields > 3: quaternary = np.column_stack((quaternary_usages, quaternary_percentage))
 
     # replace usages in df with primary, secondary, tertiary and quaternary usages and percentages
     df[c.NOM_PRIMARY_USAGE] = primary[:, 0]
-    df[c.NOM_SECONDARY_USAGE] = secondary[:, 0]
-    df[c.NOM_TERTIARY_USAGE] = tertiary[:, 0]
-    df[c.NOM_QUATERNARY_USAGE] = quaternary[:, 0]
+    if max_fields > 1: df[c.NOM_SECONDARY_USAGE] = secondary[:, 0]
+    if max_fields > 2: df[c.NOM_TERTIARY_USAGE] = tertiary[:, 0]
+    if max_fields > 3: df[c.NOM_QUATERNARY_USAGE] = quaternary[:, 0]
 
     df[c.PRIMARY_USAGE_PERCENTAGE] = primary[:, 1]
-    df[c.SECONDARY_USAGE_PERCENTAGE] = secondary[:, 1]
-    df[c.TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
-    df[c.QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
+    if max_fields > 1: df[c.SECONDARY_USAGE_PERCENTAGE] = secondary[:, 1]
+    if max_fields > 2: df[c.TERTIARY_USAGE_PERCENTAGE] = tertiary[:, 1]
+    if max_fields > 3: df[c.QUATERNARY_USAGE_PERCENTAGE] = quaternary[:, 1]
 
     # set dtype to numeric
     df[c.PRIMARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.PRIMARY_USAGE_PERCENTAGE], errors='coerce')
-    df[c.SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.SECONDARY_USAGE_PERCENTAGE], errors='coerce')
-    df[c.TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.TERTIARY_USAGE_PERCENTAGE], errors='coerce')
-    df[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.QUATERNARY_USAGE_PERCENTAGE], errors='coerce')
+    if max_fields > 1: df[c.SECONDARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.SECONDARY_USAGE_PERCENTAGE],
+                                                                        errors='coerce')
+    if max_fields > 2: df[c.TERTIARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.TERTIARY_USAGE_PERCENTAGE], errors='coerce')
+    if max_fields > 3: df[c.QUATERNARY_USAGE_PERCENTAGE] = pd.to_numeric(df[c.QUATERNARY_USAGE_PERCENTAGE],
+                                                                         errors='coerce')
 
     # remove usage features except garages
     if c.FIELD_GARAGE_TYPE_UG in usage_types:
@@ -147,13 +149,37 @@ def __reduce_to_highest(df: DataFrame, usage_types: list):
         usage_types.remove(c.FIELD_GARAGE_TYPE_OG)
     df.drop(inplace=True, columns=usage_types)
 
-    return df
+    # names of new fields
+    new_fields = [c.NOM_PRIMARY_USAGE,
+                  c.PRIMARY_USAGE_PERCENTAGE,
+                  c.FIELD_GARAGE_TYPE_UG,
+                  c.FIELD_GARAGE_TYPE_OG
+                  ]
+
+    if max_fields > 1: new_fields.extend([c.NOM_SECONDARY_USAGE, c.SECONDARY_USAGE_PERCENTAGE])
+    if max_fields > 2: new_fields.extend([c.NOM_TERTIARY_USAGE, c.TERTIARY_USAGE_PERCENTAGE])
+    if max_fields > 3: new_fields.extend([c.NOM_QUATERNARY_USAGE, c.QUATERNARY_USAGE_PERCENTAGE])
+
+    # remove percentage fields
+    if percentages_only:
+        nom_fields = [c.NOM_PRIMARY_USAGE,
+                      c.NOM_SECONDARY_USAGE,
+                      c.NOM_TERTIARY_USAGE,
+                      c.NOM_QUATERNARY_USAGE]
+        for nom_field in nom_fields:
+            if nom_field in new_fields: new_fields.remove(nom_field)
+
+    return df, new_fields
 
 
 #  TODO import from basic importer automatically
 # extract usages and add features to source df
-def extract_usage_details(df: DataFrame, highest_only: bool = False, include_garages: bool = True,
-                          combine_garages: bool = True) -> DataFrame:
+def extract_usage_details(df: DataFrame,
+                          highest_only: bool = False,
+                          include_garages: bool = True,
+                          combine_garages: bool = True,
+                          max_fields: int = 4,
+                          percentages_only: bool = False) -> tuple[Union[DataFrame, Series], list]:
     data = df.copy()
 
     # extract usages
@@ -162,15 +188,29 @@ def extract_usage_details(df: DataFrame, highest_only: bool = False, include_gar
 
     # replace usages by primary - quaternary
     if highest_only:
-        data = __reduce_to_highest(data, usage_types)
+        data, new_fields = __reduce_to_highest(data,
+                                               usage_types,
+                                               max_fields=max_fields,
+                                               percentages_only=percentages_only)
+        usage_types = new_fields
 
     # combine garages
     if combine_garages:
         data[c.FIELD_GARAGE_COMBINED] = data[c.FIELD_GARAGE_TYPE_UG] + data[c.FIELD_GARAGE_TYPE_OG]
         data.drop(columns=[c.FIELD_GARAGE_TYPE_UG, c.FIELD_GARAGE_TYPE_OG], errors='ignore')
 
+        usage_types.remove(c.FIELD_GARAGE_TYPE_UG)
+        usage_types.remove(c.FIELD_GARAGE_TYPE_OG)
+        usage_types.append(c.FIELD_GARAGE_COMBINED)
+
     # remove garages
     if not include_garages:
         df.drop(columns=[c.FIELD_GARAGE_TYPE_UG, c.FIELD_GARAGE_TYPE_OG, c.FIELD_GARAGE_COMBINED], errors='ignore')
+
+        if combine_garages:
+            usage_types.remove(c.FIELD_GARAGE_COMBINED)
+        else:
+            usage_types.remove(c.FIELD_GARAGE_TYPE_UG)
+            usage_types.remove(c.FIELD_GARAGE_TYPE_OG)
 
     return data, usage_types
