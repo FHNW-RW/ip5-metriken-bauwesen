@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.base import TransformerMixin
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
 import src.package.consts as c
@@ -21,7 +21,7 @@ def combine_usage(usage_main, usage_cluster):
         return usage_cluster
 
 
-class CombineFeatures(BaseEstimator, TransformerMixin):
+class CombineFeatures(TransformerMixin):
 
     def fit(self, X, y=None):
         return self  # nothing else to do
@@ -38,7 +38,7 @@ class CombineFeatures(BaseEstimator, TransformerMixin):
         return X
 
 
-class NumericalImputer(BaseEstimator, TransformerMixin):
+class VolumeImputer(TransformerMixin):
 
     def __init__(self, cluster_mean_values, field=c.FIELD_VOLUME_TOTAL_416, other=c.FIELD_VOLUME_TOTAL_116,
                  drop_other=True):
@@ -74,7 +74,7 @@ class NumericalImputer(BaseEstimator, TransformerMixin):
         df[field] = df[field].fillna(df[other] * float(factor))
 
 
-class OneHotEncodingTransformer(BaseEstimator, TransformerMixin):
+class OneHotEncodingTransformer(TransformerMixin):
 
     def __init__(self, field):
         self.field = field
@@ -95,7 +95,7 @@ class OneHotEncodingTransformer(BaseEstimator, TransformerMixin):
         return X
 
 
-class LabelEncoderTransformer(BaseEstimator, TransformerMixin):
+class LabelEncoderTransformer(TransformerMixin):
 
     def __init__(self, field):
         self.field = field
