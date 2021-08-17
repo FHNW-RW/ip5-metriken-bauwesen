@@ -8,11 +8,12 @@ import src.package.consts as c
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
 import src.package.shared as sh
-from src.package.transformers import CombineFeatures, VolumeImputer, OneHotEncodingTransformer
+from src.package.transformers import VolumeImputer, OneHotEncodingTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
     """ Returns dataset to estimate HNF based on GF and usage cluster """
+
     dataset = df.copy().loc[:, [c.FIELD_AREA_TOTAL_FLOOR_416,
                                 c.FIELD_AREA_MAIN_USAGE,
                                 c.FIELD_USAGE_CLUSTER,
@@ -22,7 +23,6 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     dataset = dataset.dropna(how="any")
 
     transform_pipeline = Pipeline([
-        ('combine_features', CombineFeatures()),
         ('one_hot_encoder', OneHotEncodingTransformer()),
         # ('encode_labels', EncodeLabelsTransformer()),
     ])
@@ -40,6 +40,7 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
 
 def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, features=None, remove_features=None,
                     additional_features=None, fitted_pipeline=None):
+    """ Returns features and actual value for training the model """
 
     # add default features
     if features is None:
@@ -47,7 +48,7 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
             c.FIELD_USAGE_CLUSTER,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
             c.FIELD_NUM_FLOORS_OVERGROUND,
-            c.GARAGE_COMBINED,
+            c.FIELD_GARAGE_COMBINED,
             c.FIELD_TOTAL_EXPENSES,
             c.PRIMARY_USAGE_PERCENTAGE,
             c.FIELD_VOLUME_TOTAL_416,
@@ -85,7 +86,6 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
     else:
         dataset = fitted_pipeline.transform(dataset)
 
-    # TODO: use median for some of the fields?
     dataset = dataset.dropna(how="any")
 
     X = dataset.drop(field_to_predict, axis=1)

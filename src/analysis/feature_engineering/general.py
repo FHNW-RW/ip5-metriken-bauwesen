@@ -1,7 +1,6 @@
 from pandas import DataFrame
 
 import src.package.consts
-import src.package.importer_usages as im_usages
 
 
 def drop_lessthan(df: DataFrame, min: int):

@@ -1,6 +1,6 @@
 from typing import Final
 
-# check data/README.me for more info about package
+# check data/README.me for more info about the data
 
 # general data info
 FIELD_ID: Final = "id"
@@ -78,7 +78,6 @@ JSON_FIELD_VAU: Final = "VAU"
 FIELD_USAGES: Final = "usages"
 FIELD_USAGE_CLUSTER: Final = "usage_cluster"
 FIELD_NOM_USAGE_MAIN: Final = "nom_usage_main"
-FIELD_COMBINED_USAGE: Final = "combined_usage"
 
 USAGE_TYPE: Final = "type"
 USAGE_PERCENTAGE: Final = "percentage"

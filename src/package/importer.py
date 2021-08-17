@@ -1,13 +1,14 @@
 import json
 
 import pandas as pd
-import numpy as np
 from pandas import DataFrame
 
 import src.package.consts as c
 
 
 def _get_from_json(jsonstr, attribute):
+    """ Get value of attribute of json """
+
     loaded_json = json.loads(jsonstr)
     if attribute in loaded_json:
         return loaded_json[attribute]
@@ -15,6 +16,7 @@ def _get_from_json(jsonstr, attribute):
 
 def _get_total_expenses(jsonstr: str):
     """ Return total expenses from BKP_08 or EBKP_12 if present """
+
     loaded_json = json.loads(jsonstr)
 
     if c.JSON_FIELD_TOTAL_EXPENSES_BKP in loaded_json:
@@ -29,6 +31,8 @@ def _fillna_cluster_median(df, field):
 
 
 def get_dataset(csv_path, raw=False, verification_status=None) -> DataFrame:
+    """ Parse the dataset from CSV to DataFrame. Filter unrelevant data if raw=False """
+
     df = pd.read_csv(csv_path, sep=';')
 
     if not raw:
@@ -48,7 +52,9 @@ def get_dataset(csv_path, raw=False, verification_status=None) -> DataFrame:
 
 
 def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, verification_status=None,
-                         cluster_threshold: int = 0, hnf_gf_ratio: bool = True) -> DataFrame:
+                         cluster_threshold: int = 0) -> DataFrame:
+    """ Parse the dataset from CSV to DataFrame with additional features """
+
     df = get_dataset(csv_path=csv_path, verification_status=verification_status, )
 
     # extract cost and expenses from json
@@ -81,6 +87,8 @@ def get_extended_dataset(csv_path, remove_na=False, fill_cluster_median=False, v
 
 
 def cap_upper_gf_field(df: DataFrame, upper_percentile='75%', field: str = None) -> DataFrame:
+    """ Filter DataFrame by upper percentile for certain field """
+
     percentile_decimal = float(upper_percentile.strip('%')) / 100.0
     gf_upper = df[c.FIELD_AREA_TOTAL_FLOOR_416].describe(percentiles=[percentile_decimal])[upper_percentile]
     if field is None:
@@ -98,6 +106,8 @@ def cap_upper_gf_field(df: DataFrame, upper_percentile='75%', field: str = None)
 
 
 def select_relevant_features(df: DataFrame, additional_features=None) -> DataFrame:
+    """ Select relevant features out of the DataFrame for the Flächenschätzer """
+
     features = [
         c.FIELD_NOM_USAGE_MAIN,
         c.FIELD_USAGE_CLUSTER,
@@ -123,6 +133,8 @@ def select_relevant_features(df: DataFrame, additional_features=None) -> DataFra
 
 
 def calculate_gf_ratio(df: DataFrame, other_field: str, ratio_field: str, cut_upper=None, cut_lower=None):
+    """ Calculate ration of GF to other field with the possibility to define upper or lower limits """
+
     df[ratio_field] = df.eval(f'{other_field} / {c.FIELD_AREA_TOTAL_FLOOR_416}')
     if cut_lower is not None:
         df.drop(df.loc[df[ratio_field] < cut_lower].index, inplace=True)  # ratio can not be lower than x

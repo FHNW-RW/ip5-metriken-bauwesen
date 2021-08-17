@@ -6,9 +6,9 @@ import src.package.shared as sh
 
 def impute_mean(df: DataFrame, field: str = "", other: str = "", clustered=True, percentile: float = 0.5,
                 serialize=False):
-    """ fills missing values for specified field based on (clustered) mean values of other column """
+    """ Fills missing values for specified field based on (clustered) mean values of other column """
 
-    if field is "":
+    if field == "":
         field = c.FIELD_VOLUME_TOTAL_416
         other = c.FIELD_VOLUME_TOTAL_116
 

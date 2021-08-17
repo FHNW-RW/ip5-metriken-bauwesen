@@ -5,7 +5,6 @@ import pandas as pd
 from pandas import DataFrame, Series
 
 import src.package.consts as c
-import src.package.importer as imp
 import json
 
 # JSON CODES
@@ -13,8 +12,9 @@ USAGE_TYPE: Final = "type"
 USAGE_PERCENTAGE: Final = "percentage"
 
 
-# decode usage types and percentages
 def __decode_usages(raw_json: str):
+    """ Decode usage types and percentages """
+
     decoded_usages = []
     decoded_percentages = []
 
@@ -32,8 +32,9 @@ def __decode_usages(raw_json: str):
     return pd.DataFrame(list(zip(decoded_usages, decoded_percentages)), columns=['usage', 'percentage'])
 
 
-# extract usages as columns
 def __extract_usages(df: DataFrame):
+    """ Extract usages as columns """
+
     extracted_usages = pd.DataFrame()
     usage_types = []
 
@@ -59,8 +60,9 @@ def __extract_usages(df: DataFrame):
     return extracted_usages, usage_types
 
 
-# reduce usages to highest values (primary, secondary, tertiary and quaternary)
 def __reduce_to_highest(df: DataFrame, usage_types: list, max_fields: int = 4, percentages_only: bool = False):
+    """ Reduce usages to highest values (primary, secondary, tertiary and quaternary) """
+
     # copy usages only
     usages = df[usage_types]
 
@@ -172,14 +174,14 @@ def __reduce_to_highest(df: DataFrame, usage_types: list, max_fields: int = 4, p
     return df, new_fields
 
 
-#  TODO import from basic importer automatically
-# extract usages and add features to source df
 def extract_usage_details(df: DataFrame,
                           highest_only: bool = False,
                           include_garages: bool = True,
                           combine_garages: bool = True,
                           max_fields: int = 4,
                           percentages_only: bool = False) -> tuple[Union[DataFrame, Series], list]:
+    """ Extract usages and add features to source df """
+
     data = df.copy()
 
     # extract usages

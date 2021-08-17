@@ -33,6 +33,7 @@ CHART_WIDTH: Final = 8
 
 def set_preferences(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH), font_scale: float = 1.0):
     """ set size of seaborn plots """
+
     seaborn.set(rc={'figure.figsize': rc})
     sns.set(font_scale=font_scale)
 
@@ -40,6 +41,8 @@ def set_preferences(seaborn, rc=(CHART_HEIGHT, CHART_WIDTH), font_scale: float =
 def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, ratio_label: str = None,
                     percentile: str = None,
                     hue=None) -> FacetGrid:
+    """ Plot GF in relation to other field with Seaborn Implot """
+
     if field is None:
         gf = sns.lmplot(
             data=df,
@@ -75,6 +78,8 @@ def lmplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, r
 
 def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None, ratio_label: str = None,
                      save_label: str = None):
+    """ Plot GF clustered in relation to other field with Seaborn Implot """
+
     df = df.copy()
     df = df.rename(columns={c.FIELD_USAGE_CLUSTER: "Typ"})
 
@@ -110,6 +115,8 @@ def lmplot_clustered(df: DataFrame, y: str = None, y_label: str = None, ratio_la
 
 
 def regplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, logscale=False) -> FacetGrid:
+    """ Plot GF clustered in relation to other field with Regression Plot """
+
     if field is None:
         gf = sns.regplot(
             data=df,
@@ -137,6 +144,8 @@ def regplot_gf_field(df: DataFrame, field: str = None, field_label: str = None, 
 
 
 def plot_feature_importance(importance, names, model_type, save_label: str = None):
+    """ Plot importance of features for a model """
+
     # create arrays from feature importance and feature names
     feature_importance = np.array(importance)
     feature_names = np.array(names)
@@ -168,6 +177,8 @@ def plot_feature_importance(importance, names, model_type, save_label: str = Non
 
 def scatter_highlight(df, df_highlight, x, y, show_id=True, x_label: str = None, y_label: str = None,
                       save_label: str = None):
+    """ Highlight outliers with scatter plot """
+
     fig, ax = plt.subplots()
 
     ax.scatter(x=df[x], y=df[y])
@@ -193,8 +204,10 @@ def scatter_highlight(df, df_highlight, x, y, show_id=True, x_label: str = None,
 def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, percentile: int, ratio_label: str,
                                  ratio_field: str = None,
                                  upper_limit=None, lower_limit=None):
+    """ Use barplot to display ratio bigger than certain threshold """
+
     # preprocess data
-    percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[(percentile) / 100])
+    percentiles = ratio_data.groupby(df_full[c.FIELD_USAGE_CLUSTER]).describe(percentiles=[percentile / 100])
     percentiles = percentiles[[f'{percentile}%']]
     percentiles.columns = [f'{100 - percentile}%']  # reversed percentiles
 
@@ -237,6 +250,8 @@ def barplot_reversed_percentiles(ratio_data: DataFrame, df_full: DataFrame, perc
 
 def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
                       cut: float = 2, bw='scott', garage_hue: bool = True):
+    """ Use violin plot to display clustered ratios """
+
     # add garage present
     plot_data = grg.add_garage_present(data)
 
@@ -285,6 +300,7 @@ def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
                 dpi=200)
 
 
+# TODO: Löschen?
 def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = None):
     if ratio_field is None:
         gf = sns.catplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, kind="box", data=data)
@@ -309,6 +325,8 @@ def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = N
 
 
 def describe_ratios(df_full: DataFrame, ratio_field: str = None):
+    """ Describe ratio with count, mean, sdt, min and different percentiles for cluster """
+
     pd.options.mode.chained_assignment = None
     if ratio_field is None:
         # check different cluster sizes
@@ -325,6 +343,8 @@ def describe_ratios(df_full: DataFrame, ratio_field: str = None):
 
 
 def correlation_hmp(df: DataFrame):
+    """ Show correlation heatmap for dataset """
+
     # select relevant features and preprocces plot
     mask = np.triu(np.ones_like(df.corr(), dtype=np.bool))
 
@@ -343,6 +363,8 @@ def correlation_hmp(df: DataFrame):
 
 
 def correlation_ratio(df: DataFrame, ratio_field: str = None, ratio_label: str = "Verhältnis HNF – GF"):
+    """ Show correlation heatmap for a ratio """
+
     if ratio_field is None:
         ratio_field = c.FIELD_HNF_GF_RATIO
 
