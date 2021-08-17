@@ -29,7 +29,7 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     dataset = transform_pipeline.fit_transform(dataset)
 
     if upper_percentile is not None:
-        dataset = im.cap_upper_gf_hnf(dataset, upper_percentile=upper_percentile)
+        dataset = im.cap_upper_gf_field(dataset, upper_percentile=upper_percentile)
 
     # features / labels
     X = dataset[[c.FIELD_AREA_TOTAL_FLOOR_416, c.FIELD_USAGE_CLUSTER]]
@@ -73,6 +73,10 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
         transform_pipeline = Pipeline([
             ('volume_imputer', VolumeImputer(cluster_mean_values)),
             ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
+            # ('label_encoder1', LabelEncoderTransformer(c.NOM_PRIMARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # ('label_encoder2', LabelEncoderTransformer(c.NOM_SECONDARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # ('label_encoder3', LabelEncoderTransformer(c.NOM_TERTIARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # ('label_encoder4', LabelEncoderTransformer(c.NOM_QUATERNARY_USAGE)), # activate if HIGHEST_ONLY with usage name
         ])
 
         # fit/transform & serialize pipeline
