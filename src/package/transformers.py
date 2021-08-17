@@ -60,6 +60,10 @@ class NumericalImputer(BaseEstimator, TransformerMixin):
         return X
 
     def __apply_cluster_mean(self, grp, grp_name):
+        # use ANDERES for unknown group
+        if grp_name not in self.cluster_mean_values:
+            grp_name = 'ANDERES'
+
         factor = self.cluster_mean_values[grp_name]
         grp[self.field] = grp[self.field].fillna(grp[self.other] * float(factor))
 

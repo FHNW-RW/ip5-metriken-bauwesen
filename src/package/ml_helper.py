@@ -5,10 +5,10 @@ from sklearn.model_selection import cross_validate, RepeatedKFold
 from sklearn.pipeline import Pipeline
 
 import src.package.consts as c
-import src.package.shared as sh
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
-from src.package.transformers import CombineFeatures, NumericalImputer, OneHotEncodingTransformer
+import src.package.shared as sh
+from src.package.transformers import CombineFeatures, NumericalImputer, OneHotEncodingTransformer, LabelEncoderTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -29,7 +29,7 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     dataset = transform_pipeline.fit_transform(dataset)
 
     if upper_percentile is not None:
-        dataset = im.cap_upper_gf_hnf(dataset, upper_percentile=upper_percentile)
+        dataset = im.cap_upper_gf_field(dataset, upper_percentile=upper_percentile)
 
     # features / labels
     X = dataset[[c.FIELD_AREA_TOTAL_FLOOR_416, c.FIELD_USAGE_CLUSTER]]
@@ -38,41 +38,41 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     return X, y
 
 
-def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_pipeline=None):
-    # TODO: nom_facade & nom_usage_main encode?
+def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, features=None, remove_features=None,
+                    additional_features=None, fitted_pipeline=None):
 
     # add default features
     if features is None:
         features = [
-            c.FIELD_AREA_MAIN_USAGE,
-            c.FIELD_AREA_TOTAL_FLOOR_416,
             c.FIELD_USAGE_CLUSTER,
-            # c.FIELD_NOM_USAGE_MAIN,
-            # c.FIELD_NUM_FLOORS_UNDERGROUND,
-            # c.FIELD_NUM_FLOORS_OVERGROUND,
-            # c.GARAGE_INDOOR_PRESENT,
-            # c.GARAGE_INDOOR_PERCENTAGE,
+            c.FIELD_NUM_FLOORS_UNDERGROUND,
+            c.FIELD_NUM_FLOORS_OVERGROUND,
             c.FIELD_TOTAL_EXPENSES,
-            # c.PRIMARY_USAGE_PERCENTAGE,
-            # c.SECONDARY_USAGE_PERCENTAGE,
-            # c.TERTIARY_USAGE_PERCENTAGE,
-            # c.QUATERNARY_USAGE_PERCENTAGE,
             c.FIELD_VOLUME_TOTAL_416,
-            c.FIELD_VOLUME_TOTAL_116
+            c.FIELD_VOLUME_TOTAL_116,
         ]
+
+    # add additional fields
+    if additional_features is not None:
+        features.extend(additional_features)
 
     # remove certain features
     if remove_features is not None:
         for to_remove in remove_features:
             while to_remove in features: features.remove(to_remove)
 
-    dataset = df.copy().loc[:, features]
+    features.append(field_to_predict)
+    dataset = df.copy().reindex(columns=features)
 
     # preprocess dataset
     if fitted_pipeline is None:
         transform_pipeline = Pipeline([
-            ('volume_imputer', NumericalImputer(nimp.impute_mean(df))),
+            ('volume_imputer', NumericalImputer(nimp.impute_mean(df, serialize=True))),
             ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
+            # ('label_encoder1', LabelEncoderTransformer(c.NOM_PRIMARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # ('label_encoder2', LabelEncoderTransformer(c.NOM_SECONDARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # ('label_encoder3', LabelEncoderTransformer(c.NOM_TERTIARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # ('label_encoder4', LabelEncoderTransformer(c.NOM_QUATERNARY_USAGE)), # activate if HIGHEST_ONLY with usage name
         ])
         dataset = transform_pipeline.fit_transform(dataset)
 
@@ -84,8 +84,8 @@ def hnf_dataset_full(df: DataFrame, features=None, remove_features=None, fitted_
     # TODO: use median for some of the fields?
     dataset = dataset.dropna(how="any")
 
-    X = dataset.drop(c.FIELD_AREA_MAIN_USAGE, axis=1)
-    y = dataset[c.FIELD_AREA_MAIN_USAGE].copy()
+    X = dataset.drop(field_to_predict, axis=1)
+    y = dataset[field_to_predict].copy()
 
     return X, y
 
