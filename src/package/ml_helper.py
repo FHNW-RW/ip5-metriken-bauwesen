@@ -8,7 +8,7 @@ import src.package.consts as c
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
 import src.package.shared as sh
-from src.package.transformers import CombineFeatures, NumericalImputer, OneHotEncodingTransformer, LabelEncoderTransformer
+from src.package.transformers import CombineFeatures, VolumeImputer, OneHotEncodingTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -47,7 +47,9 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
             c.FIELD_USAGE_CLUSTER,
             c.FIELD_NUM_FLOORS_UNDERGROUND,
             c.FIELD_NUM_FLOORS_OVERGROUND,
+            c.GARAGE_COMBINED,
             c.FIELD_TOTAL_EXPENSES,
+            c.PRIMARY_USAGE_PERCENTAGE,
             c.FIELD_VOLUME_TOTAL_416,
             c.FIELD_VOLUME_TOTAL_116,
         ]
@@ -66,17 +68,19 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
 
     # preprocess dataset
     if fitted_pipeline is None:
+        cluster_mean_values = nimp.impute_mean(df, serialize=True)
+
         transform_pipeline = Pipeline([
-            ('volume_imputer', NumericalImputer(nimp.impute_mean(df, serialize=True))),
+            ('volume_imputer', VolumeImputer(cluster_mean_values)),
             ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
             # ('label_encoder1', LabelEncoderTransformer(c.NOM_PRIMARY_USAGE)), # activate if HIGHEST_ONLY with usage name
             # ('label_encoder2', LabelEncoderTransformer(c.NOM_SECONDARY_USAGE)), # activate if HIGHEST_ONLY with usage name
             # ('label_encoder3', LabelEncoderTransformer(c.NOM_TERTIARY_USAGE)), # activate if HIGHEST_ONLY with usage name
             # ('label_encoder4', LabelEncoderTransformer(c.NOM_QUATERNARY_USAGE)), # activate if HIGHEST_ONLY with usage name
         ])
-        dataset = transform_pipeline.fit_transform(dataset)
 
-        # serialize pipeline
+        # fit/transform & serialize pipeline
+        dataset = transform_pipeline.fit_transform(dataset)
         sh.serialize_object(transform_pipeline, 'fitted_pipeline')
     else:
         dataset = fitted_pipeline.transform(dataset)
@@ -90,7 +94,7 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
     return X, y
 
 
-def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=3, random_state=0)):
+def cross_validation(model, X, y, cv=RepeatedKFold(n_splits=5, n_repeats=10, random_state=0)):
     """ Use repeated cross validation to evaluate model """
 
     scoring = [

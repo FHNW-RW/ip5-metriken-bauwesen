@@ -52,7 +52,7 @@ area_outer_floor: Aussengeschossfläche AGF\
 **!area_total_floor_416:** Geschossfläche GF\
 **!area_net_floor_416:** Nettogeschossfläche NGF\
 **!area_main_usage:** Hauptnutzfläche HNF\
-area_usage: Nutzfläche NF\
+**!area_usage**: Nutzfläche NF\
 **!volume_total_416:** Volumen GV SIA 416\
 **!volume_total_116:** Volumen RI SIA 116
 

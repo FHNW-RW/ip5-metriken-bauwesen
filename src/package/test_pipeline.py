@@ -7,7 +7,7 @@ import src.package.consts as c
 import src.package.shared as sh
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
-from src.package.transformers import NumericalImputer, OneHotEncodingTransformer, LabelEncoderTransformer
+from src.package.transformers import VolumeImputer, OneHotEncodingTransformer, LabelEncoderTransformer
 
 from joblib import load
 
@@ -30,7 +30,7 @@ column_transformers = ColumnTransformer([
 print(df)
 
 transform_pipeline = Pipeline([
-    ('volume_imputer', NumericalImputer(nimp.impute_mean(df))),
+    ('volume_imputer', VolumeImputer(nimp.impute_mean(df))),
     # ('usage_encoder', OneHotEncoder(categories=[1]))
     ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
     # ('usage_encoder', LabelEncoderTransformer(c.FIELD_USAGE_CLUSTER)),
