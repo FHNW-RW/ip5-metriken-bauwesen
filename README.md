@@ -2,7 +2,7 @@
 **Team:** Luca Dietiker & Ralf Winkelmann
 
 ### Auftraggeber
-Das Projekt «Flächenmetriken im Bauwesen» wurde von der Kennwerte AG mit Sitz in Brugg AG bei der FHNW eingereicht. 
+Das Projekt «Flächenmetriken im Bauwesen» wurde von der kennwerte AG mit Sitz in Brugg AG bei der FHNW eingereicht. 
 
 ### Ziel
 - Umsetzung eines Schätzer-Service für Gebäude-Metriken.
