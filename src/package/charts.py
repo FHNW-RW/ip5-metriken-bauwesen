@@ -300,30 +300,6 @@ def violinplot_ratios(data: DataFrame, ratio_field: str, ratio_label: str,
                 dpi=200)
 
 
-# TODO: Löschen?
-def catplot_field(data: DataFrame, ratio_field: str = None, ratio_label: str = None):
-    if ratio_field is None:
-        gf = sns.catplot(x=c.FIELD_USAGE_CLUSTER, y=c.FIELD_HNF_GF_RATIO, kind="box", data=data)
-
-        gf.set(xlabel='Nutzungstyp (Cluster))', ylabel='Ratio HNF - GF')
-        plt.xticks(
-            rotation=45,
-            horizontalalignment='right',
-            fontweight='normal',
-            fontsize='medium'
-        )
-    else:
-        gf = sns.catplot(x=c.FIELD_USAGE_CLUSTER, y=ratio_field, kind="box", data=data)
-
-        gf.set(xlabel='Nutzungstyp (Cluster))', ylabel=ratio_label)
-        plt.xticks(
-            rotation=45,
-            horizontalalignment='right',
-            fontweight='normal',
-            fontsize='medium'
-        )
-
-
 def describe_ratios(df_full: DataFrame, ratio_field: str = None):
     """ Describe ratio with count, mean, sdt, min and different percentiles for cluster """
 

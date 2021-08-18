@@ -121,7 +121,6 @@ def select_relevant_features(df: DataFrame, additional_features=None) -> DataFra
         c.FIELD_NUM_FLOORS_OVERGROUND,
         c.FIELD_NUM_FLOORS_UNDERGROUND,
         c.FIELD_TOTAL_EXPENSES,
-        # c.FIELD_COST_REF_GF, # same as area_total_floor_416
         c.FIELD_COST_REF_GSF,
         c.FIELD_HNF_GF_RATIO
     ]

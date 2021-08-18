@@ -96,7 +96,7 @@ def __reduce_to_highest(df: DataFrame, usage_types: list, max_fields: int = 4, p
             primary_percentage.append(decoded_usages.iloc[0]['percentage'])
         else:
             primary_usages.append(None)
-            primary_percentage.append(float(0.0))
+            primary_percentage.append(float(100.0))
 
         if len(decoded_usages) >= 2:
             secondary_usages.append(decoded_usages.iloc[1]['usage'])

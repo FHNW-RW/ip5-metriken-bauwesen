@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.base import TransformerMixin
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
 
 import src.package.consts as c
 
@@ -64,12 +64,12 @@ class OneHotEncodingTransformer(TransformerMixin):
         return X
 
 
-class LabelEncoderTransformer(TransformerMixin):
-    """ Transformer to encode field with LabelEncoder """
+class OrdinalEncoderTransformer(TransformerMixin):
+    """ Transformer to encode field with OrdinalEncoder """
 
     def __init__(self, field):
         self.field = field
-        self.encoder = LabelEncoder()
+        self.encoder = OrdinalEncoder()
 
     def fit(self, X, y=None):
         self.encoder.fit(X[[self.field]])

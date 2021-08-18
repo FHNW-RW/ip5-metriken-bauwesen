@@ -8,7 +8,7 @@ import src.package.consts as c
 import src.package.importer as im
 import src.package.numeric_imputations as nimp
 import src.package.shared as sh
-from src.package.transformers import VolumeImputer, OneHotEncodingTransformer
+from src.package.transformers import VolumeImputer, OneHotEncodingTransformer, OrdinalEncoderTransformer
 
 
 def hnf_dataset(df: DataFrame, upper_percentile=None):
@@ -23,8 +23,8 @@ def hnf_dataset(df: DataFrame, upper_percentile=None):
     dataset = dataset.dropna(how="any")
 
     transform_pipeline = Pipeline([
-        ('one_hot_encoder', OneHotEncodingTransformer()),
-        # ('encode_labels', EncodeLabelsTransformer()),
+        ('one_hot_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
+        # ('ordinal_encoder', OrdinalEncoderTransformer()),
     ])
     dataset = transform_pipeline.fit_transform(dataset)
 
@@ -74,10 +74,11 @@ def ml_dataset_full(df: DataFrame, field_to_predict=c.FIELD_AREA_MAIN_USAGE, fea
         transform_pipeline = Pipeline([
             ('volume_imputer', VolumeImputer(cluster_mean_values)),
             ('usage_encoder', OneHotEncodingTransformer(c.FIELD_USAGE_CLUSTER)),
-            # ('label_encoder1', LabelEncoderTransformer(c.NOM_PRIMARY_USAGE)), # activate if HIGHEST_ONLY with usage name
-            # ('label_encoder2', LabelEncoderTransformer(c.NOM_SECONDARY_USAGE)), # activate if HIGHEST_ONLY with usage name
-            # ('label_encoder3', LabelEncoderTransformer(c.NOM_TERTIARY_USAGE)), # activate if HIGHEST_ONLY with usage name
-            # ('label_encoder4', LabelEncoderTransformer(c.NOM_QUATERNARY_USAGE)), # activate if HIGHEST_ONLY with usage name
+            # activate if HIGHEST_ONLY with usage name
+            # ('ordinal_encoder1', OrdinalEncoderTransformer(c.NOM_PRIMARY_USAGE)),
+            # ('ordinal_encoder2', OrdinalEncoderTransformer(c.NOM_SECONDARY_USAGE)),
+            # ('ordinal_encoder3', OrdinalEncoderTransformer(c.NOM_TERTIARY_USAGE)),
+            # ('ordinal_encoder4', OrdinalEncoderTransformer(c.NOM_QUATERNARY_USAGE)),
         ])
 
         # fit/transform & serialize pipeline
