@@ -1,5 +1,3 @@
-import pandas as pd
-
 import src.package.consts as c
 
 

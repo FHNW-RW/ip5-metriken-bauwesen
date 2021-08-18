@@ -5,7 +5,8 @@ from joblib import dump
 
 
 def export_directory_path(filename):
-    """ get or create export directory """
+    """ Get or create export directory """
+
     project_root = Path(__file__).parent.parent.parent
     export_directory = os.path.join(project_root, r'export')
     if not os.path.exists(export_directory):

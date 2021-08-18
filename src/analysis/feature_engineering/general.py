@@ -1,13 +1,12 @@
 from pandas import DataFrame
 
 import src.package.consts
-import src.package.importer_usages as im_usages
 
 
-def drop_lessthan(df: DataFrame, min: int):
+def drop_lessthan(df: DataFrame, min_values: int):
     """ drops usage types with less than specified elements """
     df = df.groupby(src.package.consts.NOM_PRIMARY_USAGE).apply(__add_usage_count)
-    df.drop(df[df['object_per_usagetype'] < min].index, inplace=True)
+    df.drop(df[df['object_per_usagetype'] < min_values].index, inplace=True)
 
     return df
 
